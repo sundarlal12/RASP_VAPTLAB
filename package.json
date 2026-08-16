@@ -1,0 +1,8 @@
+{
+  "name": "vaptlab-site",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "services/*"
+  ]
+}

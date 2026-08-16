@@ -1,0 +1,42 @@
+import { Section } from "@/components/ui/Section";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+
+export const metadata = {
+  title: "SSL Pinning Configuration",
+  description: "Generate and manage per-client SSL/certificate pin sets for AppShield.",
+  alternates: { canonical: "/docs/ssl-pinning-configuration/" },
+};
+
+<Section bg="gradient" className="pb-4 pt-14">
+  <Breadcrumbs
+    items={[
+      { label: "Home", href: "/" },
+      { label: "Docs", href: "/docs/" },
+      { label: "SSL Pinning Configuration", href: "/docs/ssl-pinning-configuration/" },
+    ]}
+  />
+</Section>
+
+<Section bg="white" narrow>
+
+# SSL Pinning Configuration
+
+If your app talks to your own backend over TLS, AppShield can pin your API's certificate at the native layer — independent of the device's OS trust store — so a malicious CA installed on the device can't be used to intercept your traffic.
+
+## Generating a pin set
+
+Pin sets are generated from the AppShield portal against your API's hostname. AppShield computes the SPKI (Subject Public Key Info) hash of your certificate — the same value tools like `openssl` or `curl --pinnedpubkey` would produce — and stores it as your app's pin set.
+
+## Multiple hosts
+
+If your app talks to more than one backend host (an API domain and a CDN, for example), each host gets its own pin entry. All configured pins are embedded into the shielded build.
+
+## Certificate rotation
+
+Because the pin is tied to your certificate's public key, a routine certificate renewal from the same key pair doesn't require a new pin. If you rotate to a new key pair, generate a new pin set **before** your new certificate goes live on your backend, and ship an updated build with both the old and new pins during the transition window — otherwise devices on the old build will fail to connect once the old certificate is retired.
+
+## Where this fits
+
+SSL pinning configuration happens once per app (and again on key rotation) and applies to every subsequent shielded build. See the [Quickstart](/docs/quickstart/) for where this step fits in the overall flow.
+
+</Section>

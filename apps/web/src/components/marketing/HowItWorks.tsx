@@ -1,25 +1,25 @@
-import { PackagePlus, SlidersHorizontal, Rocket } from "lucide-react";
+import { SlidersHorizontal, UploadCloud, LayoutDashboard } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { IconTile } from "@/components/ui/IconTile";
 
 const steps = [
   {
-    icon: PackagePlus,
-    title: "Integrate the SDK",
-    description:
-      "Add the AppShield AAR to your Gradle build. The native core ships with the SDK — no separate build step or external toolchain required.",
-  },
-  {
     icon: SlidersHorizontal,
-    title: "Configure detection & pinning policy",
+    title: "Configure your detection & pinning policy",
     description:
-      "Set which detections are active, your SSL pin set, and how the SDK should report risk — as an in-app signal, a callback, or both.",
+      "Set root/VM detection, anti-hooking, anti-debugging, and memory-protection modes independently, and generate your SSL pin set — all from the AppShield portal.",
   },
   {
-    icon: Rocket,
-    title: "Ship, then monitor risk signals",
+    icon: UploadCloud,
+    title: "Upload your signed build",
     description:
-      "Your app decides how to act on the runtime risk score. Detections keep re-running through the session via the background watchdog, not just at launch.",
+      "Upload your already-built, already-signed APK. AppShield shields it against your configured policy and hands back a protected build ready to distribute — no separate SDK integration required for most teams.",
+  },
+  {
+    icon: LayoutDashboard,
+    title: "Monitor the live dashboard",
+    description:
+      "Track detection events, device risk scores, and top threats as they happen. Detections keep re-running through the session via the background watchdog, not just at launch.",
   },
 ];
 
@@ -27,9 +27,9 @@ export function HowItWorks() {
   return (
     <div className="flex flex-col gap-16">
       <SectionHeading
-        eyebrow="Integration"
-        title="Three steps from build to protected"
-        description="AppShield integrates at the Gradle level — no proprietary build pipeline or app resubmission workflow to adopt."
+        eyebrow="How it works"
+        title="Shield a build in minutes, not a sprint"
+        description="Configure policy, upload your signed APK, get a protected build back. Teams that want native SDK-level control can integrate directly instead — talk to us about what fits your app."
       />
       <div className="grid gap-10 sm:grid-cols-3">
         {steps.map((step, index) => (

@@ -1,0 +1,39 @@
+import { Section } from "@/components/ui/Section";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+
+export const metadata = {
+  title: "Direct SDK Integration",
+  description: "Direct AppShield SDK integration for teams that want native-level control instead of the upload-and-shield flow.",
+  alternates: { canonical: "/docs/sdk-integration/" },
+};
+
+<Section bg="gradient" className="pb-4 pt-14">
+  <Breadcrumbs
+    items={[
+      { label: "Home", href: "/" },
+      { label: "Docs", href: "/docs/" },
+      { label: "Direct SDK Integration", href: "/docs/sdk-integration/" },
+    ]}
+  />
+</Section>
+
+<Section bg="white" narrow>
+
+# Direct SDK Integration
+
+Most teams use the [Quickstart](/docs/quickstart/) flow — configure a policy, upload a signed build, get back a shielded one. Some teams want more control than that: custom in-app handling of individual detection events, tighter build-pipeline integration, or protection logic that ships as part of their own CI rather than a separate upload step.
+
+For those cases, AppShield's Android SDK is available as a direct dependency, distributed through a private Maven repository scoped to your account rather than a public registry like Maven Central or JitPack.
+
+## What direct integration involves
+
+- Access to a private Maven repository, provisioned per account.
+- Adding the SDK as a Gradle dependency in your app module.
+- Initializing the SDK and wiring up the same detection policy and pin configuration you'd otherwise set in the portal, but in code.
+- Handling risk-score and detection callbacks directly in your app, rather than only observing them on the dashboard.
+
+## Getting access
+
+Private Maven credentials and exact integration steps (dependency coordinates, initialization API, minimum SDK version) are provided when we set up direct integration for your account — [talk to us](/contact/) about whether this path or the upload-and-shield flow is the better fit for your app.
+
+</Section>

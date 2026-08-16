@@ -39,12 +39,13 @@ export const industries: Industry[] = [
     icon: Landmark,
     relevantFeatures: [
       "root-jailbreak-detection",
+      "vm-emulator-detection",
       "ssl-certificate-pinning",
       "tamper-detection-integrity-attestation",
       "screenshot-screen-recording-prevention",
     ],
     description:
-      "Banking and payments apps are high-value targets for rooted-device fraud, MITM attacks against transaction traffic, and cloned apps used for credential harvesting. AppShield's combination of root detection, SSL pinning, and tamper detection addresses the environment-level risks that sit underneath your existing fraud and auth controls.",
+      "Banking and payments apps are high-value targets for rooted-device fraud, emulator-based fraud rings, MITM attacks against transaction traffic, and cloned apps used for credential harvesting. AppShield's combination of root/VM detection, SSL pinning, and tamper detection addresses the environment-level risks that sit underneath your existing fraud and auth controls.",
   },
   {
     slug: "gaming",
@@ -53,11 +54,12 @@ export const industries: Industry[] = [
     icon: Gamepad2,
     relevantFeatures: [
       "anti-hooking-frida-xposed",
+      "memory-protection",
       "tamper-detection-integrity-attestation",
       "runtime-risk-scoring",
     ],
     description:
-      "Cheat tools and memory editors typically rely on hooking frameworks or a patched, resigned build. Anti-hooking detection and integrity attestation target exactly that path, without needing to enumerate every cheat tool individually.",
+      "Cheat tools and memory editors typically rely on hooking frameworks, direct memory patching, or a patched, resigned build. Anti-hooking detection, memory protection, and integrity attestation target exactly that path, without needing to enumerate every cheat tool individually.",
   },
   {
     slug: "healthcare",
@@ -120,11 +122,12 @@ export const useCases: UseCase[] = [
     icon: Bot,
     relevantFeatures: [
       "anti-hooking-frida-xposed",
+      "vm-emulator-detection",
       "device-fingerprinting",
       "runtime-risk-scoring",
     ],
     description:
-      "Most automated abuse of a mobile app's APIs doesn't come through a browser — it comes through a hooked, instrumented, or cloned instance of your own app used to script requests at scale. AppShield targets that client-side tampering directly: anti-hooking detection flags instrumentation frameworks like Frida, device fingerprinting correlates abuse across sessions and reinstalls, and the runtime risk score gives you a single signal to throttle, block, or step up verification for bot-driven traffic. This is a client-integrity control, not a web application firewall — it's built for mobile API abuse specifically.",
+      "Most automated abuse of a mobile app's APIs doesn't come through a browser — it comes through a hooked, instrumented, or emulator-farmed instance of your own app used to script requests at scale. AppShield targets that client-side tampering directly: anti-hooking detection flags instrumentation frameworks like Frida, VM/emulator detection flags non-device traffic, device fingerprinting correlates abuse across sessions and reinstalls, and the runtime risk score gives you a single signal to throttle, block, or step up verification for bot-driven traffic. This is a client-integrity control, not a web application firewall — it's built for mobile API abuse specifically.",
   },
   {
     slug: "app-cloning-repackaging-prevention",

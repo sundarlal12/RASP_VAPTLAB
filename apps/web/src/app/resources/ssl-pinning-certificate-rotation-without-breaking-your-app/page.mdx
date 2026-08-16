@@ -1,0 +1,62 @@
+import { Section } from "@/components/ui/Section";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { articleSchema } from "@/components/seo/schema/article";
+
+export const metadata = {
+  title: "SSL Pinning Certificate Rotation Without Breaking Your App",
+  description:
+    "Certificate pinning fails hard when it fails. A rollout pattern for rotating keys without locking out users on your current release.",
+  alternates: { canonical: "/resources/ssl-pinning-certificate-rotation-without-breaking-your-app/" },
+};
+
+<JsonLd
+  data={articleSchema({
+    title: "SSL Pinning Certificate Rotation Without Breaking Your App",
+    description: "Certificate pinning fails hard when it fails. A rollout pattern for rotating keys without locking out users on your current release.",
+    slug: "ssl-pinning-certificate-rotation-without-breaking-your-app",
+    datePublished: "2026-04-08",
+    authorName: "AppShield Team",
+  })}
+/>
+
+<Section bg="gradient" className="pb-4 pt-14">
+  <Breadcrumbs
+    items={[
+      { label: "Home", href: "/" },
+      { label: "Resources", href: "/resources/" },
+      {
+        label: "SSL Pinning Certificate Rotation Without Breaking Your App",
+        href: "/resources/ssl-pinning-certificate-rotation-without-breaking-your-app/",
+      },
+    ]}
+  />
+</Section>
+
+<Section bg="white" narrow>
+
+# SSL Pinning Certificate Rotation Without Breaking Your App
+
+<p className="text-sm text-ink-500">April 8, 2026 · AppShield Team</p>
+
+Certificate pinning is a fail-closed control by design — that's the entire point. It also means getting rotation wrong doesn't degrade gracefully; it locks out every user still on a build with the old pin, all at once, the moment the old certificate is retired.
+
+## Why this catches teams off guard
+
+A normal TLS certificate renewal — same key pair, new expiry date, reissued by your CA — doesn't require any app-side change if you pinned the public key (SPKI hash) rather than the full certificate. The failure mode shows up specifically when you rotate to a **new key pair**, which is a routine part of good key-management hygiene, not an edge case.
+
+If you generate a new pin, update your backend to serve the new certificate, and don't account for users on older app versions, everyone who hasn't updated loses connectivity to your API the instant the change goes live — no error message that points at the real cause, just failed requests.
+
+## A rollout pattern that avoids this
+
+1. **Generate the new pin before rotating anything on your backend.** Don't wait until the new certificate is already live to start this.
+2. **Ship a build with both pins** — old and new — accepted. Your app should treat either as valid during the transition window.
+3. **Wait out your update adoption curve.** Give users on the dual-pin build enough time to actually update before you touch the backend certificate. This is usually the step teams skip or rush.
+4. **Rotate the backend certificate** once you're confident enough of your active user base is on the dual-pin build.
+5. **Ship a follow-up build that drops the old pin**, once the old certificate is fully retired and you don't need to support it anymore.
+
+## The core principle
+
+Pinning fails hard on purpose — that's what makes it useful against interception. The only way to rotate safely is to make the transition window itself tolerant of both the old and new certificate, rather than trying to time a single instantaneous cutover across every device running your app.
+
+</Section>

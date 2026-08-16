@@ -1,0 +1,60 @@
+import { Section } from "@/components/ui/Section";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { articleSchema } from "@/components/seo/schema/article";
+
+export const metadata = {
+  title: "Root Detection Alone Isn't Enough Anymore",
+  description:
+    "A single root check is a single thing to bypass. Why layered environment detection — root, VM, and hooking together — holds up better.",
+  alternates: { canonical: "/resources/root-detection-alone-isnt-enough/" },
+};
+
+<JsonLd
+  data={articleSchema({
+    title: "Root Detection Alone Isn't Enough Anymore",
+    description: "A single root check is a single thing to bypass. Why layered environment detection — root, VM, and hooking together — holds up better.",
+    slug: "root-detection-alone-isnt-enough",
+    datePublished: "2026-06-02",
+    authorName: "AppShield Team",
+  })}
+/>
+
+<Section bg="gradient" className="pb-4 pt-14">
+  <Breadcrumbs
+    items={[
+      { label: "Home", href: "/" },
+      { label: "Resources", href: "/resources/" },
+      { label: "Root Detection Alone Isn't Enough Anymore", href: "/resources/root-detection-alone-isnt-enough/" },
+    ]}
+  />
+</Section>
+
+<Section bg="white" narrow>
+
+# Root Detection Alone Isn't Enough Anymore
+
+<p className="text-sm text-ink-500">June 2, 2026 · AppShield Team</p>
+
+A root check used to be most of what "mobile app security" meant. Look for `su`, look for a handful of known root-management packages, look for a couple of suspicious system paths — good enough for a long time.
+
+It isn't anymore, for a simple reason: a single signal is a single thing to hide. Root-hiding modules are a mature, well-documented category of tooling specifically built to make a rooted device look clean to exactly the kind of checks most apps still run.
+
+## What layering actually buys you
+
+The fix isn't a better root check — it's not relying on root detection alone to answer the question "should I trust this session?"
+
+A few signals that don't depend on each other being individually bypassable:
+
+- **Root detection** — the traditional signal, still worth having as one input among several.
+- **VM / emulator detection** — a device can look "unrooted" and still not be a real device at all. Emulator farms are standard tooling for automating abuse at scale, and they don't need root-hiding tricks to pass a root check.
+- **Anti-hooking detection** — a device can be rooted or unrooted and still have Frida or Xposed attached, actively patching your app's behavior at runtime. This is a different attack surface than root status entirely.
+- **Tamper / integrity attestation** — independent of what's happening on the device right now, has the binary itself been modified since you signed it?
+
+None of these fully overlaps with the others. An attacker who beats one still has three more to get past, and the combination is meaningfully more expensive to defeat than any single check — that's the actual value of layering, not that any one signal is individually unbeatable.
+
+## The practical takeaway
+
+If your current "security" is a single root check gating a single feature, you have a binary you can decompile once, patch out one `if` statement, and be done. Layered, native-level detection that keeps re-checking through the session is a fundamentally different cost proposition for whoever's trying to get around it.
+
+</Section>

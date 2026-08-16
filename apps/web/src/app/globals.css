@@ -30,6 +30,13 @@
   --color-accent-500: #8b5cf6;
   --color-accent-600: #7c3aed;
 
+  /* Sky = sign3.ai-style bright blue, used for glow/gradient accents only */
+  --color-sky-50: #eff8ff;
+  --color-sky-300: #53b1fd;
+  --color-sky-500: #1570ef;
+  --color-sky-600: #2563eb;
+  --color-sky-900: #194185;
+
   /* Ink = near-black text tuned slightly toward brand hue */
   --color-ink-950: #0f1222;
   --color-ink-900: #171a2e;

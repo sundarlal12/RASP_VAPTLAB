@@ -1,0 +1,51 @@
+import { Section } from "@/components/ui/Section";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+
+export const metadata = {
+  title: "Detection Policy Configuration",
+  description: "The four detection categories AppShield exposes and how OFF, monitor, and detect modes behave.",
+  alternates: { canonical: "/docs/detection-policy-configuration/" },
+};
+
+<Section bg="gradient" className="pb-4 pt-14">
+  <Breadcrumbs
+    items={[
+      { label: "Home", href: "/" },
+      { label: "Docs", href: "/docs/" },
+      { label: "Detection Policy Configuration", href: "/docs/detection-policy-configuration/" },
+    ]}
+  />
+</Section>
+
+<Section bg="white" narrow>
+
+# Detection Policy Configuration
+
+AppShield exposes four detection categories that can each be configured independently per app. Everything else — root detection, anti-hooking, SSL pinning, screenshot prevention, and runtime risk scoring — runs as part of the core protection.
+
+## The four categories
+
+| Category | What it catches |
+|---|---|
+| **Anti-debugging** | An active debugger attached to the running process |
+| **Anti-tampering** | A modified, patched, or resigned binary |
+| **Memory protection** | Live memory patching or inspection tools |
+| **VM / emulator detection** | The app running in an emulator or virtualized environment |
+
+## Modes
+
+Each category can be set to:
+
+- **OFF** — the category isn't evaluated.
+- **Monitor** — detections are logged to your dashboard but don't trigger any in-app response. Useful for understanding what a category would catch before enforcing it.
+- **Detect** — detections are reported to your app in real time as part of the runtime risk score, so you can act on them.
+
+## A reasonable rollout
+
+Start every new app with all four categories in **monitor** mode. Watch the live dashboard for a release cycle or two to understand your real-world detection volume — some categories are noisier than others depending on your user base (emulator usage is common for some regions and use cases, for instance) — then move categories to **detect** once you're confident in the signal.
+
+## Where this fits
+
+Detection policy is configured per app in the portal and applies to every subsequent shielded build for that app. See the [Quickstart](/docs/quickstart/) for where this step fits in the overall flow.
+
+</Section>

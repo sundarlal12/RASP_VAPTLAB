@@ -1,0 +1,45 @@
+import { Section } from "@/components/ui/Section";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+
+export const metadata = {
+  title: "Risk Score & Dashboard Signals",
+  description: "How AppShield's runtime risk scoring surfaces in the live dashboard and your own systems.",
+  alternates: { canonical: "/docs/risk-score-callback-integration/" },
+};
+
+<Section bg="gradient" className="pb-4 pt-14">
+  <Breadcrumbs
+    items={[
+      { label: "Home", href: "/" },
+      { label: "Docs", href: "/docs/" },
+      { label: "Risk Score & Dashboard Signals", href: "/docs/risk-score-callback-integration/" },
+    ]}
+  />
+</Section>
+
+<Section bg="white" narrow>
+
+# Risk Score & Dashboard Signals
+
+Every detection module AppShield runs — environment checks, tamper detection, SSL pinning failures, and the four configurable policy categories — feeds a single runtime risk score, rather than reporting each signal in isolation.
+
+## What you see on the dashboard
+
+The AppShield portal's live dashboard surfaces this data as it happens:
+
+- Individual detection events per app and per device.
+- Aggregate device risk scores.
+- Top threats and affected device manufacturers.
+- Sessions blocked or flagged, over time.
+
+## Acting on risk signals
+
+For apps using the upload-and-shield flow, risk signals are visible on the dashboard and drive whatever enforcement your detection policy modes are set to (see [Detection Policy Configuration](/docs/detection-policy-configuration/)).
+
+For teams on [direct SDK integration](/docs/sdk-integration/), the same risk score and individual detection events are available as in-app callbacks — so your app can react immediately (step up authentication, degrade a sensitive feature, or just log) rather than only observing after the fact.
+
+## Where this fits
+
+Risk scoring runs automatically once your policy is configured — there's no separate step to enable it. See the [Quickstart](/docs/quickstart/) for the overall flow.
+
+</Section>

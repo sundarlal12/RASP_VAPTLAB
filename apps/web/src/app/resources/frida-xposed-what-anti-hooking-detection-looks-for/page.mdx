@@ -1,0 +1,65 @@
+import { Section } from "@/components/ui/Section";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { articleSchema } from "@/components/seo/schema/article";
+
+export const metadata = {
+  title: "Frida and Xposed: What Anti-Hooking Detection Actually Looks For",
+  description:
+    "A practical look at the fingerprints instrumentation frameworks leave behind in a running process, and why native-layer detection catches more of them.",
+  alternates: { canonical: "/resources/frida-xposed-what-anti-hooking-detection-looks-for/" },
+};
+
+<JsonLd
+  data={articleSchema({
+    title: "Frida and Xposed: What Anti-Hooking Detection Actually Looks For",
+    description: "A practical look at the fingerprints instrumentation frameworks leave behind in a running process, and why native-layer detection catches more of them.",
+    slug: "frida-xposed-what-anti-hooking-detection-looks-for",
+    datePublished: "2026-05-14",
+    authorName: "AppShield Team",
+  })}
+/>
+
+<Section bg="gradient" className="pb-4 pt-14">
+  <Breadcrumbs
+    items={[
+      { label: "Home", href: "/" },
+      { label: "Resources", href: "/resources/" },
+      {
+        label: "Frida and Xposed: What Anti-Hooking Detection Looks For",
+        href: "/resources/frida-xposed-what-anti-hooking-detection-looks-for/",
+      },
+    ]}
+  />
+</Section>
+
+<Section bg="white" narrow>
+
+# Frida and Xposed: What Anti-Hooking Detection Actually Looks For
+
+<p className="text-sm text-ink-500">May 14, 2026 · AppShield Team</p>
+
+Frida and Xposed solve a real, legitimate problem — dynamic instrumentation for debugging and reverse-engineering research — and get used just as often for the opposite purpose: intercepting method calls, patching return values, and bypassing an app's logic entirely at runtime, without ever touching the APK on disk.
+
+That "without touching the APK" part is exactly why static tamper checks alone don't catch it. The binary you shipped is still the binary that's running — it's just being watched and patched live, in memory, by a framework that attached to the process after it started.
+
+## What detection is actually looking for
+
+Anti-hooking detection isn't about recognizing "Frida" or "Xposed" as named products — it's about recognizing the mechanisms both rely on, since both need to do fundamentally invasive things to a running process to work at all:
+
+- **Injected libraries and unexpected loaded modules** — instrumentation frameworks need their own code resident in your process's memory space.
+- **Modified function entry points** — hooking a method typically means rewriting its prologue to redirect execution, which leaves a detectable signature at that address.
+- **Unusual process/thread and memory-mapping patterns** — the injection and hooking machinery itself tends to leave traces in how the process is structured, not just in what it does.
+- **Known IPC and port fingerprints** — some instrumentation setups establish a communication channel with a host tool, which is itself observable from inside the process.
+
+## Why this runs better in native code
+
+A hooking framework's whole purpose is to intercept and rewrite behavior at runtime. If your detection logic lives in the same Java/Kotlin layer that's exposed to instrumentation, the detection itself becomes a target — an attacker with Frida attached can potentially hook the detection method and make it always report "clean."
+
+Running detection in native C++ doesn't make this attack impossible, but it raises the bar meaningfully: the attacker now needs native-level reverse engineering to find and neutralize the check, not just a scripted method hook from a Frida console.
+
+## The re-verification piece
+
+A hooking framework typically attaches *after* your app has already launched — a user opens the app normally, then a tool gets attached mid-session. A detection pass that only runs once at cold start will never see that. Re-running key detections periodically through the session, not just at launch, is what actually catches this class of attack in practice.
+
+</Section>

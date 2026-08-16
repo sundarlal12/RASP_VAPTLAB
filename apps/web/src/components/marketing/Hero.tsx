@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { HeroPreviewCard } from "@/components/marketing/HeroPreviewCard";
 
 export function Hero() {
   return (
@@ -12,7 +13,7 @@ export function Hero() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 -z-10 flex justify-center"
       >
-        <div className="h-[480px] w-[900px] rounded-full bg-gradient-to-br from-brand-200/40 to-accent-400/30 blur-3xl" />
+        <div className="h-[480px] w-[900px] rounded-full bg-gradient-to-br from-brand-300/40 via-sky-300/30 to-accent-400/30 blur-3xl" />
       </div>
 
       <Container className="flex flex-col items-center text-center">
@@ -69,6 +70,15 @@ export function Hero() {
         >
           Android SDK · Native C++ core · No public self-serve pricing — every deployment is scoped to your app
         </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.32 }}
+          className="mt-14 flex w-full justify-center"
+        >
+          <HeroPreviewCard />
+        </motion.div>
       </Container>
     </section>
   );

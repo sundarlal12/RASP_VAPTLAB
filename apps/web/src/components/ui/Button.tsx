@@ -42,7 +42,8 @@ export function Button(props: ButtonAsLink | ButtonAsButton) {
     );
   }
 
-  const { variant: _v, className: _c, children: _ch, href: _h, ...rest } =
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- stripped so `rest` only carries native <button> attributes
+  const { variant: _variant, className: _restClassName, children: _restChildren, href: _href, ...rest } =
     props as ButtonAsButton;
   return (
     <button className={classes} {...rest}>

@@ -1,0 +1,77 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { useCases, getUseCaseBySlug } from "@/app/solutions/data";
+import { getFeatureBySlug } from "@/app/features/data";
+import { Section } from "@/components/ui/Section";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { IconTile } from "@/components/ui/IconTile";
+import { FeatureGrid } from "@/components/marketing/FeatureGrid";
+import { CTABand } from "@/components/marketing/CTABand";
+
+export function generateStaticParams() {
+  return useCases.map((useCase) => ({ slug: useCase.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const useCase = getUseCaseBySlug(slug);
+  if (!useCase) return {};
+
+  return {
+    title: `${useCase.title} — Solutions`,
+    description: useCase.summary,
+    alternates: { canonical: `/solutions/use-cases/${useCase.slug}/` },
+  };
+}
+
+export default async function UseCasePage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const useCase = getUseCaseBySlug(slug);
+  if (!useCase) notFound();
+
+  const relatedFeatures = useCase.relevantFeatures
+    .map((featureSlug) => getFeatureBySlug(featureSlug))
+    .filter((feature): feature is NonNullable<typeof feature> => Boolean(feature));
+
+  return (
+    <>
+      <Section bg="gradient" className="pb-14 pt-14">
+        <div className="flex flex-col gap-6">
+          <Breadcrumbs
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Solutions", href: "/solutions/" },
+              { label: useCase.title, href: `/solutions/use-cases/${useCase.slug}/` },
+            ]}
+          />
+          <div className="flex flex-col gap-5">
+            <IconTile icon={useCase.icon} className="h-14 w-14 [&>svg]:h-6 [&>svg]:w-6" />
+            <h1 className="font-display text-3xl font-bold tracking-tight text-ink-950 sm:text-5xl">
+              {useCase.title}
+            </h1>
+            <p className="max-w-2xl text-lg leading-relaxed text-ink-500">{useCase.description}</p>
+          </div>
+        </div>
+      </Section>
+
+      {relatedFeatures.length > 0 ? (
+        <Section bg="white">
+          <div className="flex flex-col gap-10">
+            <h2 className="font-display text-xl font-bold text-ink-950">Capabilities behind this</h2>
+            <FeatureGrid features={relatedFeatures} />
+          </div>
+        </Section>
+      ) : null}
+
+      <CTABand />
+    </>
+  );
+}

@@ -10,9 +10,16 @@ import {
   Radar,
   Camera,
   RadioTower,
+  Boxes,
+  BugOff,
+  MemoryStick,
 } from "lucide-react";
 
-export type LayerId = "threat-detection" | "secure-communication" | "runtime-defense";
+export type LayerId =
+  | "environment-detection"
+  | "tamper-debug-protection"
+  | "secure-communication"
+  | "runtime-defense";
 
 export interface Layer {
   id: LayerId;
@@ -32,10 +39,16 @@ export interface Feature {
 
 export const layers: Layer[] = [
   {
-    id: "threat-detection",
-    title: "Threat & Tamper Detection",
+    id: "environment-detection",
+    title: "Environment & Threat Detection",
     description:
-      "Identify compromised, hooked, or repackaged environments before they can be used to attack your app.",
+      "Know what your app is actually running on before you trust the session — rooted, virtualized, or a real device.",
+  },
+  {
+    id: "tamper-debug-protection",
+    title: "Tamper & Debug Protection",
+    description:
+      "Catch instrumentation, live debugging, and modified binaries — the tooling attackers rely on to analyze and patch your app.",
   },
   {
     id: "secure-communication",
@@ -54,7 +67,7 @@ export const layers: Layer[] = [
 export const features: Feature[] = [
   {
     slug: "root-jailbreak-detection",
-    layer: "threat-detection",
+    layer: "environment-detection",
     title: "Root & Jailbreak Detection",
     summary: "Detects rooted devices and modified system environments at launch and during the session.",
     description:
@@ -67,8 +80,34 @@ export const features: Feature[] = [
     ],
   },
   {
+    slug: "vm-emulator-detection",
+    layer: "environment-detection",
+    title: "VM & Emulator Detection",
+    summary: "Flags sessions running in an emulator or virtualized environment instead of a real device.",
+    description:
+      "Emulators and virtual machines are standard tooling for automating abuse at scale and for analyzing an app outside a real device. AppShield detects common emulator and virtualization fingerprints so you can treat virtualized sessions differently from real-device traffic.",
+    icon: Boxes,
+    details: [
+      "One of the four detection categories exposed in the AppShield policy — set independently to OFF, monitor, or actively detect.",
+      "Feeds the same unified runtime risk score as every other detection module.",
+    ],
+  },
+  {
+    slug: "device-fingerprinting",
+    layer: "environment-detection",
+    title: "Device Fingerprinting",
+    summary: "Generates a stable device identity signal to spot repeat abuse across sessions and reinstalls.",
+    description:
+      "A persistent, per-device identifier lets you correlate risk signals across sessions — useful for spotting the same compromised device cycling through accounts, or the same cloned app instance reappearing after a reinstall.",
+    icon: Radar,
+    details: [
+      "Generated natively, alongside the SDK's other device-level checks.",
+      "Feeds the runtime risk score so repeat-offender devices can be scored differently from first-time sessions.",
+    ],
+  },
+  {
     slug: "anti-hooking-frida-xposed",
-    layer: "threat-detection",
+    layer: "tamper-debug-protection",
     title: "Anti-Hooking (Frida / Xposed)",
     summary: "Detects instrumentation frameworks used to hook, trace, or manipulate your app's runtime behavior.",
     description:
@@ -81,30 +120,43 @@ export const features: Feature[] = [
     ],
   },
   {
+    slug: "anti-debugging",
+    layer: "tamper-debug-protection",
+    title: "Anti-Debugging",
+    summary: "Detects an attached debugger so live step-through analysis of your app doesn't go unnoticed.",
+    description:
+      "A debugger attached to a running process is one of the most direct ways to analyze and bypass app logic. AppShield detects active debugger attachment as its own policy category, independent of hooking-framework detection.",
+    icon: BugOff,
+    details: [
+      "Configurable independently of hooking and tamper detection in the AppShield policy.",
+      "Targets live debugger attachment, not just static analysis resistance.",
+    ],
+  },
+  {
+    slug: "memory-protection",
+    layer: "tamper-debug-protection",
+    title: "Memory Protection",
+    summary: "Guards against runtime memory patching and inspection — a common route around app logic.",
+    description:
+      "Memory editors and process-inspection tools let attackers read or patch a running app's memory directly, bypassing checks that only look at the binary on disk. AppShield's memory protection targets this class of live, in-process tampering.",
+    icon: MemoryStick,
+    details: [
+      "One of the four independently configurable detection categories in the AppShield policy.",
+      "Complements tamper detection, which focuses on the binary; this focuses on the running process.",
+    ],
+  },
+  {
     slug: "tamper-detection-integrity-attestation",
-    layer: "threat-detection",
+    layer: "tamper-debug-protection",
     title: "Tamper Detection & Integrity Attestation",
     summary: "Verifies your app hasn't been modified, resigned, or repackaged since you built it.",
     description:
       "A signed integrity check attests that the running binary matches what you shipped. If the APK has been decompiled, patched, and resigned — a common precursor to cloned or cracked app distribution — AppShield's attestation module can detect the mismatch.",
     icon: ShieldAlert,
     details: [
-      "Cryptographic signature verification (shield_sig) confirms the app's integrity at runtime, not just at install.",
+      "Cryptographic signature verification confirms the app's integrity at runtime, not just at install.",
       "Catches common repackaging workflows: decompile → patch → resign → redistribute.",
-      "Works alongside root and hooking detection to build a full picture of environment trust.",
-    ],
-  },
-  {
-    slug: "device-fingerprinting",
-    layer: "threat-detection",
-    title: "Device Fingerprinting",
-    summary: "Generates a stable device identity signal to spot repeat abuse across sessions and reinstalls.",
-    description:
-      "A persistent, per-device identifier lets you correlate risk signals across sessions — useful for spotting the same compromised device cycling through accounts, or the same cloned app instance reappearing after a reinstall.",
-    icon: Radar,
-    details: [
-      "Generated natively, alongside the SDK's other device-level checks.",
-      "Feeds the runtime risk score so repeat-offender devices can be scored differently from first-time sessions.",
+      "Works alongside environment detection to build a full picture of session trust.",
     ],
   },
   {
@@ -116,7 +168,7 @@ export const features: Feature[] = [
       "AppShield pins your API's certificate (SPKI hash) at the native layer, independent of the OS trust store. Even a device with a malicious CA installed — the standard setup for MITM proxy tools — can't get between your app and your backend without the connection failing.",
     icon: Lock,
     details: [
-      "Per-client pin sets, configured per integration rather than a single hardcoded pin.",
+      "Per-client pin sets, generated and managed through the AppShield portal.",
       "Pin data is obfuscated in the shipped asset, not stored as a plain, greppable string.",
       "Native TLS client (mbedTLS-based) rather than relying solely on platform HTTP stacks.",
     ],
@@ -153,11 +205,12 @@ export const features: Feature[] = [
     title: "Runtime Risk Scoring",
     summary: "Every detection module feeds one unified risk score you can act on in real time.",
     description:
-      "Rather than handling each detection signal separately, AppShield's detection registry aggregates root, hooking, tamper, and network signals into a single runtime risk score your app (or backend) can react to — block, step up authentication, or just log, depending on your policy.",
+      "Rather than handling each detection signal separately, AppShield aggregates environment, tamper, and network signals into a single runtime risk score your app (or backend) can react to — block, step up authentication, or just log, depending on your policy. The same signals power the live dashboard in the AppShield portal.",
     icon: Activity,
     details: [
       "Centralized detection registry aggregates every module's output.",
       "Your app decides the response — the SDK reports risk, it doesn't force a single policy.",
+      "Visible in the AppShield portal's live dashboard: top threats, device risk scores, blocked sessions.",
     ],
   },
   {
@@ -166,7 +219,7 @@ export const features: Feature[] = [
     title: "Background Watchdog & Re-Verification",
     summary: "Detection re-runs periodically through the session, not just once at launch.",
     description:
-      "A launch-time-only check only has to be beaten once. AppShield's background watchdog re-runs key detections at intervals through the app's lifecycle, so an environment that becomes compromised mid-session — a hook attached after startup, for instance — still gets caught.",
+      "A launch-time-only check only has to be beaten once. AppShield's background watchdog re-runs key detections at intervals through the app's lifecycle, so an environment that becomes compromised mid-session — a debugger or hook attached after startup, for instance — still gets caught.",
     icon: Eye,
     details: [
       "Periodic re-checks, not a single gate at cold start.",

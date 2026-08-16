@@ -1,0 +1,57 @@
+import { Section } from "@/components/ui/Section";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+
+export const metadata = {
+  title: "Quickstart",
+  description: "Configure a policy, upload a signed APK, and get a shielded build back from AppShield.",
+  alternates: { canonical: "/docs/quickstart/" },
+};
+
+<Section bg="gradient" className="pb-4 pt-14">
+  <Breadcrumbs
+    items={[
+      { label: "Home", href: "/" },
+      { label: "Docs", href: "/docs/" },
+      { label: "Quickstart", href: "/docs/quickstart/" },
+    ]}
+  />
+</Section>
+
+<Section bg="white" narrow>
+
+# Quickstart
+
+The standard AppShield path doesn't require touching your app's source — you configure a policy in the portal and upload an already-built, signed release APK.
+
+## 1. Register your app
+
+In the AppShield portal, register your app by package name. Each registered app gets its own detection policy and pin configuration, scoped to your account.
+
+## 2. Set your detection policy
+
+Four detection categories can each be set independently to **OFF**, **monitor**, or **detect**:
+
+- Anti-debugging
+- Anti-tampering
+- Memory protection
+- VM / emulator detection
+
+Root, hooking, SSL pinning, screenshot prevention, and risk scoring run as part of the core protection and don't need separate enablement. Start new apps in **monitor** mode to see what the policy would catch before switching categories to full **detect** enforcement.
+
+## 3. Generate your SSL pin set
+
+If your app talks to your own backend over TLS, generate a pin set for your API's certificate from the portal. See [SSL Pinning Configuration](/docs/ssl-pinning-configuration/) for details.
+
+## 4. Upload your signed build
+
+Upload your release APK — already built and signed with your own keystore. AppShield extracts your signing certificate's fingerprint, applies your configured policy, and returns a shielded build. Your private keystore is never uploaded — only the final signed artifact.
+
+## 5. Distribute the shielded build
+
+Publish the shielded APK exactly as you would your original build. Detection events start appearing on your live dashboard as real devices run the app.
+
+## Want direct SDK integration instead?
+
+Some teams prefer to integrate the native SDK directly rather than using the upload-and-shield flow — see [Direct SDK Integration](/docs/sdk-integration/), or talk to us about which path fits your app.
+
+</Section>

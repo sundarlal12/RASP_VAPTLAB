@@ -2,12 +2,12 @@ export const faqs = [
   {
     question: "What platforms does AppShield support?",
     answer:
-      "AppShield is an Android SDK, integrated as a Gradle dependency (AAR). The native core is written in C++ and ships as part of the SDK — there's no separate build toolchain to install.",
+      "AppShield protects Android apps. The native protection core is written in C++. Most teams use the AppShield portal to configure a policy and upload an already-built, signed APK for shielding — teams that want SDK-level control can integrate directly instead.",
   },
   {
     question: "Does AppShield require code changes to my app?",
     answer:
-      "Integration is a Gradle dependency plus initialization and configuration (detection policy, SSL pin set). It doesn't require restructuring your existing app architecture.",
+      "Not for the standard path — you configure your detection and pinning policy in the portal, then upload your existing signed build to be shielded. Direct SDK integration is available for teams that want native-level control instead.",
   },
   {
     question: "How is 'anti-scraping' different from a web bot-mitigation product?",

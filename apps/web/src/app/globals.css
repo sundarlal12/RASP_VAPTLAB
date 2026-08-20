@@ -51,6 +51,16 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Grid/flex children default to min-width:auto, so unwrappable content
+   (badge rows, mono-spaced labels) forces the whole track wider than the
+   viewport instead of wrapping — this is what was clipping headings and
+   copy on mobile. Let them shrink to fit by default. */
+.grid > *,
+.flex > * {
+  min-width: 0;
 }
 
 h1,

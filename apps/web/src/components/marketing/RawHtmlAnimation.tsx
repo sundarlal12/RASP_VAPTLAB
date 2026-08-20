@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // Deliberately NOT rendered via dangerouslySetInnerHTML: the browser's HTML
 // parser can normalize markup (attribute quoting, whitespace, etc.) in ways
@@ -22,16 +22,26 @@ import { useEffect, useRef } from "react";
 // whichever script instance ran before, so its timers go on mutating
 // detached, invisible nodes while only the latest script instance drives
 // what's actually on screen.
+// The animations themselves are hand-built at a fixed pixel canvas (~672px
+// wide, with absolutely-positioned children measured against that width) —
+// they can't reflow like normal responsive markup. Instead of fighting that,
+// the outer wrapper measures its own available width and the content's
+// natural (unconstrained) width, then scales the whole thing down with a
+// CSS transform so it fits any viewport while keeping every internal pixel
+// relationship intact.
 export function RawHtmlAnimation({ html, className = "" }: { html: string; className?: string }) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const outerRef = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+  const [scaledHeight, setScaledHeight] = useState<number | undefined>(undefined);
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+    const inner = innerRef.current;
+    if (!inner) return;
 
-    container.innerHTML = html;
+    inner.innerHTML = html;
 
-    const scripts = Array.from(container.querySelectorAll("script"));
+    const scripts = Array.from(inner.querySelectorAll("script"));
     scripts.forEach((oldScript) => {
       const newScript = document.createElement("script");
       Array.from(oldScript.attributes).forEach((attr) => newScript.setAttribute(attr.name, attr.value));
@@ -40,5 +50,33 @@ export function RawHtmlAnimation({ html, className = "" }: { html: string; class
     });
   }, [html]);
 
-  return <div ref={containerRef} className={className} />;
+  useEffect(() => {
+    const outer = outerRef.current;
+    const inner = innerRef.current;
+    if (!outer || !inner) return;
+
+    function measure() {
+      const naturalWidth = inner!.scrollWidth;
+      const naturalHeight = inner!.scrollHeight;
+      if (naturalWidth === 0) return;
+      const nextScale = Math.min(1, outer!.clientWidth / naturalWidth);
+      setScale(nextScale);
+      setScaledHeight(naturalHeight * nextScale);
+    }
+
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(outer);
+    observer.observe(inner);
+    return () => observer.disconnect();
+  }, [html]);
+
+  return (
+    <div ref={outerRef} className={className} style={{ height: scaledHeight }}>
+      <div
+        ref={innerRef}
+        style={{ width: "max-content", transform: `scale(${scale})`, transformOrigin: "top left" }}
+      />
+    </div>
+  );
 }

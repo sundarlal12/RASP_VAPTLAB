@@ -51,7 +51,7 @@ export function ProtectionLayerShowcase() {
             </div>
 
             <div className="w-full flex-1 overflow-x-auto">
-              <RawHtmlAnimation html={readLayerAnimation(layer.id)} className="mx-auto w-[672px] max-w-none" />
+              <RawHtmlAnimation html={readLayerAnimation(layer.id)} className="mx-auto w-full max-w-[672px]" />
             </div>
           </div>
         );

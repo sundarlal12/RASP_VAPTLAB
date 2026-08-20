@@ -9,20 +9,42 @@ export const dynamic = "force-static";
 // (to the crawler and to anyone auditing this file) that AI indexing here
 // is intentional, not just an unconfigured default.
 const aiUserAgents = [
+  // OpenAI
   "GPTBot",
   "ChatGPT-User",
   "OAI-SearchBot",
+  // Anthropic
   "ClaudeBot",
   "Claude-User",
   "Claude-SearchBot",
   "anthropic-ai",
+  // Perplexity
   "PerplexityBot",
   "Perplexity-User",
+  // Google (AI-specific crawlers, distinct from the standard Googlebot
+  // already covered by the wildcard rule)
   "Google-Extended",
+  "GoogleOther",
+  // Apple
   "Applebot-Extended",
-  "CCBot",
-  "Bytespider",
+  // Meta
+  "Meta-ExternalAgent",
+  "Meta-ExternalFetcher",
+  "FacebookBot",
+  // Amazon
   "Amazonbot",
+  // ByteDance / TikTok
+  "Bytespider",
+  // DuckDuckGo's AI assistant
+  "DuckAssistBot",
+  // Cohere
+  "cohere-ai",
+  // Allen Institute for AI
+  "AI2Bot",
+  // Diffbot (used by several AI/data platforms for structured extraction)
+  "Diffbot",
+  // Common Crawl — its dataset is a primary training source for many LLMs
+  "CCBot",
 ];
 
 export default function robots(): MetadataRoute.Robots {

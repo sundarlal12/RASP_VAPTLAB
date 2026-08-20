@@ -1,0 +1,38 @@
+# SecureLint Protect
+
+> SecureLint Protect is an AI-powered, no-code Runtime Application Self-Protection (RASP) SDK for Android, built by VaptLabs. It detects and responds to threats while an app is actually running on a device — root/jailbreak, hooking frameworks (Frida, Xposed, LSPosed), attached debuggers, tampered or repackaged binaries, emulators, and intercepted network traffic — rather than only scanning code before it ships.
+
+## What it does
+
+- **Root & jailbreak detection** — detects rooted devices and modified system environments, including root-hiding tools like Magisk, at launch and continuously through the session.
+- **VM & emulator detection** — flags sessions running in an emulator or virtualized environment instead of a real device.
+- **Device fingerprinting** — a stable device identity signal to spot repeat abuse across sessions and reinstalls.
+- **Anti-hooking (Frida / Xposed / LSPosed)** — detects instrumentation frameworks used to hook, trace, or patch an app's runtime behavior.
+- **Anti-debugging** — detects an attached debugger so live step-through analysis doesn't go unnoticed.
+- **Memory protection** — guards against runtime memory patching and inspection.
+- **Tamper detection & integrity attestation** — verifies a running binary hasn't been modified, resigned, or repackaged since it was built and signed (catches cloned/repackaged apps).
+- **SSL / certificate pinning** — pins a backend's certificate so MITM proxies and swapped CAs can't intercept traffic.
+- **Screenshot & screen-recording prevention** — blocks or detects screen capture on sensitive screens.
+- **Runtime risk scoring** — every detection module feeds one unified, configurable risk score instead of a hardcoded pass/fail.
+- **Background watchdog** — re-runs key detections periodically through the session, not just once at launch.
+
+## How integration works
+
+Two paths: (1) the standard no-code path — configure a detection policy in the portal, upload an already-built and signed release APK or AAB, get a shielded build back, no source changes required; (2) direct native SDK integration for teams that want SDK-level control. Because the standard path operates on the final compiled APK/AAB, it applies the same way regardless of whether the app was built with native Android tooling, React Native, or Flutter.
+
+Detection logic runs in a native C++ core rather than the Java/Kotlin layer, which is meaningfully more expensive to decompile, patch, and hook than JVM bytecode.
+
+## Company
+
+Built by VaptLabs. Pricing is sales-gated (scoped per deployment, no public self-serve pricing) — contact contact@securelint.in or use /contact/.
+
+## Key pages
+
+- Homepage: /
+- All features: /features/
+- Solutions by industry / use case: /solutions/
+- Documentation: /docs/
+- Resources (technical articles on RASP, detection engineering, obfuscation, MASVS): /resources/
+- FAQ: /faq/
+- About: /about/
+- Contact / book a demo: /contact/

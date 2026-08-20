@@ -1,19 +1,82 @@
+export type PostCategory = "Fundamentals" | "Detection Engineering" | "Engineering" | "Compliance";
+
 export interface Post {
   slug: string;
   title: string;
   summary: string;
   date: string; // ISO 8601
   author: string;
+  category: PostCategory;
+  readTime: string;
 }
 
+export const postCategories: PostCategory[] = [
+  "Fundamentals",
+  "Detection Engineering",
+  "Engineering",
+  "Compliance",
+];
+
 export const posts: Post[] = [
+  {
+    slug: "rasp-for-react-native-and-flutter-apps",
+    title: "RASP for React Native and Flutter Apps: What Actually Works",
+    summary:
+      "React Native and Flutter apps still compile down to a standard APK. What that means for root, hooking, and tamper detection — and where framework-level SDK integration actually gets harder.",
+    date: "2026-08-11",
+    author: "Protect Team",
+    category: "Engineering",
+    readTime: "7 min read",
+  },
+  {
+    slug: "what-is-rasp-runtime-application-self-protection-explained",
+    title: "What Is RASP? Runtime Application Self-Protection Explained",
+    summary:
+      "RASP checks what's happening on the device while your app is running, not just what the binary looks like at rest. Here's what that means in practice, and where it fits next to static scanning and obfuscation.",
+    date: "2026-07-28",
+    author: "Protect Team",
+    category: "Fundamentals",
+    readTime: "7 min read",
+  },
+  {
+    slug: "app-cloning-and-repackaging-detection",
+    title: "App Cloning and Repackaging: How Attackers Do It, How to Catch It",
+    summary:
+      "Decompile, patch, resign, redistribute. A walkthrough of the standard app-cloning pipeline and the signature attestation checks that catch a repackaged build.",
+    date: "2026-07-14",
+    author: "Protect Team",
+    category: "Detection Engineering",
+    readTime: "8 min read",
+  },
+  {
+    slug: "code-obfuscation-vs-runtime-protection",
+    title: "Code Obfuscation vs. Runtime Protection: Why Mobile Apps Need Both",
+    summary:
+      "Obfuscation slows down static analysis. It does nothing once your app is actually running on a hooked or rooted device. Why these are complementary layers, not substitutes.",
+    date: "2026-06-30",
+    author: "Protect Team",
+    category: "Fundamentals",
+    readTime: "6 min read",
+  },
+  {
+    slug: "emulator-and-virtual-device-detection",
+    title: "Emulator and Virtual Device Detection: How It Actually Works",
+    summary:
+      "Build fingerprints, sensor gaps, and telephony stubs — the signals that separate a real device from an emulator, and why any single one of them is easy to patch around.",
+    date: "2026-06-16",
+    author: "Protect Team",
+    category: "Detection Engineering",
+    readTime: "7 min read",
+  },
   {
     slug: "root-detection-alone-isnt-enough",
     title: "Root Detection Alone Isn't Enough Anymore",
     summary:
       "A single root check is a single thing to bypass. Why layered environment detection — root, VM, and hooking together — holds up better.",
     date: "2026-06-02",
-    author: "AppShield Team",
+    author: "Protect Team",
+    category: "Detection Engineering",
+    readTime: "5 min read",
   },
   {
     slug: "frida-xposed-what-anti-hooking-detection-looks-for",
@@ -21,7 +84,19 @@ export const posts: Post[] = [
     summary:
       "A practical look at the fingerprints instrumentation frameworks leave behind in a running process, and why native-layer detection catches more of them.",
     date: "2026-05-14",
-    author: "AppShield Team",
+    author: "Protect Team",
+    category: "Detection Engineering",
+    readTime: "6 min read",
+  },
+  {
+    slug: "owasp-masvs-where-runtime-protection-fits",
+    title: "OWASP MASVS and Where Runtime Protection Fits In",
+    summary:
+      "MASVS's resilience requirements (MASVS-RESILIENCE) are explicitly about runtime behavior, not static code review. Mapping RASP controls to the categories an assessor actually checks.",
+    date: "2026-04-22",
+    author: "Protect Team",
+    category: "Compliance",
+    readTime: "6 min read",
   },
   {
     slug: "ssl-pinning-certificate-rotation-without-breaking-your-app",
@@ -29,7 +104,9 @@ export const posts: Post[] = [
     summary:
       "Certificate pinning fails hard when it fails. A rollout pattern for rotating keys without locking out users on your current release.",
     date: "2026-04-08",
-    author: "AppShield Team",
+    author: "Protect Team",
+    category: "Engineering",
+    readTime: "6 min read",
   },
 ];
 

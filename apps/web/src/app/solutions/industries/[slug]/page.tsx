@@ -55,7 +55,7 @@ export default async function IndustryPage({
           <div className="flex flex-col gap-5">
             <IconTile icon={industry.icon} className="h-14 w-14 [&>svg]:h-6 [&>svg]:w-6" />
             <h1 className="font-display text-3xl font-bold tracking-tight text-ink-950 sm:text-5xl">
-              AppShield for {industry.title}
+              Protect for {industry.title}
             </h1>
             <p className="max-w-2xl text-lg leading-relaxed text-ink-500">{industry.description}</p>
           </div>

@@ -9,7 +9,7 @@ import { faqPageSchema } from "@/components/seo/schema/faqPage";
 
 export const metadata: Metadata = {
   title: "FAQ",
-  description: "Answers to common questions about AppShield's integration, detection behavior, and pricing.",
+  description: "Answers to common questions about Protect's integration, detection behavior, and pricing.",
   alternates: { canonical: "/faq/" },
 };
 

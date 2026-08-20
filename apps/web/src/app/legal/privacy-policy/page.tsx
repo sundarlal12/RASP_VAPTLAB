@@ -24,7 +24,7 @@ export default function PrivacyPolicyPage() {
 
       <p>
         This Privacy Policy describes how {siteConfig.legalName} (&quot;we,&quot; &quot;us,&quot;
-        or &quot;our&quot;) collects, uses, and shares information in connection with the AppShield
+        or &quot;our&quot;) collects, uses, and shares information in connection with the Protect
         website and related services.
       </p>
 

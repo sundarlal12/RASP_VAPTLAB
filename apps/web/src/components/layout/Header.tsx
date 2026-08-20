@@ -1,16 +1,24 @@
 import Link from "next/link";
+import type { ComponentType } from "react";
 import { Logo } from "@/components/layout/Logo";
 import { MegaMenu } from "@/components/layout/MegaMenu";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { Button } from "@/components/ui/Button";
 import { featureMenu, solutionsMenu, primaryNav } from "@/components/layout/NavData";
 
-// Icon component references can't cross the server -> client boundary as
-// props, so pass MegaMenu plain {title, items:{label,href}} data only.
-function toMenuGroups(groups: { title: string; items: { label: string; href: string }[] }[]) {
+// Icon *component references* can't cross the server -> client boundary as
+// props, but pre-rendered JSX can (the standard RSC "slot" pattern) — so
+// render each icon into an element here and pass that down to MegaMenu.
+function toMenuGroups(
+  groups: { title: string; items: { label: string; href: string; icon?: ComponentType<{ className?: string }> }[] }[],
+) {
   return groups.map((group) => ({
     title: group.title,
-    items: group.items.map(({ label, href }) => ({ label, href })),
+    items: group.items.map(({ label, href, icon: Icon }) => ({
+      label,
+      href,
+      icon: Icon ? <Icon className="h-4 w-4" /> : null,
+    })),
   }));
 }
 

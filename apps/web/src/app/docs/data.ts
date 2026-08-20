@@ -8,7 +8,7 @@ export const guides: Guide[] = [
   {
     slug: "quickstart",
     title: "Quickstart",
-    summary: "Configure a policy, upload a signed APK, and get a shielded build back.",
+    summary: "Configure a policy, upload a signed APK or AAB, and get a shielded build back.",
   },
   {
     slug: "detection-policy-configuration",

@@ -1,5 +1,4 @@
-import { Section } from "@/components/ui/Section";
-import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { ArticleLayout } from "@/components/marketing/ArticleLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { articleSchema } from "@/components/seo/schema/article";
 
@@ -16,28 +15,19 @@ export const metadata = {
     description: "A practical look at the fingerprints instrumentation frameworks leave behind in a running process, and why native-layer detection catches more of them.",
     slug: "frida-xposed-what-anti-hooking-detection-looks-for",
     datePublished: "2026-05-14",
-    authorName: "AppShield Team",
+    authorName: "Protect Team",
   })}
 />
 
-<Section bg="gradient" className="pb-4 pt-14">
-  <Breadcrumbs
-    items={[
-      { label: "Home", href: "/" },
-      { label: "Resources", href: "/resources/" },
-      {
-        label: "Frida and Xposed: What Anti-Hooking Detection Looks For",
-        href: "/resources/frida-xposed-what-anti-hooking-detection-looks-for/",
-      },
-    ]}
-  />
-</Section>
-
-<Section bg="white" narrow>
-
-# Frida and Xposed: What Anti-Hooking Detection Actually Looks For
-
-<p className="text-sm text-ink-500">May 14, 2026 · AppShield Team</p>
+<ArticleLayout
+  title="Frida and Xposed: What Anti-Hooking Detection Actually Looks For"
+  slug="frida-xposed-what-anti-hooking-detection-looks-for"
+  category="Detection Engineering"
+  date="2026-05-14"
+  author="Protect Team"
+  readTime="6 min read"
+  toc={["What detection is actually looking for", "Why this runs better in native code", "The re-verification piece"]}
+>
 
 Frida and Xposed solve a real, legitimate problem — dynamic instrumentation for debugging and reverse-engineering research — and get used just as often for the opposite purpose: intercepting method calls, patching return values, and bypassing an app's logic entirely at runtime, without ever touching the APK on disk.
 
@@ -62,4 +52,4 @@ Running detection in native C++ doesn't make this attack impossible, but it rais
 
 A hooking framework typically attaches *after* your app has already launched — a user opens the app normally, then a tool gets attached mid-session. A detection pass that only runs once at cold start will never see that. Re-running key detections periodically through the session, not just at launch, is what actually catches this class of attack in practice.
 
-</Section>
+</ArticleLayout>

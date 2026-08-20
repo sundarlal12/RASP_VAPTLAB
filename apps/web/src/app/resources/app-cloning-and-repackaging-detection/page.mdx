@@ -1,0 +1,70 @@
+import { ArticleLayout } from "@/components/marketing/ArticleLayout";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { articleSchema } from "@/components/seo/schema/article";
+
+export const metadata = {
+  title: "App Cloning and Repackaging: How Attackers Do It, How to Catch It",
+  description:
+    "Decompile, patch, resign, redistribute. A walkthrough of the standard app-cloning pipeline and the signature attestation checks that catch a repackaged build.",
+  alternates: { canonical: "/resources/app-cloning-and-repackaging-detection/" },
+};
+
+<JsonLd
+  data={articleSchema({
+    title: "App Cloning and Repackaging: How Attackers Do It, How to Catch It",
+    description: "Decompile, patch, resign, redistribute. A walkthrough of the standard app-cloning pipeline and the signature attestation checks that catch a repackaged build.",
+    slug: "app-cloning-and-repackaging-detection",
+    datePublished: "2026-07-14",
+    authorName: "Protect Team",
+  })}
+/>
+
+<ArticleLayout
+  title="App Cloning and Repackaging: How Attackers Do It, How to Catch It"
+  slug="app-cloning-and-repackaging-detection"
+  category="Detection Engineering"
+  date="2026-07-14"
+  author="Protect Team"
+  readTime="8 min read"
+  toc={[
+    "The standard pipeline",
+    "Why this matters beyond IP theft",
+    "What actually catches it: signature and integrity attestation",
+    "The practical takeaway",
+  ]}
+>
+
+App cloning isn't sophisticated. That's what makes it common. The tooling is free, well-documented, and the whole pipeline can be run by someone with modest Android reverse-engineering experience in an afternoon.
+
+## The standard pipeline
+
+1. **Decompile.** Tools like `apktool` or `jadx` turn a shipped APK back into readable Smali or approximate Java/Kotlin source. Obfuscation slows this step down — it rarely stops it.
+2. **Patch.** The attacker modifies whatever they're after: strip a license check, remove ads, patch a game's currency logic, inject a malicious SDK alongside the legitimate app to harvest data or credentials, or swap in a different backend endpoint entirely.
+3. **Rebuild and resign.** `apktool b` reassembles the APK. Because the attacker doesn't have your original signing key, they sign the new build with their own — Android allows any valid signature, it just has to be internally consistent.
+4. **Redistribute.** The cloned build gets pushed through third-party app stores, sideloading links, or — for the more aggressive cases — a copycat listing on an official store under a similar name.
+
+The result is a build that looks and mostly behaves like the original, running with a signature that doesn't match yours, doing something you didn't ship.
+
+## Why this matters beyond IP theft
+
+Cloning gets filed under "piracy" more often than it should be. The actual risk surface is broader:
+
+- **Credential and data harvesting.** A cloned banking or wallet app with an injected keylogger or modified network layer is a direct account-takeover vector, and it carries your brand.
+- **Fake-user and bonus abuse at scale.** A patched build that bypasses device checks, referral validation, or rate limiting is standard tooling for large-scale promo abuse and fake account creation.
+- **Cheat distribution.** In gaming specifically, repackaged builds with modified game logic are the primary distribution mechanism for cheats.
+- **Reputational damage that isn't your bug.** Users who install a cloned build and get compromised generally don't distinguish "the real app" from "an app with your name and icon" — the support and trust cost lands on you regardless of whose signature is on the APK.
+
+## What actually catches it: signature and integrity attestation
+
+The reliable signal isn't behavioral — it's cryptographic. Two checks, run from inside the app at runtime:
+
+- **Signing certificate verification.** The app checks its own signing certificate's fingerprint against the one you actually shipped with. A resigned, cloned build fails this immediately, because the attacker's signature is — structurally, always — not yours.
+- **Binary / integrity attestation.** Independent of the signature, does the running binary's checksum match what was built and signed originally? This catches modification even in edge cases where signature verification alone might be worked around.
+
+Both checks need to run from native code, not the Java/Kotlin layer. A check written in Java is visible and patchable in the exact same decompile step that created the clone in the first place — if the patch tooling is already open, patching out a Java-level signature check is one more `if` statement to remove. A check compiled into native C++ meaningfully raises the cost of finding and defeating it.
+
+## The practical takeaway
+
+Obfuscation and code-quality practices reduce how *readable* your decompiled source is, which is worth doing, but they don't prevent the pipeline above — a determined attacker with `jadx` and patience gets through eventually regardless. Signature and integrity attestation, checked natively and re-verified through the session rather than only at launch, is what actually distinguishes your build from a resigned copy of it.
+
+</ArticleLayout>

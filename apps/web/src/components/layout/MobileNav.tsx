@@ -25,7 +25,7 @@ export function MobileNav() {
         <div className="fixed inset-x-0 top-[65px] bottom-0 z-40 overflow-y-auto bg-white px-6 py-6">
           <nav className="flex flex-col gap-6">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-ink-500">
+              <p className="text-xs font-semibold uppercase tracking-[0.08em] text-ink-500">
                 Features
               </p>
               <ul className="mt-2 flex flex-col gap-1">
@@ -34,8 +34,11 @@ export function MobileNav() {
                     <Link
                       href={item.href}
                       onClick={() => setOpen(false)}
-                      className="block rounded-lg px-2 py-2 text-sm text-ink-900 hover:bg-brand-50"
+                      className="flex items-center gap-3 rounded-lg px-2 py-2 text-sm text-ink-900 hover:bg-brand-50"
                     >
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px] bg-[linear-gradient(135deg,#eff4ff,#d1e0ff)] text-brand-600">
+                        <item.icon className="h-4 w-4" />
+                      </span>
                       {item.label}
                     </Link>
                   </li>
@@ -44,7 +47,7 @@ export function MobileNav() {
             </div>
 
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-ink-500">
+              <p className="text-xs font-semibold uppercase tracking-[0.08em] text-ink-500">
                 Solutions
               </p>
               <ul className="mt-2 flex flex-col gap-1">
@@ -54,8 +57,11 @@ export function MobileNav() {
                       <Link
                         href={item.href}
                         onClick={() => setOpen(false)}
-                        className="block rounded-lg px-2 py-2 text-sm text-ink-900 hover:bg-brand-50"
+                        className="flex items-center gap-3 rounded-lg px-2 py-2 text-sm text-ink-900 hover:bg-brand-50"
                       >
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px] bg-[linear-gradient(135deg,#eff4ff,#d1e0ff)] text-brand-600">
+                          <item.icon className="h-4 w-4" />
+                        </span>
                         {item.label}
                       </Link>
                     </li>

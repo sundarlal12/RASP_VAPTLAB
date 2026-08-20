@@ -1,0 +1,75 @@
+import { ArticleLayout } from "@/components/marketing/ArticleLayout";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { articleSchema } from "@/components/seo/schema/article";
+
+export const metadata = {
+  title: "Code Obfuscation vs. Runtime Protection: Why Mobile Apps Need Both",
+  description:
+    "Obfuscation slows down static analysis. It does nothing once your app is actually running on a hooked or rooted device. Why these are complementary layers, not substitutes.",
+  alternates: { canonical: "/resources/code-obfuscation-vs-runtime-protection/" },
+};
+
+<JsonLd
+  data={articleSchema({
+    title: "Code Obfuscation vs. Runtime Protection: Why Mobile Apps Need Both",
+    description: "Obfuscation slows down static analysis. It does nothing once your app is actually running on a hooked or rooted device. Why these are complementary layers, not substitutes.",
+    slug: "code-obfuscation-vs-runtime-protection",
+    datePublished: "2026-06-30",
+    authorName: "Protect Team",
+  })}
+/>
+
+<ArticleLayout
+  title="Code Obfuscation vs. Runtime Protection: Why Mobile Apps Need Both"
+  slug="code-obfuscation-vs-runtime-protection"
+  category="Fundamentals"
+  date="2026-06-30"
+  author="Protect Team"
+  readTime="6 min read"
+  toc={[
+    "What obfuscation actually does",
+    "What obfuscation doesn't do",
+    "Why the order of operations matters",
+    "A concrete example",
+    "The practical takeaway",
+  ]}
+>
+
+These two get bundled together under "app security" often enough that teams sometimes ship one and assume it covers the other. It doesn't. They defend against different attack phases, and neither is a substitute for the other.
+
+## What obfuscation actually does
+
+Tools like R8/ProGuard, or a dedicated native obfuscator, transform your compiled code so that a decompiled version is harder to read: class and method names get replaced with meaningless symbols, control flow gets restructured, string literals get encrypted, and dead code gets injected to waste an analyst's time.
+
+The target here is **static analysis** — someone with your APK, sitting offline, trying to understand how your app works without ever running it. Obfuscation raises the time cost of that process. It does not stop it: `jadx` still produces readable-enough output on an obfuscated APK, and a patient analyst with the right tooling gets through it. What obfuscation buys you is friction and time, not a hard stop.
+
+## What obfuscation doesn't do
+
+Obfuscation has no opinion about what happens once your app is actually installed and running. It doesn't know or care whether:
+
+- The device is rooted or jailbroken
+- Frida or Xposed is attached to the running process
+- A debugger is stepping through your app live
+- The binary has been modified and resigned since you built it
+- Network traffic is being intercepted by a proxy
+
+None of that is a static-analysis problem. All of it is something that's only observable while the app is executing — which is precisely the gap runtime protection (RASP) exists to close.
+
+## Why the order of operations matters
+
+Think of it as two checkpoints instead of one:
+
+1. **Before the app runs anywhere** — obfuscation makes the binary itself expensive to reverse-engineer, which slows down anyone trying to find a vulnerability or build a patch offline.
+2. **Every time the app runs** — runtime checks evaluate the live environment and catch the cases where someone got past checkpoint one anyway: a hooked process, a rooted device, a patched and resigned build.
+
+Skip runtime protection and you're trusting that obfuscation alone stops a motivated attacker — it doesn't, it just costs them more time. Skip obfuscation and your runtime checks are sitting in a decompiled binary that's trivial to read and understand, which makes them easier to locate and patch out in the first place. The two layers make each other more effective; neither is complete alone.
+
+## A concrete example
+
+Say your app has a native-layer root check. Without obfuscation, an attacker decompiles the APK, finds the check by name or by an obvious string like `"su"` or `"magisk"`, and patches it out in minutes. With obfuscation, that same check is buried in symbol names and control flow that take real effort to untangle — the attacker either gives up, or spends meaningfully longer getting there. Either way, obfuscation didn't stop the *runtime* attack (a rooted device running your app); it made *finding and defeating the check that stops it* more expensive.
+
+## The practical takeaway
+
+Obfuscation and runtime protection solve adjacent problems on the same threat model. Ship obfuscation to raise the cost of static reverse-engineering. Ship runtime protection because obfuscation, however good, eventually loses to a determined attacker with time — and runtime checks are the layer that's actually watching the device while your app is live.
+
+</ArticleLayout>

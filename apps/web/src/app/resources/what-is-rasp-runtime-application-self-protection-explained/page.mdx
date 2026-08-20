@@ -1,0 +1,78 @@
+import { ArticleLayout } from "@/components/marketing/ArticleLayout";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { articleSchema } from "@/components/seo/schema/article";
+
+export const metadata = {
+  title: "What Is RASP? Runtime Application Self-Protection Explained",
+  description:
+    "RASP checks what's happening on the device while your app is running, not just what the binary looks like at rest. Here's what that means in practice, and where it fits next to static scanning and obfuscation.",
+  alternates: { canonical: "/resources/what-is-rasp-runtime-application-self-protection-explained/" },
+};
+
+<JsonLd
+  data={articleSchema({
+    title: "What Is RASP? Runtime Application Self-Protection Explained",
+    description: "RASP checks what's happening on the device while your app is running, not just what the binary looks like at rest. Here's what that means in practice, and where it fits next to static scanning and obfuscation.",
+    slug: "what-is-rasp-runtime-application-self-protection-explained",
+    datePublished: "2026-07-28",
+    authorName: "Protect Team",
+  })}
+/>
+
+<ArticleLayout
+  title="What Is RASP? Runtime Application Self-Protection Explained"
+  slug="what-is-rasp-runtime-application-self-protection-explained"
+  category="Fundamentals"
+  date="2026-07-28"
+  author="Protect Team"
+  readTime="7 min read"
+  toc={[
+    "What RASP actually checks",
+    "Detection vs. response",
+    "Where RASP fits next to everything else",
+    "The practical takeaway",
+  ]}
+>
+
+RASP stands for Runtime Application Self-Protection. The name is literal: it's protection logic that runs *inside* the application, evaluating the environment and the app's own integrity while the app is actually executing — not a scan that runs once against a build artifact before it ships.
+
+That distinction is the whole point. Most mobile app security work happens before an app ever reaches a device: static analysis, dependency scanning, code review. All of that is genuinely useful, and none of it can tell you anything about the specific device a specific user is running your app on, right now, in this session.
+
+## What RASP actually checks
+
+A RASP SDK embedded in a mobile app typically evaluates a handful of independent categories every time it runs, and often keeps re-checking through the session rather than once at launch:
+
+- **Device integrity** — is this a real device, or a rooted, jailbroken, or virtualized environment presenting itself as one?
+- **Process integrity** — is a debugger attached? Is an instrumentation framework like Frida or Xposed hooked into the running process?
+- **Binary integrity** — does the running code match what was actually signed and shipped, or has it been decompiled, patched, and resigned?
+- **Communication integrity** — is network traffic going where it's supposed to go over a channel that hasn't been intercepted?
+
+Individually, each of these is a narrow, specific check. Together, they answer a broader question an app can't otherwise answer for itself: *should I trust the environment I'm currently running in?*
+
+## Detection vs. response
+
+RASP is often described as if detection and response are the same step, but they're worth separating. The SDK's job is to detect and report — surfacing a risk signal or a unified risk score. What the app *does* with that signal is a policy decision, not something the SDK should hardcode:
+
+- Block the session outright
+- Degrade functionality (read-only mode, hide sensitive data)
+- Step up authentication
+- Allow the session but flag it for backend risk scoring
+- Just log the event for later analysis
+
+A payments app handling regulated transactions and a content app with a freemium tier have very different tolerance for false positives. Good RASP tooling treats response as configurable policy, not a fixed reaction baked into the SDK.
+
+## Where RASP fits next to everything else
+
+RASP isn't a replacement for other layers of mobile app security — it fills a gap the others structurally can't:
+
+- **Static analysis / SAST** catches vulnerable patterns in source code before build. It can't see what happens after the APK is compiled and running on a real device.
+- **Code obfuscation** raises the cost of reverse-engineering a binary at rest. It does nothing once the app is live on a hooked or rooted device — an attacker with a debugger attached doesn't care how the source looked before compilation.
+- **App-store review** checks for policy compliance and obvious malicious behavior at submission time. It isn't a continuous runtime signal, and it doesn't run on your users' actual devices.
+
+RASP is specifically the layer that answers questions about the live, running environment — which is exactly the layer most mobile teams have historically had the least visibility into.
+
+## The practical takeaway
+
+If your current security posture is entirely pre-runtime — static scans, obfuscation, app-store checks — you have strong coverage of what your app *is* and close to none of what your app is currently *running on*. RASP is the piece that closes that gap, and it's the layer where most real-world attacks against mobile apps — hooking, tampering, cloning, rooted-device abuse — actually happen.
+
+</ArticleLayout>

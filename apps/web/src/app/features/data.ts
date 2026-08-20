@@ -69,9 +69,10 @@ export const features: Feature[] = [
     slug: "root-jailbreak-detection",
     layer: "environment-detection",
     title: "Root & Jailbreak Detection",
-    summary: "Detects rooted devices and modified system environments at launch and during the session.",
+    summary:
+      "Detects rooted devices, including Magisk-hidden root, and modified system environments at launch and during the session.",
     description:
-      "AppShield inspects the device environment for root indicators — modified system partitions, root management apps, su binaries, and other signs of a compromised OS — so you can block, degrade, or flag sessions running on devices your app shouldn't trust.",
+      "Protect inspects the device environment for root indicators — modified system partitions, root management apps like Magisk, su binaries, and other signs of a compromised OS — so you can block, degrade, or flag sessions running on devices your app shouldn't trust.",
     icon: Fingerprint,
     details: [
       "Layered detection rather than a single signature check, so common root-hiding tools don't get a free pass.",
@@ -85,10 +86,10 @@ export const features: Feature[] = [
     title: "VM & Emulator Detection",
     summary: "Flags sessions running in an emulator or virtualized environment instead of a real device.",
     description:
-      "Emulators and virtual machines are standard tooling for automating abuse at scale and for analyzing an app outside a real device. AppShield detects common emulator and virtualization fingerprints so you can treat virtualized sessions differently from real-device traffic.",
+      "Emulators and virtual machines are standard tooling for automating abuse at scale and for analyzing an app outside a real device. Protect detects common emulator and virtualization fingerprints so you can treat virtualized sessions differently from real-device traffic.",
     icon: Boxes,
     details: [
-      "One of the four detection categories exposed in the AppShield policy — set independently to OFF, monitor, or actively detect.",
+      "One of the four detection categories exposed in the Protect policy — set independently to OFF, monitor, or actively detect.",
       "Feeds the same unified runtime risk score as every other detection module.",
     ],
   },
@@ -109,9 +110,10 @@ export const features: Feature[] = [
     slug: "anti-hooking-frida-xposed",
     layer: "tamper-debug-protection",
     title: "Anti-Hooking (Frida / Xposed)",
-    summary: "Detects instrumentation frameworks used to hook, trace, or manipulate your app's runtime behavior.",
+    summary:
+      "Detects Frida, Xposed, and LSPosed instrumentation frameworks used to hook, trace, or manipulate your app's runtime behavior.",
     description:
-      "Frida, Xposed, and similar hooking frameworks let attackers intercept method calls, patch return values, and bypass in-app logic entirely. AppShield's native hooking-detection module looks for the fingerprints these frameworks leave behind in a running process.",
+      "Frida, Xposed, LSPosed, and similar hooking frameworks let attackers intercept method calls, patch return values, and bypass in-app logic entirely. Protect's native hooking-detection module looks for the fingerprints these frameworks leave behind in a running process.",
     icon: ScanEye,
     details: [
       "Detection logic runs in the native C++ layer, not Java/Kotlin — harder for a hooked runtime to blind.",
@@ -125,10 +127,10 @@ export const features: Feature[] = [
     title: "Anti-Debugging",
     summary: "Detects an attached debugger so live step-through analysis of your app doesn't go unnoticed.",
     description:
-      "A debugger attached to a running process is one of the most direct ways to analyze and bypass app logic. AppShield detects active debugger attachment as its own policy category, independent of hooking-framework detection.",
+      "A debugger attached to a running process is one of the most direct ways to analyze and bypass app logic. Protect detects active debugger attachment as its own policy category, independent of hooking-framework detection.",
     icon: BugOff,
     details: [
-      "Configurable independently of hooking and tamper detection in the AppShield policy.",
+      "Configurable independently of hooking and tamper detection in the Protect policy.",
       "Targets live debugger attachment, not just static analysis resistance.",
     ],
   },
@@ -138,10 +140,10 @@ export const features: Feature[] = [
     title: "Memory Protection",
     summary: "Guards against runtime memory patching and inspection — a common route around app logic.",
     description:
-      "Memory editors and process-inspection tools let attackers read or patch a running app's memory directly, bypassing checks that only look at the binary on disk. AppShield's memory protection targets this class of live, in-process tampering.",
+      "Memory editors and process-inspection tools let attackers read or patch a running app's memory directly, bypassing checks that only look at the binary on disk. Protect's memory protection targets this class of live, in-process tampering.",
     icon: MemoryStick,
     details: [
-      "One of the four independently configurable detection categories in the AppShield policy.",
+      "One of the four independently configurable detection categories in the Protect policy.",
       "Complements tamper detection, which focuses on the binary; this focuses on the running process.",
     ],
   },
@@ -151,7 +153,7 @@ export const features: Feature[] = [
     title: "Tamper Detection & Integrity Attestation",
     summary: "Verifies your app hasn't been modified, resigned, or repackaged since you built it.",
     description:
-      "A signed integrity check attests that the running binary matches what you shipped. If the APK has been decompiled, patched, and resigned — a common precursor to cloned or cracked app distribution — AppShield's attestation module can detect the mismatch.",
+      "A signed integrity check attests that the running binary matches what you shipped. If the APK has been decompiled, patched, and resigned — a common precursor to cloned or cracked app distribution — Protect's attestation module can detect the mismatch.",
     icon: ShieldAlert,
     details: [
       "Cryptographic signature verification confirms the app's integrity at runtime, not just at install.",
@@ -163,12 +165,13 @@ export const features: Feature[] = [
     slug: "ssl-certificate-pinning",
     layer: "secure-communication",
     title: "SSL / Certificate Pinning",
-    summary: "Pins your backend's certificate so MITM proxies and swapped CAs can't intercept traffic.",
+    summary:
+      "Pins your backend's certificate so common SSL pinning bypass tools, MITM proxies, and swapped CAs can't intercept traffic.",
     description:
-      "AppShield pins your API's certificate (SPKI hash) at the native layer, independent of the OS trust store. Even a device with a malicious CA installed — the standard setup for MITM proxy tools — can't get between your app and your backend without the connection failing.",
+      "Protect pins your API's certificate (SPKI hash) at the native layer, independent of the OS trust store. Even a device with a malicious CA installed — the standard setup for MITM proxy tools and SSL pinning bypass frameworks — can't get between your app and your backend without the connection failing.",
     icon: Lock,
     details: [
-      "Per-client pin sets, generated and managed through the AppShield portal.",
+      "Per-client pin sets, generated and managed through the Protect portal.",
       "Pin data is obfuscated in the shipped asset, not stored as a plain, greppable string.",
       "Native TLS client (mbedTLS-based) rather than relying solely on platform HTTP stacks.",
     ],
@@ -192,7 +195,7 @@ export const features: Feature[] = [
     title: "Hardened Native Core",
     summary: "Core protection logic runs in native C++, not Java/Kotlin bytecode.",
     description:
-      "AppShield's detection and cryptographic logic is implemented in native C++ (AES-256-GCM, RSA-OAEP, HMAC-SHA256) rather than Java or Kotlin. Native code is meaningfully more expensive to decompile and reverse-engineer than JVM bytecode, which raises the cost of attacking the SDK itself, not just your app.",
+      "Protect's detection and cryptographic logic is implemented in native C++ (AES-256-GCM, RSA-OAEP, HMAC-SHA256) rather than Java or Kotlin. Native code is meaningfully more expensive to decompile and reverse-engineer than JVM bytecode, which raises the cost of attacking the SDK itself, not just your app.",
     icon: Cpu,
     details: [
       "Built on a hardened mbedTLS-based crypto stack: AES-128/256/GCM, RSA-OAEP, HMAC-SHA256, secure random.",
@@ -205,12 +208,12 @@ export const features: Feature[] = [
     title: "Runtime Risk Scoring",
     summary: "Every detection module feeds one unified risk score you can act on in real time.",
     description:
-      "Rather than handling each detection signal separately, AppShield aggregates environment, tamper, and network signals into a single runtime risk score your app (or backend) can react to — block, step up authentication, or just log, depending on your policy. The same signals power the live dashboard in the AppShield portal.",
+      "Rather than handling each detection signal separately, Protect aggregates environment, tamper, and network signals into a single runtime risk score your app (or backend) can react to — block, step up authentication, or just log, depending on your policy. The same signals power the live dashboard in the Protect portal.",
     icon: Activity,
     details: [
       "Centralized detection registry aggregates every module's output.",
       "Your app decides the response — the SDK reports risk, it doesn't force a single policy.",
-      "Visible in the AppShield portal's live dashboard: top threats, device risk scores, blocked sessions.",
+      "Visible in the Protect portal's live dashboard: top threats, device risk scores, blocked sessions.",
     ],
   },
   {
@@ -219,7 +222,7 @@ export const features: Feature[] = [
     title: "Background Watchdog & Re-Verification",
     summary: "Detection re-runs periodically through the session, not just once at launch.",
     description:
-      "A launch-time-only check only has to be beaten once. AppShield's background watchdog re-runs key detections at intervals through the app's lifecycle, so an environment that becomes compromised mid-session — a debugger or hook attached after startup, for instance — still gets caught.",
+      "A launch-time-only check only has to be beaten once. Protect's background watchdog re-runs key detections at intervals through the app's lifecycle, so an environment that becomes compromised mid-session — a debugger or hook attached after startup, for instance — still gets caught.",
     icon: Eye,
     details: [
       "Periodic re-checks, not a single gate at cold start.",
@@ -232,7 +235,7 @@ export const features: Feature[] = [
     title: "Screenshot & Screen-Recording Prevention",
     summary: "Blocks or detects screen capture on sensitive screens to protect on-screen data.",
     description:
-      "For screens showing sensitive data — payment details, documents, credentials, proprietary content — AppShield can prevent or detect screenshots and screen recording, reducing casual data exfiltration and content piracy risk.",
+      "For screens showing sensitive data — payment details, documents, credentials, proprietary content — Protect can prevent or detect screenshots and screen recording, reducing casual data exfiltration and content piracy risk.",
     icon: Camera,
     details: [
       "Useful for fintech (account/payment data), media/streaming (content piracy), and enterprise apps (confidential documents).",

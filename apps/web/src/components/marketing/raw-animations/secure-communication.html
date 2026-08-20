@@ -1,0 +1,167 @@
+<div style="padding:1rem 0">
+<h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Packets travelling a pinned TLS channel from app to server, with an intercepting proxy being blocked, beside a scrolling feed of channel checks</h2>
+<style>
+.sH{position:relative;overflow:hidden;border-radius:20px;padding:22px;background:linear-gradient(160deg,#f6faff 0%,#e9f2fd 55%,#dfeafb 100%)}
+.sGrid{position:absolute;inset:0;background-image:linear-gradient(rgba(120,165,225,.15) 1px,transparent 1px),linear-gradient(90deg,rgba(120,165,225,.15) 1px,transparent 1px);background-size:78px 78px}
+.sBody{position:relative;z-index:2;display:flex;gap:14px;align-items:flex-end}
+.sLeft{width:284px;position:relative;padding-left:30px;flex:none}
+.sRail{position:absolute;left:10px;top:18px;bottom:6px;width:20px;border-left:1.5px solid #b9d4ee;border-top:1.5px solid #b9d4ee;border-top-left-radius:16px}
+.sX{position:absolute;left:-4px;top:-16px;width:30px;height:30px;border-radius:50%;background:#fff;border:1px solid #e6edf6;display:flex;align-items:center;justify-content:center;color:#2f6df6;font-size:16px;box-shadow:0 3px 10px rgba(22,55,110,.08)}
+.sDia{position:absolute;left:-5.5px;top:62%;width:9px;height:9px;background:#2f6df6;transform:rotate(45deg);border-radius:1px}
+.sList{position:relative;height:352px;overflow:hidden;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 11%,#000 89%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 11%,#000 89%,transparent 100%)}
+.sTrack.go{animation:sScroll 19s linear infinite}
+@keyframes sScroll{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+.sRow{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fff;border-radius:10px;padding:10px 12px;margin-bottom:8px;box-shadow:0 4px 14px rgba(22,55,110,.07)}
+.sN{margin:0;font-size:12px;font-weight:500;color:#16213d}
+.sSub{margin:2px 0 0;font-size:10px;color:#7b88a3}
+.sSc{margin:0;font-size:12.5px;font-weight:500}
+.sPill{padding:3px 8px;border-radius:6px;font-size:10px;font-weight:500;white-space:nowrap;flex:none}
+.ok{background:#e7f6ec;color:#17794a}
+.bad{background:#fdeaea;color:#c0392b}
+.info{background:#eaf1fe;color:#2f6df6}
+.sRight{width:330px;flex:none}
+.sCard{width:300px;margin:0 0 14px 26px;background:#fff;border-radius:12px;padding:12px 12px 13px;box-shadow:0 6px 22px rgba(22,55,110,.09)}
+.sUrl{font-family:var(--font-mono);font-size:9.5px;color:#16213d;display:flex;align-items:center;gap:1px;margin-bottom:12px;word-break:break-all}
+.sM{color:#2f6df6;font-weight:500;margin-right:5px;flex:none}
+.sCar{display:inline-block;width:5px;height:10px;background:#2f6df6;opacity:0;flex:none}
+.sUrl.typing .sCar{opacity:1;animation:sBlink 1s step-end infinite}
+@keyframes sBlink{50%{opacity:0}}
+.sLane{position:relative;height:76px}
+.sNode{position:absolute;bottom:0;width:34px;height:34px;border-radius:9px;background:#eef3fb;color:#2f6df6;display:flex;align-items:center;justify-content:center;font-size:18px}
+.sApp{left:0}
+.sSrv{right:0}
+.sWire{position:absolute;left:40px;right:40px;bottom:17px;height:2px;background:#d9e4f4;border-radius:1px}
+.pkt{position:absolute;left:40px;bottom:13.5px;width:7px;height:7px;border-radius:50%;background:#2f6df6;animation:pktGo 2.6s linear infinite}
+.pkt:nth-child(2){animation-delay:.65s}
+.pkt:nth-child(3){animation-delay:1.3s}
+.pkt:nth-child(4){animation-delay:1.95s}
+@keyframes pktGo{0%{transform:translateX(0);opacity:0}8%{opacity:1}90%{opacity:1}100%{transform:translateX(196px);opacity:0}}
+.mitm .pkt{background:#e05252;animation:pktStop 2.6s ease-out infinite}
+@keyframes pktStop{0%{transform:translateX(0);opacity:0}10%{opacity:1}42%{transform:translateX(92px);opacity:1}56%{transform:translateX(74px) scale(.55);opacity:.55}70%{transform:translateX(80px);opacity:0}100%{transform:translateX(80px);opacity:0}}
+.sProxy{position:absolute;left:50%;margin-left:-17px;top:0;width:34px;height:34px;border-radius:9px;background:#fdeaea;color:#c0392b;display:flex;align-items:center;justify-content:center;font-size:18px;opacity:0;transform:translateY(-6px);transition:opacity .35s ease,transform .35s ease}
+.sDash{position:absolute;left:50%;margin-left:-0.5px;top:34px;height:23px;width:1px;border-left:1.5px dashed #eab6b6;opacity:0;transition:opacity .35s ease}
+.mitm .sProxy{opacity:1;transform:none}
+.mitm .sDash{opacity:1}
+.sCert{display:flex;align-items:center;gap:8px;margin-top:11px;padding-top:11px;border-top:1px solid #eef2f8;transition:opacity .25s ease}
+.sCi{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex:none}
+.sPhone{width:250px;margin-left:56px;background:#fff;border:1.5px solid #cbe4f7;border-radius:26px 26px 20px 20px;border-bottom:none;padding:10px 0 0;position:relative;overflow:hidden}
+.sNotch{width:76px;height:14px;border-radius:0 0 9px 9px;background:#e3e7ee;margin:-10px auto 0}
+.sSb{display:flex;align-items:center;justify-content:space-between;padding:4px 15px 0;font-size:11px;font-weight:500;color:#16213d}
+.sHd{display:flex;align-items:center;padding:12px 15px 8px}
+.sHt{flex:1;text-align:center;font-size:13px;font-weight:500;color:#16213d;margin:0 0 0 -17px}
+.sStat{margin:4px 15px 12px;border-radius:12px;padding:13px 14px;display:flex;align-items:center;gap:11px;background:#111a2e;transition:background .35s ease,opacity .25s ease}
+.sSi{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex:none;background:#22304f;color:#8fb4f7;transition:background .35s ease,color .35s ease}
+.sReq{display:flex;align-items:center;gap:8px;padding:7px 15px;transition:opacity .25s ease}
+.sMeth{font-family:var(--font-mono);font-size:9px;font-weight:500;color:#2f6df6;background:#eef3fb;border-radius:5px;padding:3px 5px;flex:none}
+.sPath{font-family:var(--font-mono);font-size:10px;color:#16213d;flex:1}
+</style>
+<div class="sH" id="sHero">
+<div class="sGrid"></div>
+<div class="sBody">
+
+<div class="sLeft">
+<div class="sRail"><div class="sX"><i class="ti ti-lock" aria-hidden="true"></i></div><div class="sDia"></div></div>
+<div class="sList"><div class="sTrack" id="sTrack">
+<div class="sRow"><p class="sN">Certificate pinning</p><span class="sPill ok">Enforced</span></div>
+<div class="sRow"><p class="sN">Proxy / MITM</p><span class="sPill bad">Detected</span></div>
+<div class="sRow"><p class="sN">TLS version</p><span class="sPill info">1.3</span></div>
+<div class="sRow"><p class="sN">Cipher suite</p><span class="sPill info">AES-256-GCM</span></div>
+<div class="sRow"><p class="sN">Certificate chain</p><span class="sPill bad">Untrusted CA</span></div>
+<div class="sRow"><p class="sN">Telemetry payload</p><span class="sPill ok">Encrypted</span></div>
+<div class="sRow"><div><p class="sSc" style="color:#c0392b">88/100</p><p class="sSub">Channel risk score</p></div><span class="sPill bad">Critical</span></div>
+<div class="sRow"><p class="sN">User CA store</p><span class="sPill bad">Modified</span></div>
+<div class="sRow"><p class="sN">Keys in native core</p><span class="sPill ok">Sealed</span></div>
+<div class="sRow"><div><p class="sSc" style="color:#17794a">18/100</p><p class="sSub">Data exposure score</p></div><span class="sPill ok">Safe</span></div>
+<div class="sRow"><p class="sN">Traffic capture tool</p><span class="sPill bad">Detected</span></div>
+<div class="sRow"><p class="sN">Session resumption</p><span class="sPill ok">Verified</span></div>
+</div></div>
+</div>
+
+<div class="sRight">
+<div class="sCard">
+<div class="sUrl" id="sUrlLine"><span class="sM" id="sMeth">POST</span><span id="sUrl"></span><span class="sCar"></span></div>
+<div class="sLane" id="sLane">
+<div class="sNode sApp"><i class="ti ti-device-mobile" aria-hidden="true"></i></div>
+<div class="sWire"></div>
+<span class="pkt"></span><span class="pkt"></span><span class="pkt"></span><span class="pkt"></span>
+<div class="sDash"></div>
+<div class="sProxy"><i class="ti ti-shield-x" aria-hidden="true"></i></div>
+<div class="sNode sSrv"><i class="ti ti-server-2" aria-hidden="true"></i></div>
+</div>
+<div class="sCert" id="sCert">
+<div class="sCi" id="sCertI"><i class="ti ti-certificate" aria-hidden="true"></i></div>
+<div style="flex:1"><p style="margin:0;font-size:11px;font-weight:500;color:#16213d" id="sCertT">Issuer</p><p style="margin:2px 0 0;font-size:9.5px;color:#7b88a3;font-family:var(--font-mono)" id="sCertS">fingerprint</p></div>
+<span class="sPill" id="sCertP">Pin</span>
+</div>
+</div>
+
+<div class="sPhone">
+<div class="sNotch"></div>
+<div class="sSb"><span>9:41</span><span style="display:flex;gap:4px;color:#16213d"><i class="ti ti-antenna-bars-5" style="font-size:14px" aria-hidden="true"></i><i class="ti ti-wifi" style="font-size:14px" aria-hidden="true"></i><i class="ti ti-battery-4" style="font-size:14px" aria-hidden="true"></i></span></div>
+<div class="sHd"><i class="ti ti-arrow-left" style="font-size:17px;color:#16213d" aria-hidden="true"></i><p class="sHt">Network</p></div>
+<div class="sStat" id="sStat">
+<div class="sSi" id="sStatI"><i class="ti ti-lock" aria-hidden="true"></i></div>
+<div><p style="margin:0;font-size:12px;font-weight:500;color:#fff" id="sStatT">Channel secured</p><p style="margin:3px 0 0;font-size:9.5px;color:#9fb0d0" id="sStatS">TLS 1.3 · SPKI pin matched</p></div>
+</div>
+<div class="sReq" id="sR0"><span class="sMeth">POST</span><span class="sPath">/v1/auth</span><span class="sPill ok" id="sP0">200</span></div>
+<div class="sReq" id="sR1"><span class="sMeth">GET</span><span class="sPath">/v1/balance</span><span class="sPill ok" id="sP1">200</span></div>
+<div class="sReq" id="sR2" style="padding-bottom:12px"><span class="sMeth">POST</span><span class="sPath">/v1/telemetry</span><span class="sPill ok" id="sP2">200</span></div>
+<div style="margin:0 15px 16px;background:#f4f7fb;border-radius:9px;padding:9px 11px"><p style="margin:0;font-size:9px;color:#8a95ad">Payload</p><p style="margin:3px 0 0;font-size:9.5px;font-family:var(--font-mono);color:#16213d;word-break:break-all" id="sBlob">8f2a c41d 90be 77a3 e5f0 12cc</p></div>
+</div>
+</div>
+
+</div>
+</div>
+<script>
+(function(){
+var root=document.getElementById('sHero');if(!root)return;
+var track=document.getElementById('sTrack');
+if(track){track.innerHTML=track.innerHTML+track.innerHTML;track.classList.add('go');}
+var lane=document.getElementById('sLane'),urlLine=document.getElementById('sUrlLine'),url=document.getElementById('sUrl'),meth=document.getElementById('sMeth');
+var certI=document.getElementById('sCertI'),certT=document.getElementById('sCertT'),certS=document.getElementById('sCertS'),certP=document.getElementById('sCertP'),cert=document.getElementById('sCert');
+var stat=document.getElementById('sStat'),statI=document.getElementById('sStatI'),statT=document.getElementById('sStatT'),statS=document.getElementById('sStatS'),blob=document.getElementById('sBlob');
+var pills=[document.getElementById('sP0'),document.getElementById('sP1'),document.getElementById('sP2')];
+var reqs=[document.getElementById('sR0'),document.getElementById('sR1'),document.getElementById('sR2')];
+var scenes=[
+{m:'POST',u:'https://api.finpay.in/v1/auth',mitm:false,ci:'#eef3fb',cc:'#2f6df6',ct:'ISRG Root X1',cs:'SPKI a91f4c… pin matched',cp:'Pinned',cpc:'ok',sb:'#111a2e',si:'#22304f',sic:'#8fb4f7',st:'Channel secured',ss:'TLS 1.3 · SPKI pin matched',p:['200','200','200'],pc:['ok','ok','ok'],b:'8f2a c41d 90be 77a3 e5f0 12cc'},
+{m:'POST',u:'https://api.finpay.in/v1/balance',mitm:true,ci:'#fdeaea',cc:'#c0392b',ct:'PortSwigger CA',cs:'SPKI 3d02b7… does not match',cp:'Mismatch',cpc:'bad',sb:'#2c1420',si:'#4a1e22',sic:'#f0a0a0',st:'Channel blocked',ss:'Untrusted CA · handshake aborted',p:['TLS fail','Blocked','Held'],pc:['bad','bad','bad'],b:'connection closed before send'},
+{m:'POST',u:'https://api.finpay.in/v1/telemetry',mitm:false,ci:'#e7f6ec',cc:'#17794a',ct:'AES-256-GCM',cs:'keys sealed in native core',cp:'Encrypted',cpc:'ok',sb:'#111a2e',si:'#1d3a2f',sic:'#7fd6b3',st:'Payload sealed',ss:'Encrypted before leaving the app',p:['200','200','200'],pc:['ok','ok','ok'],b:'a7d1 3b9e ff04 62ca 8810 5e7b'}
+];
+var timers=[],cycle=0,gen=0;
+function T(f,ms){timers.push(setTimeout(f,ms));}
+function apply(s){
+certI.style.background=s.ci;certI.style.color=s.cc;
+certT.textContent=s.ct;certS.textContent=s.cs;
+certP.textContent=s.cp;certP.className='sPill '+s.cpc;
+stat.style.background=s.sb;statI.style.background=s.si;statI.style.color=s.sic;
+statT.textContent=s.st;statS.textContent=s.ss;blob.textContent=s.b;
+for(var i=0;i<3;i++){pills[i].textContent=s.p[i];pills[i].className='sPill '+s.pc[i];reqs[i].style.opacity=s.mitm&&i>0?'.55':'1';}
+}
+function run(){
+for(var i=0;i<timers.length;i++)clearTimeout(timers[i]);
+timers=[];gen++;
+var g=gen,s=scenes[cycle%scenes.length];cycle++;
+if(s.mitm){lane.classList.add('mitm');}else{lane.classList.remove('mitm');}
+meth.textContent=s.m;url.textContent='';
+cert.style.opacity='.35';stat.style.opacity='.55';
+T(function(){
+if(g!==gen)return;
+urlLine.classList.add('typing');
+var i=0;
+(function step(){
+if(g!==gen)return;
+if(i>=s.u.length){
+urlLine.classList.remove('typing');
+T(function(){apply(s);cert.style.opacity='1';stat.style.opacity='1';},520);
+T(run,6200);
+return;
+}
+url.textContent=s.u.slice(0,++i);
+T(step,28);
+})();
+},420);
+}
+run();
+})();
+</script>
+</div>

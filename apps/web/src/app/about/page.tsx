@@ -9,7 +9,7 @@ import { Target, ShieldCheck, Cpu } from "lucide-react";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "VaptLabs builds AppShield, a native-C++ RASP SDK for Android focused on runtime detection, not just static app-store scanning.",
+    "VaptLabs builds SecureLint Protect — AI-powered, no-code runtime application security for mobile, focused on runtime detection, not just static app-store scanning.",
   alternates: { canonical: "/about/" },
 };
 
@@ -18,7 +18,7 @@ const principles = [
     icon: Target,
     title: "Runtime, not just static analysis",
     description:
-      "A clean static scan doesn't mean a safe runtime. AppShield focuses on what's happening on the device while your app is running — hooking, tampering, and environment risk that static analysis can't see.",
+      "A clean static scan doesn't mean a safe runtime. Protect focuses on what's happening on the device while your app is running — hooking, tampering, and environment risk that static analysis can't see.",
   },
   {
     icon: Cpu,
@@ -30,7 +30,7 @@ const principles = [
     icon: ShieldCheck,
     title: "Signal, not a black box",
     description:
-      "AppShield reports risk — root, hooking, tamper, and network signals — through a unified score. Your team decides the policy; we don't force a single response.",
+      "Protect reports risk — root, hooking, tamper, and network signals — through a unified score. Your team decides the policy; we don't force a single response.",
   },
 ];
 
@@ -44,7 +44,7 @@ export default function AboutPage() {
             align="left"
             eyebrow="About VaptLabs"
             title="We build runtime protection for Android apps"
-            description="AppShield is VaptLabs' Runtime Application Self-Protection (RASP) SDK — built to detect compromised environments and tampering while an app is running, not just at build time."
+            description="SecureLint Protect is VaptLabs' Runtime Application Self-Protection (RASP) SDK — built to detect compromised environments and tampering while an app is running, not just at build time."
           />
         </div>
       </Section>
@@ -63,7 +63,7 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      <CTABand title="Want to talk to the team behind AppShield?" />
+      <CTABand title="Want to talk to the team behind Protect?" />
     </>
   );
 }

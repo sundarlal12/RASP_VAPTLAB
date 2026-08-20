@@ -1,0 +1,68 @@
+import { ArticleLayout } from "@/components/marketing/ArticleLayout";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { articleSchema } from "@/components/seo/schema/article";
+
+export const metadata = {
+  title: "RASP for React Native and Flutter Apps: What Actually Works",
+  description:
+    "React Native and Flutter apps still compile down to a standard APK. What that means for root, hooking, and tamper detection — and where framework-level SDK integration actually gets harder.",
+  alternates: { canonical: "/resources/rasp-for-react-native-and-flutter-apps/" },
+};
+
+<JsonLd
+  data={articleSchema({
+    title: "RASP for React Native and Flutter Apps: What Actually Works",
+    description: "React Native and Flutter apps still compile down to a standard APK. What that means for root, hooking, and tamper detection — and where framework-level SDK integration actually gets harder.",
+    slug: "rasp-for-react-native-and-flutter-apps",
+    datePublished: "2026-08-11",
+    authorName: "Protect Team",
+  })}
+/>
+
+<ArticleLayout
+  title="RASP for React Native and Flutter Apps: What Actually Works"
+  slug="rasp-for-react-native-and-flutter-apps"
+  category="Engineering"
+  date="2026-08-11"
+  author="Protect Team"
+  readTime="7 min read"
+  toc={[
+    "How these apps are actually packaged",
+    "What applies regardless of framework",
+    "Where the framework actually matters",
+    "The practical takeaway",
+  ]}
+>
+
+Most RASP documentation, ours included, is written from a Java/Kotlin default. That leads a lot of React Native and Flutter teams to a reasonable-sounding but wrong conclusion: that runtime protection is an Android-native concern and doesn't apply to their stack. It does — just not uniformly across every layer.
+
+## How these apps are actually packaged
+
+React Native ships your JavaScript as a bundle, executed by a JS engine embedded inside a native Android host app, with a bridge layer marshaling calls between JS and native modules. Flutter goes further in the other direction — Dart compiles ahead-of-time to native ARM (or x86) machine code, embedded in a thin native shell that hosts the Flutter engine.
+
+Different architectures, same endpoint: both produce a standard, signed Android APK (or AAB) at the end of the build. There's no separate "React Native app format" or "Flutter app format" from the OS's perspective — Android sees a normal package with a normal manifest and a normal signing certificate, same as an app written entirely in Kotlin.
+
+## What applies regardless of framework
+
+Because the final artifact is a standard APK, a meaningful set of RASP checks apply identically no matter what built the app:
+
+- **Root and jailbreak detection** — checking for `su` binaries, root-management packages, and system-path anomalies happens at the OS/filesystem level, below anything React Native or Flutter's runtime does.
+- **Emulator and virtual device detection** — build fingerprints, sensor presence, and telephony stubs are properties of the device and the process, not of the app's UI framework.
+- **Tamper and integrity attestation** — signature verification checks the APK's signing certificate, which exists regardless of what generated the DEX or native code inside it. A repackaged React Native or Flutter app is exactly as detectable as a repackaged native one.
+- **SSL / certificate pinning** — if the app makes network calls through the platform's networking stack (which both frameworks ultimately do, even when wrapped in a JS or Dart HTTP client), pinning enforced at that layer applies the same way.
+
+This is the practical reason an upload-and-shield model — where a policy is configured once and applied to the already-built, already-signed release artifact — works for React Native and Flutter apps without any framework-specific engineering. The tooling never needs to know or care what built the APK it's shielding.
+
+## Where the framework actually matters
+
+The gap shows up specifically in **hooking detection** and **deep SDK integration**, and it's worth being precise about why.
+
+Anti-hooking checks originally built against a pure Java/Kotlin threat model look for tampering with JVM method entry points. That's a real and still-relevant attack surface for both frameworks, since native modules and any Kotlin/Java code in the app are still exposed to it. But Frida specifically can also attach to a JavaScriptCore or Hermes instance (React Native) or hook into Dart VM internals (Flutter) — surfaces a JVM-focused check was never built to see. Comprehensive hooking detection for these apps means covering the JS/Dart runtime layer specifically, not just the JVM layer underneath it.
+
+Direct SDK-level integration is the other real gap. Native Android RASP SDKs expose a Java/Kotlin API. Calling that API from React Native requires a native module bridge; calling it from Flutter requires a platform channel or FFI binding. Neither is exotic engineering, but neither is free — it's real integration work specific to each framework, distinct from the zero-touch upload-and-shield path.
+
+## The practical takeaway
+
+If your app is built with React Native or Flutter, don't assume RASP doesn't apply — root detection, emulator detection, tamper attestation, and certificate pinning all work on the compiled APK the same way they would for a native app, with no framework-specific integration required. Where you do need framework awareness is comprehensive hooking coverage above the JVM layer and any deep SDK-level integration beyond the standard upload-and-shield flow — scope those specifically rather than assuming a native-Android RASP checklist covers them by default.
+
+</ArticleLayout>

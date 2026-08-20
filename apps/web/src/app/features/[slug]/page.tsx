@@ -8,6 +8,8 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { IconTile } from "@/components/ui/IconTile";
 import { Badge } from "@/components/ui/Badge";
 import { CTABand } from "@/components/marketing/CTABand";
+import { RawHtmlAnimation } from "@/components/marketing/RawHtmlAnimation";
+import { readLayerAnimation } from "@/lib/layerAnimations";
 import { Check } from "lucide-react";
 
 export function generateStaticParams() {
@@ -50,22 +52,29 @@ export default async function FeatureDetailPage({
   return (
     <>
       <Section bg="gradient" className="pb-14 pt-14">
-        <div className="flex flex-col gap-6">
-          <Breadcrumbs
-            items={[
-              { label: "Home", href: "/" },
-              { label: "Features", href: "/features/" },
-              { label: feature.title, href: `/features/${feature.slug}/` },
-            ]}
-          />
-          <div className="flex flex-col gap-5">
-            <IconTile icon={feature.icon} className="h-14 w-14 [&>svg]:h-6 [&>svg]:w-6" />
-            {layer ? <Badge>{layer.title}</Badge> : null}
-            <h1 className="font-display text-3xl font-bold tracking-tight text-ink-950 sm:text-5xl">
-              {feature.title}
-            </h1>
-            <p className="max-w-2xl text-lg leading-relaxed text-ink-500">{feature.description}</p>
+        <div className="flex flex-col items-center gap-10 xl:flex-row xl:gap-16">
+          <div className="flex w-full flex-col gap-6 xl:w-[420px] xl:flex-none">
+            <Breadcrumbs
+              items={[
+                { label: "Home", href: "/" },
+                { label: "Features", href: "/features/" },
+                { label: feature.title, href: `/features/${feature.slug}/` },
+              ]}
+            />
+            <div className="flex flex-col gap-5">
+              <IconTile icon={feature.icon} className="h-14 w-14 [&>svg]:h-6 [&>svg]:w-6" />
+              {layer ? <Badge>{layer.title}</Badge> : null}
+              <h1 className="font-display text-3xl font-bold tracking-tight text-ink-950 sm:text-5xl">
+                {feature.title}
+              </h1>
+              <p className="max-w-2xl text-lg leading-relaxed text-ink-500">{feature.description}</p>
+            </div>
           </div>
+          {layer ? (
+            <div className="w-full flex-1 overflow-x-auto">
+              <RawHtmlAnimation html={readLayerAnimation(layer.id)} className="mx-auto w-[672px] max-w-none" />
+            </div>
+          ) : null}
         </div>
       </Section>
 

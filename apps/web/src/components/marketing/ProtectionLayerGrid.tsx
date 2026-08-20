@@ -8,9 +8,9 @@ export function ProtectionLayerGrid() {
   return (
     <div className="flex flex-col gap-16">
       <SectionHeading
-        eyebrow="How AppShield protects your app"
+        eyebrow="How SecureLint Protect works"
         title="Three layers of runtime protection"
-        description="No single check is enough on its own. AppShield combines environment detection, secure communication, and continuous re-verification into one SDK."
+        description="No single check is enough on its own. Protect combines environment detection, secure communication, and continuous re-verification into one SDK."
       />
 
       <div className="grid gap-6 lg:grid-cols-3">

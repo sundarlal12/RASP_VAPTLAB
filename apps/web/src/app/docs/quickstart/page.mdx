@@ -3,7 +3,7 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 
 export const metadata = {
   title: "Quickstart",
-  description: "Configure a policy, upload a signed APK, and get a shielded build back from AppShield.",
+  description: "Configure a policy, upload a signed APK or AAB, and get a shielded build back from Protect.",
   alternates: { canonical: "/docs/quickstart/" },
 };
 
@@ -21,11 +21,11 @@ export const metadata = {
 
 # Quickstart
 
-The standard AppShield path doesn't require touching your app's source — you configure a policy in the portal and upload an already-built, signed release APK.
+The standard Protect path doesn't require touching your app's source — you configure a policy in the portal and upload an already-built, signed release APK or AAB.
 
 ## 1. Register your app
 
-In the AppShield portal, register your app by package name. Each registered app gets its own detection policy and pin configuration, scoped to your account.
+In the Protect portal, register your app by package name. Each registered app gets its own detection policy and pin configuration, scoped to your account.
 
 ## 2. Set your detection policy
 
@@ -44,11 +44,11 @@ If your app talks to your own backend over TLS, generate a pin set for your API'
 
 ## 4. Upload your signed build
 
-Upload your release APK — already built and signed with your own keystore. AppShield extracts your signing certificate's fingerprint, applies your configured policy, and returns a shielded build. Your private keystore is never uploaded — only the final signed artifact.
+Upload your release APK or AAB — already built and signed with your own keystore. Protect extracts your signing certificate's fingerprint, applies your configured policy, and returns a shielded build in the same format you uploaded. Your private keystore is never uploaded — only the final signed artifact.
 
 ## 5. Distribute the shielded build
 
-Publish the shielded APK exactly as you would your original build. Detection events start appearing on your live dashboard as real devices run the app.
+Publish the shielded build exactly as you would your original — an APK stays an APK, an AAB stays an AAB. Detection events start appearing on your live dashboard as real devices run the app.
 
 ## Want direct SDK integration instead?
 

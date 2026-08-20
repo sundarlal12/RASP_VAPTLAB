@@ -31,3 +31,6 @@ next-env.d.ts
 
 # reference dump from old site (not part of the new codebase)
 _reference/
+
+# Local Netlify folder
+.netlify

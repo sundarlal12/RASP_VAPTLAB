@@ -1,0 +1,164 @@
+<div style="padding:1rem 0">
+<h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">A live runtime risk score updating continuously while an app re-verifies itself and blocks a screenshot, beside a scrolling feed of runtime events</h2>
+<style>
+.gH{position:relative;overflow:hidden;border-radius:20px;padding:22px;background:linear-gradient(160deg,#f6faff 0%,#e9f2fd 55%,#dfeafb 100%)}
+.gGrid{position:absolute;inset:0;background-image:linear-gradient(rgba(120,165,225,.15) 1px,transparent 1px),linear-gradient(90deg,rgba(120,165,225,.15) 1px,transparent 1px);background-size:78px 78px}
+.gBody{position:relative;z-index:2;display:flex;gap:14px;align-items:flex-end}
+.gLeft{width:330px;flex:none}
+.gRight{width:284px;position:relative;padding-right:30px;flex:none}
+.gRail{position:absolute;right:10px;top:18px;bottom:6px;width:20px;border-right:1.5px solid #b9d4ee;border-top:1.5px solid #b9d4ee;border-top-right-radius:16px}
+.gX{position:absolute;right:-4px;top:-16px;width:30px;height:30px;border-radius:50%;background:#fff;border:1px solid #e6edf6;display:flex;align-items:center;justify-content:center;color:#2f6df6;font-size:16px;box-shadow:0 3px 10px rgba(22,55,110,.08)}
+.gDia{position:absolute;right:-5.5px;top:62%;width:9px;height:9px;background:#2f6df6;transform:rotate(45deg);border-radius:1px}
+.gList{position:relative;height:352px;overflow:hidden;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 11%,#000 89%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 11%,#000 89%,transparent 100%)}
+.gTrack.go{animation:gScroll 20s linear infinite}
+@keyframes gScroll{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+.gRow{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fff;border-radius:10px;padding:10px 12px;margin-bottom:8px;box-shadow:0 4px 14px rgba(22,55,110,.07)}
+.gN{margin:0;font-size:12px;font-weight:500;color:#16213d}
+.gT{margin:2px 0 0;font-size:9.5px;color:#8a95ad;font-family:var(--font-mono)}
+.gSc{margin:0;font-size:12.5px;font-weight:500}
+.gPill{padding:3px 8px;border-radius:6px;font-size:10px;font-weight:500;white-space:nowrap;flex:none}
+.ok{background:#e7f6ec;color:#17794a}
+.bad{background:#fdeaea;color:#c0392b}
+.warn{background:#fdf1e0;color:#96590a}
+.info{background:#eaf1fe;color:#2f6df6}
+.gCard{width:300px;margin:0 0 14px 0;background:#fff;border-radius:12px;padding:13px 14px 14px;box-shadow:0 6px 22px rgba(22,55,110,.09)}
+.gHead{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+.gLive{display:flex;align-items:center;gap:5px;font-size:9.5px;font-weight:500;color:#7b88a3}
+.gBlip{width:6px;height:6px;border-radius:50%;background:#2f6df6;animation:gBlink 1.5s ease-in-out infinite}
+@keyframes gBlink{0%,100%{opacity:1}50%{opacity:.2}}
+.gScore{display:flex;align-items:baseline;gap:7px}
+.gNum{font-size:26px;font-weight:500;line-height:1;transition:color .4s ease}
+.gWd{margin-top:11px;padding-top:11px;border-top:1px solid #eef2f8}
+.gWdr{display:flex;align-items:center;justify-content:space-between;font-size:10px;color:#7b88a3;margin-bottom:6px}
+.gBar{height:3px;border-radius:2px;background:#eaeff7;overflow:hidden}
+.gBar span{display:block;height:100%;background:#2f6df6;border-radius:2px;animation:gFill 4s linear infinite}
+@keyframes gFill{0%{width:0}92%{width:100%}100%{width:100%}}
+.gPhone{width:250px;margin-left:56px;background:#fff;border:1.5px solid #cbe4f7;border-radius:26px 26px 20px 20px;border-bottom:none;padding:10px 0 0;position:relative;overflow:hidden}
+.gNotch{width:76px;height:14px;border-radius:0 0 9px 9px;background:#e3e7ee;margin:-10px auto 0}
+.gSb{display:flex;align-items:center;justify-content:space-between;padding:4px 15px 0;font-size:11px;font-weight:500;color:#16213d}
+.gHd{display:flex;align-items:center;padding:12px 15px 8px}
+.gHt{flex:1;text-align:center;font-size:13px;font-weight:500;color:#16213d;margin:0 0 0 -17px}
+.gContent{position:relative}
+.gBal{margin:4px 15px 12px;background:#111a2e;border-radius:12px;padding:13px 14px;color:#fff}
+.gOtp{margin:0 15px 12px;border:1px solid #e2e8f1;border-radius:10px;padding:10px 12px}
+.gDig{display:flex;gap:6px;margin-top:6px}
+.gDig span{flex:1;text-align:center;font-family:var(--font-mono);font-size:14px;font-weight:500;color:#16213d;background:#f4f7fb;border-radius:6px;padding:5px 0}
+.gTx{display:flex;align-items:center;gap:9px;padding:6px 15px 14px}
+.gTi{width:26px;height:26px;border-radius:7px;background:#eef3fb;color:#2f6df6;display:flex;align-items:center;justify-content:center;font-size:14px;flex:none}
+.gShield{position:absolute;inset:0;background:#eef3fa;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.gShield.on{opacity:1}
+.gStrip{display:flex;align-items:center;gap:8px;margin:0 15px 16px;border-radius:9px;padding:9px 11px;background:#e7f6ec;transition:background .35s ease}
+.gStripI{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex:none;background:#cdeedb;color:#17794a;transition:background .35s ease,color .35s ease}
+</style>
+<div class="gH" id="gHero">
+<div class="gGrid"></div>
+<div class="gBody">
+
+<div class="gLeft">
+<div class="gCard">
+<div class="gHead"><span style="font-size:11px;font-weight:500;color:#16213d">Runtime risk score</span><span class="gLive"><span class="gBlip"></span>live</span></div>
+<div class="gScore"><span class="gNum" id="gNum">18</span><span class="gPill ok" id="gBand">Low</span><span style="margin-left:auto;font-size:9.5px;color:#8a95ad" id="gDelta">stable</span></div>
+<svg viewBox="0 0 272 48" width="272" height="48" style="display:block;margin-top:9px" role="img"><title>Runtime risk over time</title><desc>A rolling line chart of the app's runtime risk score.</desc>
+<path id="gArea" d="" fill="#e6eefc" stroke="none"/>
+<polyline id="gLineP" points="" fill="none" stroke="#2f6df6" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<circle id="gDot" cx="270" cy="30" r="3.2" fill="#2f6df6"/>
+</svg>
+<div class="gWd">
+<div class="gWdr"><span>Background watchdog</span><span id="gWdt">re-verifying</span></div>
+<div class="gBar"><span></span></div>
+</div>
+</div>
+
+<div class="gPhone">
+<div class="gNotch"></div>
+<div class="gSb"><span>9:41</span><span style="display:flex;gap:4px;color:#16213d"><i class="ti ti-antenna-bars-5" style="font-size:14px" aria-hidden="true"></i><i class="ti ti-wifi" style="font-size:14px" aria-hidden="true"></i><i class="ti ti-battery-4" style="font-size:14px" aria-hidden="true"></i></span></div>
+<div class="gHd"><i class="ti ti-arrow-left" style="font-size:17px;color:#16213d" aria-hidden="true"></i><p class="gHt">Wallet</p></div>
+<div class="gContent">
+<div class="gBal"><p style="margin:0;font-size:9.5px;color:#9fb0d0">Available balance</p><p style="margin:4px 0 0;font-size:19px;font-weight:500">84,250.00</p></div>
+<div class="gOtp"><p style="margin:0;font-size:9.5px;color:#8a95ad">One-time code · expires in 28s</p><div class="gDig"><span>4</span><span>8</span><span>2</span><span>9</span><span>1</span><span>3</span></div></div>
+<div class="gTx"><div class="gTi"><i class="ti ti-shield-check" aria-hidden="true"></i></div><div style="flex:1"><p style="margin:0;font-size:11px;font-weight:500;color:#16213d">Session verified</p><p style="margin:1px 0 0;font-size:9.5px;color:#8a95ad">14m 02s uptime</p></div></div>
+<div class="gShield" id="gShield">
+<i class="ti ti-camera-off" style="font-size:26px;color:#2f6df6" aria-hidden="true"></i>
+<p style="margin:0;font-size:12px;font-weight:500;color:#16213d">Screen protected</p>
+<p style="margin:0;font-size:10px;color:#7b88a3;text-align:center;padding:0 24px">Screenshot and recording blocked on this screen</p>
+</div>
+</div>
+<div class="gStrip" id="gStrip"><div class="gStripI" id="gStripI"><i class="ti ti-check" aria-hidden="true"></i></div><div><p style="margin:0;font-size:10.5px;font-weight:500;color:#16213d" id="gStripT">All checks passed</p><p style="margin:2px 0 0;font-size:9.5px;color:#7b88a3" id="gStripS">Re-verified 2s ago</p></div></div>
+</div>
+</div>
+
+<div class="gRight">
+<div class="gRail"><div class="gX"><i class="ti ti-activity" aria-hidden="true"></i></div><div class="gDia"></div></div>
+<div class="gList"><div class="gTrack" id="gTrack">
+<div class="gRow"><div><p class="gN">Watchdog re-verification</p><p class="gT">12:04:02</p></div><span class="gPill ok">Passed</span></div>
+<div class="gRow"><div><p class="gN">Screenshot attempt</p><p class="gT">12:04:07</p></div><span class="gPill bad">Blocked</span></div>
+<div class="gRow"><div><p class="gN">Overlay window</p><p class="gT">12:04:09</p></div><span class="gPill bad">Detected</span></div>
+<div class="gRow"><div><p class="gN">Accessibility service</p><p class="gT">12:04:12</p></div><span class="gPill ok">Not detected</span></div>
+<div class="gRow"><div><p class="gSc" style="color:#96590a">62/100</p><p class="gT">risk score raised</p></div><span class="gPill warn">Elevated</span></div>
+<div class="gRow"><div><p class="gN">Screen recording</p><p class="gT">12:04:18</p></div><span class="gPill bad">Blocked</span></div>
+<div class="gRow"><div><p class="gN">Foreground integrity</p><p class="gT">12:04:21</p></div><span class="gPill ok">Verified</span></div>
+<div class="gRow"><div><p class="gN">Debugger re-check</p><p class="gT">12:04:25</p></div><span class="gPill ok">Clean</span></div>
+<div class="gRow"><div><p class="gN">Clipboard scrape</p><p class="gT">12:04:29</p></div><span class="gPill bad">Blocked</span></div>
+<div class="gRow"><div><p class="gSc" style="color:#17794a">14m 02s</p><p class="gT">session uptime</p></div><span class="gPill info">Monitored</span></div>
+<div class="gRow"><div><p class="gN">Root re-check</p><p class="gT">12:04:33</p></div><span class="gPill ok">Clean</span></div>
+<div class="gRow"><div><p class="gN">App backgrounded</p><p class="gT">12:04:38</p></div><span class="gPill info">Re-verify queued</span></div>
+</div></div>
+</div>
+
+</div>
+</div>
+<script>
+(function(){
+var root=document.getElementById('gHero');if(!root)return;
+var track=document.getElementById('gTrack');
+if(track){track.innerHTML=track.innerHTML+track.innerHTML;track.classList.add('go');}
+var num=document.getElementById('gNum'),band=document.getElementById('gBand'),delta=document.getElementById('gDelta');
+var lineP=document.getElementById('gLineP'),area=document.getElementById('gArea'),dot=document.getElementById('gDot');
+var shield=document.getElementById('gShield'),wdt=document.getElementById('gWdt');
+var strip=document.getElementById('gStrip'),stripI=document.getElementById('gStripI'),stripT=document.getElementById('gStripT'),stripS=document.getElementById('gStripS');
+var N=42,W=272,H=48,vals=[],target=18,prev=18;
+for(var i=0;i<N;i++){vals.push(16+Math.random()*6);}
+function band3(v){if(v<35)return['Low','ok','#17794a'];if(v<65)return['Elevated','warn','#96590a'];return['High','bad','#c0392b'];}
+function draw(){
+var pts=[],step=W/(N-1);
+for(var i=0;i<N;i++){var x=Math.round(i*step*10)/10,y=Math.round((H-4-(vals[i]/100)*(H-8))*10)/10;pts.push(x+','+y);}
+lineP.setAttribute('points',pts.join(' '));
+area.setAttribute('d','M0,'+H+' L'+pts.join(' L')+' L'+W+','+H+' Z');
+var last=vals[N-1],lx=W,ly=Math.round((H-4-(last/100)*(H-8))*10)/10;
+dot.setAttribute('cx',lx);dot.setAttribute('cy',ly);
+var b=band3(last);
+num.textContent=Math.round(last);
+num.style.color=b[2];
+band.textContent=b[0];band.className='gPill '+b[1];
+lineP.setAttribute('stroke',b[2]);dot.setAttribute('fill',b[2]);
+area.setAttribute('fill',b[1]==='ok'?'#e7f6ec':(b[1]==='warn'?'#fdf1e0':'#fdeaea'));
+delta.textContent=last>prev+1?'rising':(last<prev-1?'falling':'stable');
+prev=last;
+}
+draw();
+setInterval(function(){
+vals.shift();
+var nv=vals[N-2]+(target-vals[N-2])*0.28+(Math.random()*6-3);
+if(nv<3)nv=3;if(nv>97)nv=97;
+vals.push(nv);draw();
+},380);
+var scenes=[
+{t:18,sh:false,wd:'passed 2s ago',sb:'#e7f6ec',si:'#cdeedb',sc:'#17794a',ic:'ti-check',st:'All checks passed',ss:'Re-verified 2s ago'},
+{t:78,sh:false,wd:'anomaly found',sb:'#fdeaea',si:'#f8d3d3',sc:'#c0392b',ic:'ti-alert-triangle',st:'Re-authentication required',ss:'Overlay window detected mid-session'},
+{t:34,sh:true,wd:'passed 1s ago',sb:'#eaf1fe',si:'#d5e3fd',sc:'#2f6df6',ic:'ti-camera-off',st:'Screenshot blocked',ss:'Capture attempt denied by policy'}
+];
+var cycle=0;
+function scene(){
+var s=scenes[cycle%scenes.length];cycle++;
+target=s.t;
+if(s.sh){shield.classList.add('on');}else{shield.classList.remove('on');}
+wdt.textContent=s.wd;
+strip.style.background=s.sb;stripI.style.background=s.si;stripI.style.color=s.sc;
+stripI.innerHTML='<i class="ti '+s.ic+'" aria-hidden="true"></i>';
+stripT.textContent=s.st;stripS.textContent=s.ss;
+setTimeout(scene,6000);
+}
+scene();
+})();
+</script>
+</div>

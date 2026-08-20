@@ -45,7 +45,7 @@ export const industries: Industry[] = [
       "screenshot-screen-recording-prevention",
     ],
     description:
-      "Banking and payments apps are high-value targets for rooted-device fraud, emulator-based fraud rings, MITM attacks against transaction traffic, and cloned apps used for credential harvesting. AppShield's combination of root/VM detection, SSL pinning, and tamper detection addresses the environment-level risks that sit underneath your existing fraud and auth controls.",
+      "Banking and payments apps are high-value targets for rooted-device fraud, emulator-based fraud rings, MITM attacks against transaction traffic, and cloned apps used for credential harvesting. Protect's combination of root/VM detection, SSL pinning, and tamper detection addresses the environment-level risks that sit underneath your existing fraud and auth controls.",
   },
   {
     slug: "gaming",
@@ -127,7 +127,7 @@ export const useCases: UseCase[] = [
       "runtime-risk-scoring",
     ],
     description:
-      "Most automated abuse of a mobile app's APIs doesn't come through a browser — it comes through a hooked, instrumented, or emulator-farmed instance of your own app used to script requests at scale. AppShield targets that client-side tampering directly: anti-hooking detection flags instrumentation frameworks like Frida, VM/emulator detection flags non-device traffic, device fingerprinting correlates abuse across sessions and reinstalls, and the runtime risk score gives you a single signal to throttle, block, or step up verification for bot-driven traffic. This is a client-integrity control, not a web application firewall — it's built for mobile API abuse specifically.",
+      "Most automated abuse of a mobile app's APIs doesn't come through a browser — it comes through a hooked, instrumented, or emulator-farmed instance of your own app used to script requests at scale. Protect targets that client-side tampering directly: anti-hooking detection flags instrumentation frameworks like Frida, VM/emulator detection flags non-device traffic, device fingerprinting correlates abuse across sessions and reinstalls, and the runtime risk score gives you a single signal to throttle, block, or step up verification for bot-driven traffic. This is a client-integrity control, not a web application firewall — it's built for mobile API abuse specifically.",
   },
   {
     slug: "app-cloning-repackaging-prevention",
@@ -148,7 +148,7 @@ export const useCases: UseCase[] = [
     icon: ShieldOff,
     relevantFeatures: ["root-jailbreak-detection", "runtime-risk-scoring"],
     description:
-      "Not every rooted device is malicious, and not every use case needs a hard block. AppShield reports the signal; you decide the policy — from a soft warning to a hard gate on sensitive flows.",
+      "Not every rooted device is malicious, and not every use case needs a hard block. Protect reports the signal; you decide the policy — from a soft warning to a hard gate on sensitive flows.",
   },
   {
     slug: "mitm-network-attack-prevention",

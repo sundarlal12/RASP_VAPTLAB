@@ -37,14 +37,14 @@ export default function TermsOfServicePage() {
 
       <h2>Product and services agreements</h2>
       <p>
-        Use of the AppShield product itself is governed by a separate agreement entered into
+        Use of the Protect product itself is governed by a separate agreement entered into
         directly with {siteConfig.legalName} as part of onboarding — these website Terms do not
         constitute that agreement.
       </p>
 
       <h2>Intellectual property</h2>
       <p>
-        All content on this website, including text, graphics, logos, and the AppShield name and
+        All content on this website, including text, graphics, logos, and the Protect name and
         mark, is the property of {siteConfig.legalName} or its licensors and is protected by
         applicable intellectual property laws.
       </p>

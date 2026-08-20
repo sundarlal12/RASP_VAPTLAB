@@ -1,22 +1,40 @@
 import type { MDXComponents } from "mdx/types";
+import type { ReactNode } from "react";
 import Link from "next/link";
+import { slugify } from "@/lib/slugify";
+
+function textContent(node: ReactNode): string {
+  if (node == null || typeof node === "boolean") return "";
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(textContent).join("");
+  if (typeof node === "object" && "props" in node) {
+    return textContent((node as { props: { children?: ReactNode } }).props.children);
+  }
+  return "";
+}
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     h1: (props) => (
       <h1 className="font-display text-3xl font-bold text-ink-950" {...props} />
     ),
-    h2: (props) => (
+    h2: ({ children, ...props }) => (
       <h2
-        className="mt-10 font-display text-xl font-bold text-ink-950"
+        id={slugify(textContent(children))}
+        className="mt-10 scroll-mt-24 font-display text-xl font-bold text-ink-950"
         {...props}
-      />
+      >
+        {children}
+      </h2>
     ),
-    h3: (props) => (
+    h3: ({ children, ...props }) => (
       <h3
-        className="mt-8 font-display text-lg font-bold text-ink-950"
+        id={slugify(textContent(children))}
+        className="mt-8 scroll-mt-24 font-display text-lg font-bold text-ink-950"
         {...props}
-      />
+      >
+        {children}
+      </h3>
     ),
     p: (props) => <p className="leading-relaxed text-ink-700" {...props} />,
     ul: (props) => (

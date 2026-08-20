@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/Card";
 
 export const metadata: Metadata = {
   title: "Docs",
-  description: "Guides for configuring AppShield's detection policy, SSL pinning, and integration path.",
+  description: "Guides for configuring Protect's detection policy, SSL pinning, and integration path.",
   alternates: { canonical: "/docs/" },
 };
 
@@ -22,7 +22,7 @@ export default function DocsPage() {
           <SectionHeading
             align="left"
             eyebrow="Documentation"
-            title="Guides for configuring and integrating AppShield"
+            title="Guides for configuring and integrating Protect"
           />
         </div>
       </Section>

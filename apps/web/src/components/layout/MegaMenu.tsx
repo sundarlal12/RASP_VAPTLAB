@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 
 export interface MegaMenuGroup {
   title: string;
-  items: { label: string; href: string }[];
+  items: { label: string; href: string; icon?: ReactNode }[];
 }
 
 export function MegaMenu({
@@ -54,10 +54,12 @@ export function MegaMenu({
 
       {open ? (
         <div className="absolute left-1/2 top-full z-40 mt-4 w-screen max-w-2xl -translate-x-1/2 rounded-2xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-900/10">
-          <div className={`grid gap-8 ${groups.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}>
+          <div
+            className={`grid gap-8 ${groups.length > 1 ? "grid-cols-2 divide-x divide-slate-100" : "grid-cols-1"}`}
+          >
             {groups.map((group) => (
-              <div key={group.title}>
-                <p className="text-xs font-semibold uppercase tracking-wide text-ink-500">
+              <div key={group.title} className={groups.length > 1 ? "pl-8 first:pl-0" : ""}>
+                <p className="text-xs font-semibold uppercase tracking-[0.08em] text-ink-500">
                   {group.title}
                 </p>
                 <ul className="mt-3 flex flex-col gap-1">
@@ -66,8 +68,13 @@ export function MegaMenu({
                       <Link
                         href={item.href}
                         onClick={() => setOpen(false)}
-                        className="block rounded-lg px-2 py-2 text-sm text-ink-900 hover:bg-brand-50 hover:text-brand-700"
+                        className="group/item flex items-center gap-3 rounded-lg px-2 py-2 text-sm text-ink-900 hover:bg-brand-50 hover:text-brand-700"
                       >
+                        {item.icon ? (
+                          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px] bg-[linear-gradient(135deg,#eff4ff,#d1e0ff)] text-brand-600">
+                            {item.icon}
+                          </span>
+                        ) : null}
                         {item.label}
                       </Link>
                     </li>

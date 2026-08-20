@@ -1,5 +1,4 @@
-import { Section } from "@/components/ui/Section";
-import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { ArticleLayout } from "@/components/marketing/ArticleLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { articleSchema } from "@/components/seo/schema/article";
 
@@ -16,25 +15,19 @@ export const metadata = {
     description: "A single root check is a single thing to bypass. Why layered environment detection — root, VM, and hooking together — holds up better.",
     slug: "root-detection-alone-isnt-enough",
     datePublished: "2026-06-02",
-    authorName: "AppShield Team",
+    authorName: "Protect Team",
   })}
 />
 
-<Section bg="gradient" className="pb-4 pt-14">
-  <Breadcrumbs
-    items={[
-      { label: "Home", href: "/" },
-      { label: "Resources", href: "/resources/" },
-      { label: "Root Detection Alone Isn't Enough Anymore", href: "/resources/root-detection-alone-isnt-enough/" },
-    ]}
-  />
-</Section>
-
-<Section bg="white" narrow>
-
-# Root Detection Alone Isn't Enough Anymore
-
-<p className="text-sm text-ink-500">June 2, 2026 · AppShield Team</p>
+<ArticleLayout
+  title="Root Detection Alone Isn't Enough Anymore"
+  slug="root-detection-alone-isnt-enough"
+  category="Detection Engineering"
+  date="2026-06-02"
+  author="Protect Team"
+  readTime="5 min read"
+  toc={["What layering actually buys you", "The practical takeaway"]}
+>
 
 A root check used to be most of what "mobile app security" meant. Look for `su`, look for a handful of known root-management packages, look for a couple of suspicious system paths — good enough for a long time.
 
@@ -57,4 +50,4 @@ None of these fully overlaps with the others. An attacker who beats one still ha
 
 If your current "security" is a single root check gating a single feature, you have a binary you can decompile once, patch out one `if` statement, and be done. Layered, native-level detection that keeps re-checking through the session is a fundamentally different cost proposition for whoever's trying to get around it.
 
-</Section>
+</ArticleLayout>

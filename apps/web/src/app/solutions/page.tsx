@@ -10,7 +10,7 @@ import { CTABand } from "@/components/marketing/CTABand";
 export const metadata: Metadata = {
   title: "Solutions — By Industry & Use Case",
   description:
-    "How AppShield applies to fintech, gaming, healthcare, government, retail, and media apps — and to specific problems like anti-scraping, app cloning, and MITM prevention.",
+    "How Protect applies to fintech, gaming, healthcare, government, retail, and media apps — and to specific problems like anti-scraping, app cloning, and MITM prevention.",
   alternates: { canonical: "/solutions/" },
 };
 

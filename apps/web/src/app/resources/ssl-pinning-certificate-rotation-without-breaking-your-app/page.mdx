@@ -1,5 +1,4 @@
-import { Section } from "@/components/ui/Section";
-import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { ArticleLayout } from "@/components/marketing/ArticleLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { articleSchema } from "@/components/seo/schema/article";
 
@@ -16,28 +15,19 @@ export const metadata = {
     description: "Certificate pinning fails hard when it fails. A rollout pattern for rotating keys without locking out users on your current release.",
     slug: "ssl-pinning-certificate-rotation-without-breaking-your-app",
     datePublished: "2026-04-08",
-    authorName: "AppShield Team",
+    authorName: "Protect Team",
   })}
 />
 
-<Section bg="gradient" className="pb-4 pt-14">
-  <Breadcrumbs
-    items={[
-      { label: "Home", href: "/" },
-      { label: "Resources", href: "/resources/" },
-      {
-        label: "SSL Pinning Certificate Rotation Without Breaking Your App",
-        href: "/resources/ssl-pinning-certificate-rotation-without-breaking-your-app/",
-      },
-    ]}
-  />
-</Section>
-
-<Section bg="white" narrow>
-
-# SSL Pinning Certificate Rotation Without Breaking Your App
-
-<p className="text-sm text-ink-500">April 8, 2026 · AppShield Team</p>
+<ArticleLayout
+  title="SSL Pinning Certificate Rotation Without Breaking Your App"
+  slug="ssl-pinning-certificate-rotation-without-breaking-your-app"
+  category="Engineering"
+  date="2026-04-08"
+  author="Protect Team"
+  readTime="6 min read"
+  toc={["Why this catches teams off guard", "A rollout pattern that avoids this", "The core principle"]}
+>
 
 Certificate pinning is a fail-closed control by design — that's the entire point. It also means getting rotation wrong doesn't degrade gracefully; it locks out every user still on a build with the old pin, all at once, the moment the old certificate is retired.
 
@@ -59,4 +49,4 @@ If you generate a new pin, update your backend to serve the new certificate, and
 
 Pinning fails hard on purpose — that's what makes it useful against interception. The only way to rotate safely is to make the transition window itself tolerant of both the old and new certificate, rather than trying to time a single instantaneous cutover across every device running your app.
 
-</Section>
+</ArticleLayout>

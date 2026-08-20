@@ -1,0 +1,140 @@
+<div style="padding:1rem 0">
+<h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">An attacker typing instrumentation commands into a terminal while a wallet app detects the tampering and locks itself, beside a scrolling feed of integrity checks</h2>
+<style>
+.tH{position:relative;overflow:hidden;border-radius:20px;padding:22px;background:linear-gradient(160deg,#f6faff 0%,#e9f2fd 55%,#dfeafb 100%)}
+.tGrid{position:absolute;inset:0;background-image:linear-gradient(rgba(120,165,225,.15) 1px,transparent 1px),linear-gradient(90deg,rgba(120,165,225,.15) 1px,transparent 1px);background-size:78px 78px}
+.tBody{position:relative;z-index:2;display:flex;gap:14px;align-items:flex-end}
+.tLeft{width:330px;flex:none}
+.tRight{width:284px;position:relative;padding-right:30px;flex:none}
+.tRail{position:absolute;right:10px;top:18px;bottom:6px;width:20px;border-right:1.5px solid #b9d4ee;border-top:1.5px solid #b9d4ee;border-top-right-radius:16px}
+.tX{position:absolute;right:-4px;top:-16px;width:30px;height:30px;border-radius:50%;background:#fff;border:1px solid #e6edf6;display:flex;align-items:center;justify-content:center;color:#e05252;font-size:17px;box-shadow:0 3px 10px rgba(22,55,110,.08)}
+.tDia{position:absolute;right:-5.5px;top:62%;width:9px;height:9px;background:#2f6df6;transform:rotate(45deg);border-radius:1px}
+.tList{position:relative;height:344px;overflow:hidden;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 11%,#000 89%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 11%,#000 89%,transparent 100%)}
+.tTrack.go{animation:tScroll 19s linear infinite}
+@keyframes tScroll{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+.tRow{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fff;border-radius:10px;padding:10px 12px;margin-bottom:8px;box-shadow:0 4px 14px rgba(22,55,110,.07)}
+.tN{margin:0;font-size:12px;font-weight:500;color:#16213d}
+.tSub{margin:2px 0 0;font-size:10px;color:#7b88a3}
+.tSc{margin:0;font-size:12.5px;font-weight:500}
+.tPill{padding:3px 8px;border-radius:6px;font-size:10px;font-weight:500;white-space:nowrap;flex:none}
+.ok{background:#e7f6ec;color:#17794a}
+.bad{background:#fdeaea;color:#c0392b}
+.tTerm{background:#101a2e;border-radius:12px;padding:11px 13px 12px;margin:0 0 14px;box-shadow:0 8px 24px rgba(16,26,46,.22)}
+.tBar{display:flex;align-items:center;gap:5px;margin-bottom:9px}
+.tDot{width:8px;height:8px;border-radius:50%;flex:none}
+.tTitle{margin-left:6px;font-size:9.5px;color:#7f8ca8;font-family:var(--font-mono)}
+.tLive{margin-left:auto;display:flex;align-items:center;gap:5px;font-size:9px;color:#f0a0a0;font-weight:500}
+.tBlip{width:6px;height:6px;border-radius:50%;background:#e0555a;animation:tBlink 1.4s ease-in-out infinite}
+@keyframes tBlink{0%,100%{opacity:1}50%{opacity:.2}}
+.tLine{font-family:var(--font-mono);font-size:10px;line-height:1.6;color:#dbe4f7;display:flex;align-items:center;gap:1px;word-break:break-all}
+.tPrompt{color:#5dcaa5;margin-right:6px;flex:none}
+.tCar{display:inline-block;width:6px;height:11px;background:#5b8def;opacity:0;flex:none}
+.tLine.typing .tCar{opacity:1;animation:tCar 1s step-end infinite}
+@keyframes tCar{50%{opacity:0}}
+.tOut{font-family:var(--font-mono);font-size:10px;line-height:1.6;color:#f09595;min-height:16px;margin-top:3px;opacity:0;transition:opacity .3s ease}
+.tOut.on{opacity:1}
+.tPhone{width:250px;margin-left:56px;background:#fff;border:1.5px solid #cbe4f7;border-radius:26px 26px 20px 20px;border-bottom:none;padding:10px 0 0;position:relative;overflow:hidden}
+.tNotch{width:76px;height:14px;border-radius:0 0 9px 9px;background:#e3e7ee;margin:-10px auto 0}
+.tSb{display:flex;align-items:center;justify-content:space-between;padding:4px 15px 0;font-size:11px;font-weight:500;color:#16213d}
+.tHd{display:flex;align-items:center;padding:12px 15px 8px}
+.tHt{flex:1;text-align:center;font-size:13px;font-weight:500;color:#16213d;margin:0 0 0 -17px}
+.tBal{margin:4px 15px 12px;background:#111a2e;border-radius:12px;padding:13px 14px;color:#fff}
+.tAct{display:flex;gap:8px;padding:0 15px 12px}
+.tAb{flex:1;border:1px solid #e2e8f1;border-radius:9px;padding:8px;text-align:center;font-size:10.5px;font-weight:500;color:#16213d}
+.tTx{display:flex;align-items:center;gap:9px;padding:7px 15px}
+.tTi{width:26px;height:26px;border-radius:7px;background:#eef3fb;color:#2f6df6;display:flex;align-items:center;justify-content:center;font-size:14px;flex:none}
+.tLock{position:absolute;left:0;right:0;bottom:0;background:#fff;border-top:1px solid #f2dede;padding:13px 15px 16px;opacity:0;transform:translateY(100%);transition:opacity .4s ease,transform .45s cubic-bezier(.2,.85,.3,1)}
+.tLock.on{opacity:1;transform:none}
+.tLr{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.tLi{width:28px;height:28px;border-radius:50%;background:#fdeaea;color:#c0392b;display:flex;align-items:center;justify-content:center;font-size:16px;flex:none}
+.tBtnB{background:#fdeaea;color:#c0392b;text-align:center;font-size:12px;font-weight:500;padding:11px;border-radius:9px}
+</style>
+<div class="tH" id="tHero">
+<div class="tGrid"></div>
+<div class="tBody">
+
+<div class="tLeft">
+<div class="tTerm">
+<div class="tBar"><span class="tDot" style="background:#e0555a"></span><span class="tDot" style="background:#e8b04b"></span><span class="tDot" style="background:#4fb477"></span><span class="tTitle">attacker@host</span><span class="tLive"><span class="tBlip"></span>live</span></div>
+<div class="tLine" id="tCmdLine"><span class="tPrompt">$</span><span id="tCmd"></span><span class="tCar"></span></div>
+<div class="tOut" id="tOut"></div>
+</div>
+
+<div class="tPhone">
+<div class="tNotch"></div>
+<div class="tSb"><span>9:41</span><span style="display:flex;gap:4px;color:#16213d"><i class="ti ti-antenna-bars-5" style="font-size:14px" aria-hidden="true"></i><i class="ti ti-wifi" style="font-size:14px" aria-hidden="true"></i><i class="ti ti-battery-4" style="font-size:14px" aria-hidden="true"></i></span></div>
+<div class="tHd"><i class="ti ti-arrow-left" style="font-size:17px;color:#16213d" aria-hidden="true"></i><p class="tHt">Wallet</p></div>
+<div class="tBal"><p style="margin:0;font-size:9.5px;color:#9fb0d0">Available balance</p><p style="margin:4px 0 0;font-size:19px;font-weight:500">84,250.00</p></div>
+<div class="tAct"><div class="tAb"><i class="ti ti-arrow-up-right" style="font-size:13px;vertical-align:-2px;margin-right:3px" aria-hidden="true"></i>Send</div><div class="tAb"><i class="ti ti-arrow-down-left" style="font-size:13px;vertical-align:-2px;margin-right:3px" aria-hidden="true"></i>Request</div></div>
+<div class="tTx"><div class="tTi"><i class="ti ti-building-store" aria-hidden="true"></i></div><div style="flex:1"><p style="margin:0;font-size:11px;font-weight:500;color:#16213d">Blinkit</p><p style="margin:1px 0 0;font-size:9.5px;color:#8a95ad">Today, 8:12 PM</p></div><span style="font-size:11px;font-weight:500;color:#16213d">-742</span></div>
+<div class="tTx"><div class="tTi"><i class="ti ti-bolt" aria-hidden="true"></i></div><div style="flex:1"><p style="margin:0;font-size:11px;font-weight:500;color:#16213d">Electricity bill</p><p style="margin:1px 0 0;font-size:9.5px;color:#8a95ad">Yesterday</p></div><span style="font-size:11px;font-weight:500;color:#16213d">-1,860</span></div>
+<div class="tTx" style="padding-bottom:18px"><div class="tTi"><i class="ti ti-briefcase" aria-hidden="true"></i></div><div style="flex:1"><p style="margin:0;font-size:11px;font-weight:500;color:#16213d">Salary credit</p><p style="margin:1px 0 0;font-size:9.5px;color:#8a95ad">1 Aug</p></div><span style="font-size:11px;font-weight:500;color:#17794a">+92,000</span></div>
+<div class="tLock" id="tLock">
+<div class="tLr"><div class="tLi"><i class="ti ti-shield-lock" aria-hidden="true"></i></div><div><p style="margin:0;font-size:11.5px;font-weight:500;color:#16213d" id="tLockT">App locked</p><p style="margin:2px 0 0;font-size:10px;color:#7b88a3" id="tLockS">Integrity check failed</p></div></div>
+<div class="tBtnB">Session terminated · restart required</div>
+</div>
+</div>
+</div>
+
+<div class="tRight">
+<div class="tRail"><div class="tX"><i class="ti ti-x" aria-hidden="true"></i></div><div class="tDia"></div></div>
+<div class="tList"><div class="tTrack" id="tTrack">
+<div class="tRow"><p class="tN">Frida server</p><span class="tPill bad">Detected</span></div>
+<div class="tRow"><p class="tN">Xposed framework</p><span class="tPill ok">Not detected</span></div>
+<div class="tRow"><p class="tN">Debugger attached (ptrace)</p><span class="tPill bad">Detected</span></div>
+<div class="tRow"><p class="tN">Native library checksum</p><span class="tPill bad">Mismatch</span></div>
+<div class="tRow"><p class="tN">Memory patch</p><span class="tPill ok">Not detected</span></div>
+<div class="tRow"><p class="tN">APK signature</p><span class="tPill ok">Verified</span></div>
+<div class="tRow"><div><p class="tSc" style="color:#c0392b">91/100</p><p class="tSub">Tamper risk score</p></div><span class="tPill bad">Critical</span></div>
+<div class="tRow"><p class="tN">JDWP debug flag</p><span class="tPill bad">Detected</span></div>
+<div class="tRow"><p class="tN">Code injection</p><span class="tPill ok">Not detected</span></div>
+<div class="tRow"><div><p class="tSc" style="color:#17794a">24/100</p><p class="tSub">Runtime integrity drift</p></div><span class="tPill ok">Safe</span></div>
+<div class="tRow"><p class="tN">Hooking framework</p><span class="tPill bad">Detected</span></div>
+<div class="tRow"><p class="tN">Repackaged build</p><span class="tPill ok">Not detected</span></div>
+</div></div>
+</div>
+
+</div>
+</div>
+<script>
+(function(){
+var root=document.getElementById('tHero');if(!root)return;
+var track=document.getElementById('tTrack');
+if(track){track.innerHTML=track.innerHTML+track.innerHTML;track.classList.add('go');}
+var line=document.getElementById('tCmdLine'),cmd=document.getElementById('tCmd'),out=document.getElementById('tOut');
+var lock=document.getElementById('tLock'),lt=document.getElementById('tLockT'),ls=document.getElementById('tLockS');
+var scenes=[
+['frida -U -f com.finpay.wallet -l hook.js','Failed to attach: process terminated','Instrumentation blocked','Frida gadget found on port 27042'],
+['adb jdwp && jdb -attach localhost:8700','JDWP refused: debuggable flag revoked','Debugger attach blocked','ptrace on PID 4821 rejected at runtime'],
+['apktool b patched/ && adb install app.apk','Install failed: signature mismatch','Modified binary detected','libnative.so checksum does not match']
+];
+var timers=[],cycle=0,gen=0;
+function T(f,ms){timers.push(setTimeout(f,ms));}
+function run(){
+for(var i=0;i<timers.length;i++)clearTimeout(timers[i]);
+timers=[];gen++;
+var g=gen,s=scenes[cycle%scenes.length];cycle++;
+cmd.textContent='';out.textContent='';out.classList.remove('on');
+lock.classList.remove('on');line.classList.remove('typing');
+T(function(){
+if(g!==gen)return;
+line.classList.add('typing');
+var i=0;
+(function step(){
+if(g!==gen)return;
+if(i>=s[0].length){
+line.classList.remove('typing');
+T(function(){out.textContent=s[1];out.classList.add('on');},620);
+T(function(){lt.textContent=s[2];ls.textContent=s[3];lock.classList.add('on');},1200);
+T(run,5400);
+return;
+}
+cmd.textContent=s[0].slice(0,++i);
+T(step,34);
+})();
+},500);
+}
+run();
+})();
+</script>
+</div>

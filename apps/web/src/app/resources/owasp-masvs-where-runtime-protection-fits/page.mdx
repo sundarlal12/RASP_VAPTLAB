@@ -1,0 +1,74 @@
+import { ArticleLayout } from "@/components/marketing/ArticleLayout";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { articleSchema } from "@/components/seo/schema/article";
+
+export const metadata = {
+  title: "OWASP MASVS and Where Runtime Protection Fits In",
+  description:
+    "MASVS's resilience requirements (MASVS-RESILIENCE) are explicitly about runtime behavior, not static code review. Mapping RASP controls to the categories an assessor actually checks.",
+  alternates: { canonical: "/resources/owasp-masvs-where-runtime-protection-fits/" },
+};
+
+<JsonLd
+  data={articleSchema({
+    title: "OWASP MASVS and Where Runtime Protection Fits In",
+    description: "MASVS's resilience requirements (MASVS-RESILIENCE) are explicitly about runtime behavior, not static code review. Mapping RASP controls to the categories an assessor actually checks.",
+    slug: "owasp-masvs-where-runtime-protection-fits",
+    datePublished: "2026-04-22",
+    authorName: "Protect Team",
+  })}
+/>
+
+<ArticleLayout
+  title="OWASP MASVS and Where Runtime Protection Fits In"
+  slug="owasp-masvs-where-runtime-protection-fits"
+  category="Compliance"
+  date="2026-04-22"
+  author="Protect Team"
+  readTime="6 min read"
+  toc={[
+    "What MASVS-RESILIENCE covers",
+    "Why this category gets skipped",
+    "What satisfying MASVS-RESILIENCE actually requires",
+    "The practical takeaway",
+  ]}
+>
+
+The OWASP Mobile Application Security Verification Standard (MASVS) is the reference framework most mobile security assessments — internal reviews, third-party pentests, and increasingly some regulatory expectations — get measured against. It's organized into groups of requirements, and one group in particular is explicitly about runtime behavior rather than source code: **MASVS-RESILIENCE**.
+
+This is worth being specific about, because "we passed a security review" can mean very different things depending on which MASVS categories were actually in scope.
+
+## What MASVS-RESILIENCE covers
+
+The resilience category exists separately from MASVS-STORAGE, MASVS-CRYPTO, MASVS-AUTH, MASVS-NETWORK, and MASVS-CODE precisely because those other groups are largely verifiable through static review and code inspection, while resilience requirements ask a different question: *can this app detect and respond to a hostile runtime environment?* The requirements map closely to the same categories runtime protection tooling implements:
+
+- **Anti-tampering** — can the app detect that its own code or resources have been modified?
+- **Anti-reverse-engineering** — does the app resist static and dynamic analysis (obfuscation, anti-debugging, anti-hooking)?
+- **Root/jailbreak detection** — does the app recognize when it's running on a compromised device?
+- **Runtime integrity checks** — does the app verify its own integrity and environment continuously, not just at launch?
+
+An app can score well on storage, crypto, network, and code-level requirements — meaning the code itself is well-written and follows secure patterns — and still have essentially no resilience coverage, because resilience isn't about how the code is written. It's about what the app does when it's running somewhere hostile.
+
+## Why this category gets skipped
+
+MASVS-RESILIENCE requirements are structurally harder to verify with static tooling than the other categories. Checking whether an app uses a deprecated crypto primitive is a grep away. Checking whether an app meaningfully detects and responds to an attached debugger requires actually running the app in a hostile environment and observing its behavior — which is more expensive, and easy to scope out of a review under time pressure.
+
+The practical result: a lot of "MASVS-aligned" security reviews implicitly cover MASVS-STORAGE through MASVS-CODE thoroughly and treat MASVS-RESILIENCE as optional or best-effort. That's a real gap if your actual threat model includes tampering, cloning, or hooking-based abuse — which, for most consumer-facing apps handling payments, credentials, or in-app economies, it does.
+
+## What satisfying MASVS-RESILIENCE actually requires
+
+Meeting these requirements in a way that holds up under a real assessment generally means:
+
+- Root and jailbreak detection that goes beyond a single `su`-binary check
+- Detection of active debuggers and instrumentation frameworks (Frida, Xposed) at runtime, not just at process start
+- Binary integrity / signature verification that catches a resigned, repackaged build
+- Detection logic implemented at a level (native code) that isn't trivially bypassed by the same static analysis tooling used to defeat obfuscation
+- Checks that re-run through the session, since an environment can go from clean to compromised mid-session — an emulator can attach a debugger after launch, a device can be rooted while the app is backgrounded
+
+This is, functionally, the same requirement set a RASP SDK is built to satisfy — MASVS-RESILIENCE and runtime application self-protection are describing the same layer from two different directions: one as a verification standard, one as the tooling that implements it.
+
+## The practical takeaway
+
+If a security assessment or compliance requirement references OWASP MASVS, ask specifically whether MASVS-RESILIENCE was in scope and how it was verified — a review that only covers storage, crypto, and network requirements is checking the code, not the runtime environment. For apps with a real tampering or fraud threat model, resilience coverage isn't optional scope, it's the category that maps directly to the attacks most likely to actually happen.
+
+</ArticleLayout>

@@ -1,25 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import "./globals.css";
 import { plusJakarta, cabinetGrotesk } from "@/lib/fonts";
 import { siteConfig } from "@/lib/seo";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SkipToContent } from "@/components/layout/SkipToContent";
+import { CookieConsent } from "@/components/layout/CookieConsent";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { organizationSchema } from "@/components/seo/schema/organization";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — ${siteConfig.tagline} | ${siteConfig.company}`,
-    template: `%s | ${siteConfig.name} by ${siteConfig.company}`,
+    default: `${siteConfig.name} — ${siteConfig.tagline}`,
+    template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
   openGraph: {
     type: "website",
     url: siteConfig.url,
-    siteName: `${siteConfig.name} by ${siteConfig.company}`,
+    siteName: siteConfig.name,
     title: `${siteConfig.name} — ${siteConfig.tagline}`,
     description: siteConfig.description,
     images: [{ url: siteConfig.ogImage }],
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#0ba37f",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -43,7 +43,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${plusJakarta.variable} ${cabinetGrotesk.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">
+      <head>
+        {/* Powers the ti ti-* icon glyphs used inside the protection-layer
+            hero animations (RawHtmlAnimation). */}
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css"
+        />
+      </head>
+      <body className="flex min-h-full flex-col" suppressHydrationWarning>
         <JsonLd data={organizationSchema()} />
         <SkipToContent />
         <Header />
@@ -51,11 +59,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <Footer />
-        <Script
-          id="cookieyes"
-          src="https://cdn-cookieyes.com/client_data/9b742e0df5d4df42a925106b/script.js"
-          strategy="afterInteractive"
-        />
+        <CookieConsent />
       </body>
     </html>
   );

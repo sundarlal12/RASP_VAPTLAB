@@ -1,4 +1,5 @@
 import { siteConfig } from "@/lib/seo";
+import { features } from "@/app/features/data";
 
 export function softwareApplicationSchema() {
   return {
@@ -9,6 +10,9 @@ export function softwareApplicationSchema() {
     operatingSystem: "Android",
     description: siteConfig.description,
     url: siteConfig.url,
+    keywords:
+      "RASP, runtime application self protection, mobile app shielding, app hardening, Frida detection Android, root detection library Android, Magisk detection, anti-tampering SDK Android, emulator detection Android, SSL pinning bypass prevention, Xposed LSPosed hooking detection, screen recording prevention Android, debugger detection Android, app repackaging detection",
+    featureList: features.map((feature) => feature.title),
     publisher: {
       "@type": "Organization",
       name: siteConfig.legalName,

@@ -3,7 +3,7 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 
 export const metadata = {
   title: "SSL Pinning Configuration",
-  description: "Generate and manage per-client SSL/certificate pin sets for AppShield.",
+  description: "Generate and manage per-client SSL/certificate pin sets for Protect.",
   alternates: { canonical: "/docs/ssl-pinning-configuration/" },
 };
 
@@ -21,11 +21,11 @@ export const metadata = {
 
 # SSL Pinning Configuration
 
-If your app talks to your own backend over TLS, AppShield can pin your API's certificate at the native layer — independent of the device's OS trust store — so a malicious CA installed on the device can't be used to intercept your traffic.
+If your app talks to your own backend over TLS, Protect can pin your API's certificate at the native layer — independent of the device's OS trust store — so a malicious CA installed on the device can't be used to intercept your traffic.
 
 ## Generating a pin set
 
-Pin sets are generated from the AppShield portal against your API's hostname. AppShield computes the SPKI (Subject Public Key Info) hash of your certificate — the same value tools like `openssl` or `curl --pinnedpubkey` would produce — and stores it as your app's pin set.
+Pin sets are generated from the Protect portal against your API's hostname. Protect computes the SPKI (Subject Public Key Info) hash of your certificate — the same value tools like `openssl` or `curl --pinnedpubkey` would produce — and stores it as your app's pin set.
 
 ## Multiple hosts
 

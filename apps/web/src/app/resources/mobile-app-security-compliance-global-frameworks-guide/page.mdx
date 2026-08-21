@@ -1,0 +1,73 @@
+import { ArticleLayout } from "@/components/marketing/ArticleLayout";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { articleSchema } from "@/components/seo/schema/article";
+import { pageKeywords } from "@/lib/seo";
+
+export const metadata = {
+  title: "Mobile App Security Compliance Around the World: A Plain-Language Guide",
+  description:
+    "OWASP MASVS, PCI DSS, Australia's APRA CPS 234, Saudi Arabia's SAMA framework — different names, but they're converging on the same point: secure code at rest isn't enough if you can't say what's happening on the device at runtime.",
+  keywords: pageKeywords([
+    "mobile app security compliance",
+    "OWASP MASVS compliance",
+    "PCI DSS mobile app security",
+    "APRA CPS 234 mobile app",
+    "SAMA cybersecurity framework",
+    "mobile banking security UAE",
+    "fintech app security Saudi Arabia",
+    "RASP solution USA",
+    "RASP solution Australia",
+  ]),
+  alternates: { canonical: "/resources/mobile-app-security-compliance-global-frameworks-guide/" },
+};
+
+<JsonLd
+  data={articleSchema({
+    title: "Mobile App Security Compliance Around the World: A Plain-Language Guide",
+    description:
+      "OWASP MASVS, PCI DSS, Australia's APRA CPS 234, Saudi Arabia's SAMA framework — different names, but they're converging on the same point: secure code at rest isn't enough if you can't say what's happening on the device at runtime.",
+    slug: "mobile-app-security-compliance-global-frameworks-guide",
+    datePublished: "2026-08-18",
+    authorName: "Protect Team",
+  })}
+/>
+
+<ArticleLayout
+  title="Mobile App Security Compliance Around the World: A Plain-Language Guide"
+  slug="mobile-app-security-compliance-global-frameworks-guide"
+  category="Compliance"
+  date="2026-08-18"
+  author="Protect Team"
+  readTime="7 min read"
+  toc={["Why runtime keeps showing up in compliance language", "The frameworks, in plain language", "What this means for your mobile app", "The practical takeaway"]}
+>
+
+If your team ships a mobile app for banking, payments, healthcare, or government use, you've probably run into a compliance framework that mentions mobile security — and if you've read past the summary, you've probably also noticed they all seem to be reaching for the same idea using different words: it's not enough to know your code was secure when you shipped it. You need to know what's actually happening on the device while your app is running.
+
+That's a newer requirement than it sounds. A static code review, a penetration test, or an app-store scan all tell you about the binary at rest. None of them tell you whether the copy of your app running on a customer's phone right now is on a rooted device, being traced by Frida, or talking to your API through a MITM proxy. That gap is what runtime application self-protection (RASP) exists to close — and it's also, increasingly, what regulators are asking about directly.
+
+## Why runtime keeps showing up in compliance language
+
+This isn't a coincidence across frameworks — it reflects how mobile fraud actually works today. Rooted-device fraud rings, emulator farms, and hooking-based automation don't need to break your code; they need to control the environment your code runs in. A framework that only asks "was the code reviewed" misses that entire attack surface. So the more current versions of these standards explicitly ask about runtime resilience, not just code quality.
+
+## The frameworks, in plain language
+
+**OWASP MASVS** is the closest thing mobile app security has to a common baseline, and it's referenced (directly or indirectly) by most of the region-specific frameworks below. Its **MASVS-RESILIENCE** category is explicitly about runtime behavior — anti-tampering, anti-debugging, device binding, and detecting a compromised runtime environment. If you've heard "MASVS compliance" mentioned in a security requirements doc, this is usually the section that's hardest to satisfy with code review alone, because it's asking about behavior, not source code.
+
+**PCI DSS**, the payment card industry's security standard, doesn't name mobile RASP directly, but its guidance for mobile payment acceptance applications expects protection against the app running in a compromised environment — rooted devices, debuggers, and tampering are all in scope for apps that touch cardholder data.
+
+**Australia's APRA CPS 234** is a prudential standard, not a mobile-specific one, but it puts a legal obligation on regulated financial entities to maintain information security capability "proportionate to the vulnerabilities of information assets" — and for a bank or fintech, the customer-facing mobile app is one of the largest attack surfaces they have. Auditors reviewing CPS 234 posture increasingly ask what controls exist at the app-runtime layer, not just the backend.
+
+**Saudi Arabia's SAMA Cybersecurity Framework**, issued by the Saudi Central Bank, applies to banks and financial institutions operating in the Kingdom and covers application security as one of its core domains — with mobile channels called out specifically given how much retail banking in the region has moved to app-first.
+
+**UAE** doesn't have a single named mobile-app framework in the way SAMA does, but guidance from the UAE Central Bank and the National Electronic Security Authority (NESA) both point in the same direction: financial and government-facing apps are expected to defend against a compromised client environment, not just a compromised network.
+
+## What this means for your mobile app
+
+Read across all of these and a pattern falls out: the specific checklist differs, but the underlying question is the same one — **can you detect and respond to a compromised runtime environment before it becomes a fraud, data-loss, or integrity incident?** That's root and jailbreak detection, emulator/VM detection, anti-hooking (Frida, Xposed, LSPosed), SSL/certificate pinning against MITM interception, and tamper/integrity attestation against repackaged builds — the same detection surface regardless of which regulator's document you're mapping against.
+
+## The practical takeaway
+
+None of this means you need a different security posture per country. It means the runtime-resilience work you'd want to do anyway — layered environment detection, pinned network traffic, integrity checks that keep re-running through the session — happens to satisfy the resilience language in most of the frameworks a global mobile app is likely to run into, whether that's a MASVS review, a PCI DSS assessment, or an APRA- or SAMA-aligned audit. Build it once, and you're not starting over for the next region.
+
+</ArticleLayout>

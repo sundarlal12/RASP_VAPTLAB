@@ -13,6 +13,27 @@ export function generateStaticParams() {
   return industries.map((industry) => ({ slug: industry.slug }));
 }
 
+// Compliance-framework keywords only make sense on the industry pages where
+// they're actually relevant — adding "APRA CPS 234" to the gaming page would
+// just be noise.
+const complianceKeywordsBySlug: Record<string, string[]> = {
+  "fintech-banking": [
+    "OWASP MASVS compliance",
+    "PCI DSS mobile app security",
+    "APRA CPS 234 mobile app",
+    "SAMA cybersecurity framework",
+    "mobile banking security UAE",
+    "fintech app security Saudi Arabia",
+    "banking app compliance Australia",
+    "RASP solution USA",
+  ],
+  "government-public-sector": [
+    "Essential Eight mobile application",
+    "NESA UAE compliance",
+    "government app security Australia",
+  ],
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -29,6 +50,7 @@ export async function generateMetadata({
       `${industry.title} app security`,
       `${industry.title} mobile security`,
       `${industry.title} RASP`,
+      ...(complianceKeywordsBySlug[industry.slug] ?? []),
     ]),
     alternates: { canonical: `/solutions/industries/${industry.slug}/` },
   };

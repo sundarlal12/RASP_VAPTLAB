@@ -19,6 +19,26 @@ export const postCategories: PostCategory[] = [
 
 export const posts: Post[] = [
   {
+    slug: "device-compromise-account-takeover-fraud-runtime-detection",
+    title: "How a Compromised Device Enables Account Takeover Fraud",
+    summary:
+      "Account takeover fraud gets discussed as a credentials problem — stolen passwords, leaked OTPs. A lot of it actually starts one layer down, with a rooted or hooked device the app never questioned.",
+    date: "2026-08-19",
+    author: "Protect Team",
+    category: "Fundamentals",
+    readTime: "6 min read",
+  },
+  {
+    slug: "mobile-app-security-compliance-global-frameworks-guide",
+    title: "Mobile App Security Compliance Around the World: A Plain-Language Guide",
+    summary:
+      "OWASP MASVS, PCI DSS, Australia's APRA CPS 234, Saudi Arabia's SAMA framework — different names, but they're converging on the same point: secure code at rest isn't enough if you can't say what's happening on the device at runtime.",
+    date: "2026-08-18",
+    author: "Protect Team",
+    category: "Compliance",
+    readTime: "7 min read",
+  },
+  {
     slug: "rasp-for-react-native-and-flutter-apps",
     title: "RASP for React Native and Flutter Apps: What Actually Works",
     summary:

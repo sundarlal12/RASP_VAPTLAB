@@ -45,7 +45,7 @@ export const industries: Industry[] = [
       "screenshot-screen-recording-prevention",
     ],
     description:
-      "Banking and payments apps are high-value targets for rooted-device fraud, emulator-based fraud rings, MITM attacks against transaction traffic, and cloned apps used for credential harvesting. Protect's combination of root/VM detection, SSL pinning, and tamper detection addresses the environment-level risks that sit underneath your existing fraud and auth controls.",
+      "Banking and payments apps are high-value targets for rooted-device fraud, emulator-based fraud rings, MITM attacks against transaction traffic, and cloned apps used for credential harvesting. Protect's combination of root/VM detection, SSL pinning, and tamper detection addresses the environment-level risks that sit underneath your existing fraud and auth controls — the same runtime-resilience territory covered by frameworks like OWASP MASVS, PCI DSS mobile guidance, Australia's APRA CPS 234, and SAMA's cybersecurity framework in Saudi Arabia, wherever your compliance program is anchored.",
   },
   {
     slug: "gaming",
@@ -85,7 +85,7 @@ export const industries: Industry[] = [
       "runtime-risk-scoring",
     ],
     description:
-      "Public-sector apps are frequent targets for both casual tampering and more deliberate attacks. A unified runtime risk score gives you a single signal to act on across a wide range of device conditions.",
+      "Public-sector apps are frequent targets for both casual tampering and more deliberate attacks. A unified runtime risk score gives you a single signal to act on across a wide range of device conditions — relevant whether you're working against Australia's Essential Eight, UAE government security guidance from NESA, or an internal hardening mandate.",
   },
   {
     slug: "retail-ecommerce",

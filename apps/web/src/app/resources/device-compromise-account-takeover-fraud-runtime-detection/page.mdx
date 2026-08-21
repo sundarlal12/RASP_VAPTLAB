@@ -1,0 +1,72 @@
+import { ArticleLayout } from "@/components/marketing/ArticleLayout";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { articleSchema } from "@/components/seo/schema/article";
+import { pageKeywords } from "@/lib/seo";
+
+export const metadata = {
+  title: "How a Compromised Device Enables Account Takeover Fraud",
+  description:
+    "Account takeover fraud gets discussed as a credentials problem — stolen passwords, leaked OTPs. A lot of it actually starts one layer down, with a rooted or hooked device the app never questioned.",
+  keywords: pageKeywords([
+    "account takeover fraud prevention",
+    "device compromise fraud",
+    "mobile fraud detection",
+    "runtime risk scoring",
+    "device fingerprinting fraud prevention",
+    "AI-based mobile fraud prevention",
+  ]),
+  alternates: { canonical: "/resources/device-compromise-account-takeover-fraud-runtime-detection/" },
+};
+
+<JsonLd
+  data={articleSchema({
+    title: "How a Compromised Device Enables Account Takeover Fraud",
+    description:
+      "Account takeover fraud gets discussed as a credentials problem — stolen passwords, leaked OTPs. A lot of it actually starts one layer down, with a rooted or hooked device the app never questioned.",
+    slug: "device-compromise-account-takeover-fraud-runtime-detection",
+    datePublished: "2026-08-19",
+    authorName: "Protect Team",
+  })}
+/>
+
+<ArticleLayout
+  title="How a Compromised Device Enables Account Takeover Fraud"
+  slug="device-compromise-account-takeover-fraud-runtime-detection"
+  category="Fundamentals"
+  date="2026-08-19"
+  author="Protect Team"
+  readTime="6 min read"
+  toc={["Where the device fits in the ATO chain", "What a compromised device actually lets an attacker do", "Where runtime detection intercepts it", "The practical takeaway"]}
+>
+
+Account takeover (ATO) fraud usually gets described as a credentials problem: a leaked password, a phished OTP, a reused login from some other breach. That's true as far as it goes, but it skips a step. Having a valid credential doesn't automate anything by itself — an attacker still has to get that credential into your app, at scale, without your existing controls stopping them. That's where the device comes in, and it's a layer most ATO discussions skip past.
+
+## Where the device fits in the ATO chain
+
+Credential-stuffing and ATO operations don't run one login attempt at a time by hand. They run against emulator farms or rooted device pools, often with a hooking framework like Frida attached, so the automation can do things a normal app session can't: read values off screen without a human watching, patch out client-side checks, replay or fabricate device signals, and cycle through thousands of attempts while looking — to a backend that only sees network requests — like ordinary traffic from ordinary devices.
+
+In other words, the environment the app is running in is part of the attack surface, not just the network path or the credential itself.
+
+## What a compromised device actually lets an attacker do
+
+A few concrete examples of what root access or an attached hooking framework buys an attacker at the app layer:
+
+- **Bypassing client-side gates.** Rate limits, CAPTCHA triggers, or "suspicious device" flags implemented in app code can be patched out at runtime if the process is hookable.
+- **Automating what should require a human.** Frida-style instrumentation can drive UI interactions and read on-screen values programmatically — including, in poorly-defended apps, values meant to require manual entry.
+- **Faking device identity.** A rooted or emulated device can spoof the signals a backend risk engine uses to distinguish "this looks like a new device" from "this looks like the same device that's been through this flow forty times."
+- **Operating at scale.** None of the above matters much for one attempt. It matters a great deal when it's the difference between an attacker running a credential list by hand and running it against ten thousand accounts unattended.
+
+## Where runtime detection intercepts it
+
+This is the part that sits upstream of most fraud-team tooling, not in competition with it. Backend fraud systems — behavioral biometrics, velocity checks, device-risk scoring on the server — are good at spotting patterns across many sessions. What they generally can't see directly is the state of the device itself at the moment of the session. That's the layer app-side runtime detection covers:
+
+- **Root and VM/emulator detection** flags the environment before a single login attempt is even evaluated for risk.
+- **Anti-hooking detection** (Frida, Xposed, LSPosed) catches the specific tooling ATO automation relies on to bypass client-side logic.
+- **Device fingerprinting** gives a stable, native-layer device identity signal that's harder to spoof than values read from the OS alone, useful for correlating "this device again" across sessions and reinstalls.
+- **Unified runtime risk scoring** means these signals don't have to be handled as separate alerts — they feed one score your app or backend can act on, alongside whatever fraud signals you're already collecting server-side.
+
+## The practical takeaway
+
+ATO prevention that only looks at credentials and backend behavior is defending one layer of a two-layer problem. The device layer — is this a real, uncompromised device, running an unmodified copy of the app, free of active instrumentation — is answerable at runtime, and answering it early means a meaningful share of ATO automation gets stopped before it ever produces a login attempt worth scoring.
+
+</ArticleLayout>

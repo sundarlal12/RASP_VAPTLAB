@@ -1,0 +1,66 @@
+import { ArticleLayout } from "@/components/marketing/ArticleLayout";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { articleSchema } from "@/components/seo/schema/article";
+import { pageKeywords } from "@/lib/seo";
+
+export const metadata = {
+  title: "SAMA Cybersecurity Framework: What It Means for Your Mobile Banking App",
+  description:
+    "The Saudi Central Bank's Cybersecurity Framework names application security as one of its core domains. What that looks like in practice for a bank or fintech's mobile app.",
+  keywords: pageKeywords([
+    "SAMA cybersecurity framework",
+    "SAMA compliance mobile app",
+    "fintech app security Saudi Arabia",
+    "mobile banking security Saudi Arabia",
+    "PDPL mobile app compliance",
+  ]),
+  alternates: { canonical: "/resources/sama-cybersecurity-framework-mobile-banking-app/" },
+};
+
+<JsonLd
+  data={articleSchema({
+    title: "SAMA Cybersecurity Framework: What It Means for Your Mobile Banking App",
+    description:
+      "The Saudi Central Bank's Cybersecurity Framework names application security as one of its core domains. What that looks like in practice for a bank or fintech's mobile app.",
+    slug: "sama-cybersecurity-framework-mobile-banking-app",
+    datePublished: "2026-08-21",
+    authorName: "Protect Team",
+  })}
+/>
+
+<ArticleLayout
+  title="SAMA Cybersecurity Framework: What It Means for Your Mobile Banking App"
+  slug="sama-cybersecurity-framework-mobile-banking-app"
+  category="Compliance"
+  date="2026-08-21"
+  author="Protect Team"
+  readTime="6 min read"
+  toc={["Who it applies to", "Application security as a named domain", "The mobile-specific reading", "The practical takeaway"]}
+>
+
+Saudi Arabia's retail banking market has moved app-first faster than most — which is exactly why the Saudi Central Bank (SAMA) built application security into its Cybersecurity Framework as a named domain rather than leaving it implied under general controls. If your app serves customers in the Kingdom, or you're evaluating the market, it's worth understanding what that domain actually expects. This is a plain-language summary, not compliance advice — confirm specifics with whoever owns your SAMA program.
+
+## Who it applies to
+
+The SAMA Cybersecurity Framework applies to banks, insurance companies, and financial institutions operating under SAMA's regulatory authority in Saudi Arabia. It's structured around a maturity-model approach — entities are assessed against defined maturity levels across a set of domains, rather than a flat pass/fail checklist, with expectations scaling based on the entity's risk profile and systemic importance.
+
+## Application security as a named domain
+
+Unlike some prudential standards that leave "how you secure your applications" implicit, SAMA's framework calls out application security explicitly as one of its domains, alongside things like identity and access management, network security, and third-party security. For a bank or fintech whose primary customer channel is a mobile app, this domain is where the app itself gets evaluated — not just the backend systems it talks to.
+
+That framing matters because it puts the mobile client itself in scope, not only the APIs and infrastructure behind it. A common gap: teams invest heavily in backend hardening and treat the mobile app as a thin, mostly-trusted client — which is a reasonable engineering default until the compliance conversation is specifically about the app layer.
+
+## The mobile-specific reading
+
+A few things the application security domain is realistically going to probe for, translated into what actually runs in a mobile banking app:
+
+- **Runtime environment integrity** — is there any capability to detect that the app is running on a rooted or otherwise compromised device, versus assuming the OS sandbox is sufficient?
+- **Secure communications** — is the connection to your backend protected against interception beyond standard TLS, given how widely available MITM proxy tooling and SSL-pinning-bypass frameworks are?
+- **Tamper resistance** — if the APK were decompiled and modified, would anything downstream notice, or would a patched build function indistinguishably from a genuine one?
+- **Ongoing monitoring, not a one-time gate** — maturity-model frameworks like SAMA's tend to reward continuous capability over a single control implemented once. A root check that only runs at launch scores differently than detection that keeps re-verifying through the session.
+
+## The practical takeaway
+
+The through-line across SAMA's application security domain and equivalent frameworks elsewhere (APRA CPS 234 in Australia, PCI DSS for payment apps generally) is the same: application-layer runtime resilience has become a named, assessed capability, not an assumed byproduct of good backend security. Root/VM/hooking detection, certificate pinning, and tamper attestation — layered and continuously re-checked — are the concrete technical answer to what a maturity-model assessment in this domain is actually looking for.
+
+</ArticleLayout>

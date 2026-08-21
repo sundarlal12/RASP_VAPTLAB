@@ -1,0 +1,67 @@
+import { ArticleLayout } from "@/components/marketing/ArticleLayout";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { articleSchema } from "@/components/seo/schema/article";
+import { pageKeywords } from "@/lib/seo";
+
+export const metadata = {
+  title: "Mobile App Security Compliance in the UAE: NESA and Central Bank Guidance",
+  description:
+    "The UAE doesn't have one named mobile-app framework — NESA's standards cover government and critical infrastructure, the Central Bank covers licensed financial institutions. What both actually expect from a mobile app.",
+  keywords: pageKeywords([
+    "mobile app security UAE",
+    "NESA compliance mobile app",
+    "mobile banking security UAE",
+    "RASP solution Dubai",
+    "cybersecurity company Abu Dhabi",
+  ]),
+  alternates: { canonical: "/resources/mobile-app-security-compliance-uae-nesa-central-bank/" },
+};
+
+<JsonLd
+  data={articleSchema({
+    title: "Mobile App Security Compliance in the UAE: NESA and Central Bank Guidance",
+    description:
+      "The UAE doesn't have one named mobile-app framework — NESA's standards cover government and critical infrastructure, the Central Bank covers licensed financial institutions. What both actually expect from a mobile app.",
+    slug: "mobile-app-security-compliance-uae-nesa-central-bank",
+    datePublished: "2026-08-22",
+    authorName: "Protect Team",
+  })}
+/>
+
+<ArticleLayout
+  title="Mobile App Security Compliance in the UAE: NESA and Central Bank Guidance"
+  slug="mobile-app-security-compliance-uae-nesa-central-bank"
+  category="Compliance"
+  date="2026-08-22"
+  author="Protect Team"
+  readTime="6 min read"
+  toc={["Two regulators, two audiences", "NESA: government and critical infrastructure", "Central Bank guidance for financial institutions", "What both are really asking for", "The practical takeaway"]}
+>
+
+Teams building for the UAE market often go looking for a single named "UAE mobile app security law" the way they'd look for GDPR in the EU or APRA CPS 234 in Australia — and don't find one, because the UAE's approach is split across regulators by sector rather than consolidated into one mobile-specific standard. That's not a gap, just a different shape. Here's how the two most relevant pieces fit together for a mobile app. This is a plain-language overview, not legal or compliance advice.
+
+## Two regulators, two audiences
+
+Broadly: the **National Electronic Security Authority (NESA)** sets information security standards aimed at UAE government entities and critical infrastructure sectors. The **UAE Central Bank (CBUAE)** regulates licensed banks, exchange houses, and other financial institutions, including their technology risk posture. If you're building a citizen-facing government app, NESA's standards are the relevant reference point; if you're building a banking or payments app, CBUAE guidance is.
+
+## NESA: government and critical infrastructure
+
+NESA's UAE Information Assurance Standards are built around a set of security controls covering areas like access control, application security, and operational security, with an expectation that entities assess and manage risk proportionate to the sensitivity of what they're protecting. For a government-facing mobile app — anything handling citizen identity data, service applications, or internal government workflows — the application security controls apply directly to the app itself, not just the servers behind it.
+
+In practice, that means the same questions come up as in other markets' frameworks: can the app detect that it's running in a compromised environment, is data in transit protected against interception, and does the app resist tampering and reverse engineering — not just at a point-in-time audit, but as an ongoing property of the shipped app.
+
+## Central Bank guidance for financial institutions
+
+CBUAE's regulatory approach to technology and cyber risk for licensed financial institutions follows the same broad pattern seen across the region's banking regulators (SAMA in Saudi Arabia, APRA in Australia): risk-based expectations that scale with the institution's size and the sensitivity of what it's protecting, with application security treated as one component of a broader technology risk program rather than a standalone checkbox.
+
+For a retail banking or payments app specifically, that translates to the same runtime-resilience territory: protecting transaction integrity against a compromised device, defending API traffic against interception, and being able to detect a repackaged or tampered app before it does damage at scale.
+
+## What both are really asking for
+
+Read together, the pattern is consistent with what shows up in every other region-specific framework in this series: **runtime behavior matters, not just code review at build time.** A rooted device, an actively hooked process, or a resigned APK are all conditions that exist only once the app is running on a real device in the field — no static analysis or code audit catches them, because they're not properties of the code, they're properties of the environment the code ends up running in.
+
+## The practical takeaway
+
+Whether you're mapping to NESA's application security controls or CBUAE's technology risk expectations, the concrete engineering answer is the same detection surface covered elsewhere in this series: root and jailbreak detection, VM/emulator detection, anti-hooking, SSL/certificate pinning, and tamper/integrity attestation — layered together and re-checked continuously through the session, not evaluated once at launch and assumed to hold.
+
+</ArticleLayout>

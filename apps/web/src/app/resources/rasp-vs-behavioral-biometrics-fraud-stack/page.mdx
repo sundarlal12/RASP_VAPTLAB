@@ -1,0 +1,67 @@
+import { ArticleLayout } from "@/components/marketing/ArticleLayout";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { articleSchema } from "@/components/seo/schema/article";
+import { pageKeywords } from "@/lib/seo";
+
+export const metadata = {
+  title: "Where RASP Fits in a Fraud Stack, Next to Behavioral Biometrics",
+  description:
+    "Behavioral biometrics and device intelligence look at how a session behaves. RASP looks at whether the environment it's running in can be trusted at all. Neither replaces the other.",
+  keywords: pageKeywords([
+    "RASP vs behavioral biometrics",
+    "device intelligence vs RASP",
+    "mobile fraud prevention stack",
+    "AI-based mobile fraud prevention",
+    "runtime risk scoring",
+  ]),
+  alternates: { canonical: "/resources/rasp-vs-behavioral-biometrics-fraud-stack/" },
+};
+
+<JsonLd
+  data={articleSchema({
+    title: "Where RASP Fits in a Fraud Stack, Next to Behavioral Biometrics",
+    description:
+      "Behavioral biometrics and device intelligence look at how a session behaves. RASP looks at whether the environment it's running in can be trusted at all. Neither replaces the other.",
+    slug: "rasp-vs-behavioral-biometrics-fraud-stack",
+    datePublished: "2026-08-23",
+    authorName: "Protect Team",
+  })}
+/>
+
+<ArticleLayout
+  title="Where RASP Fits in a Fraud Stack, Next to Behavioral Biometrics"
+  slug="rasp-vs-behavioral-biometrics-fraud-stack"
+  category="Fundamentals"
+  date="2026-08-23"
+  author="Protect Team"
+  readTime="6 min read"
+  toc={["Two different questions", "What behavioral biometrics is good at", "What it can't see", "How the two layers combine", "The practical takeaway"]}
+>
+
+Teams building a fraud stack often end up choosing between categories of tooling that aren't actually substitutes for each other — behavioral biometrics and device intelligence platforms on one side, runtime application self-protection (RASP) on the other. They get evaluated against the same RFP because they both show up under "mobile fraud prevention," but they answer different questions, at different layers, and a mature fraud stack generally wants both rather than either.
+
+## Two different questions
+
+Behavioral biometrics and device-intelligence platforms are built to answer: **does this session behave like the legitimate user it claims to be?** Typing cadence, touch pressure, scroll patterns, device fingerprint consistency across sessions — all signals about behavior and identity, typically collected and scored server-side, often across a wide population of sessions to spot anomalies.
+
+RASP is built to answer a different, earlier question: **can the environment this session is running in be trusted at all?** Is the device rooted or emulated, is there a hooking framework attached, is the binary itself the one you shipped or a patched copy — questions about the runtime environment, evaluated on-device, independent of how the user happens to be behaving in this particular session.
+
+## What behavioral biometrics is good at
+
+Cross-session pattern detection is genuinely hard to do at the app-runtime layer, and it's exactly what server-side behavioral platforms are built for: spotting that this "user" has never once made a typo across 200 form submissions, or that touch-pressure signatures across a batch of accounts are suspiciously identical, or that a device fingerprint has cycled through a dozen account logins in an hour. That's population-level pattern-matching, and it needs the aggregate view a backend has and a single app instance doesn't.
+
+## What it can't see
+
+What a behavioral platform generally can't see directly is the state of the device itself at the moment of the session — because by the time behavioral signals reach the backend, they've already been shaped by whatever's running on the device. A hooked process can feed a fraud model synthetic-but-plausible behavioral data. A rooted device with root-hiding tooling can look, from a pure device-fingerprint perspective, indistinguishable from a clean one. The behavioral layer is working with data the device chose to send it — and if the device is compromised, that data is not necessarily trustworthy input in the first place.
+
+## How the two layers combine
+
+This is the practical shape of a fraud stack that uses both well: RASP-style detection runs on-device and answers the trust question early — root, VM, hooking, tamper — before behavioral data is even collected, or flags the session as running in a compromised environment so the fraud model can weight its own inputs accordingly. A unified runtime risk score from the device layer becomes one more signal feeding the backend fraud decision, alongside behavioral and velocity signals, rather than a separate, disconnected control.
+
+Neither layer catches everything alone. A device can be completely clean — unrooted, no hooking, unmodified binary — and still be operated by a fraudster with a stolen credential and unremarkable typing behavior; that's squarely behavioral/identity territory. And a session can behave perfectly normally while running on a rooted device an attacker fully controls; that's squarely device-trust territory, and it's the gap RASP is built to close.
+
+## The practical takeaway
+
+"Which one do we buy" is usually the wrong framing. The device-trust question and the behavioral-identity question are genuinely different problems, answered at different layers, and a fraud stack that only covers one has a real, exploitable blind spot in the other.
+
+</ArticleLayout>

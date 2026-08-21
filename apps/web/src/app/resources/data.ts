@@ -19,6 +19,56 @@ export const postCategories: PostCategory[] = [
 
 export const posts: Post[] = [
   {
+    slug: "stopping-bot-driven-checkout-abuse-retail-apps",
+    title: "Stopping Bot-Driven Checkout Abuse in Retail and E-Commerce Apps",
+    summary:
+      "Sneaker bots, gift-card cracking, promo-code abuse — most large-scale retail app abuse runs through emulator farms and hooked clients, not a browser. Where app-layer detection catches what web-only defenses miss.",
+    date: "2026-08-24",
+    author: "Protect Team",
+    category: "Detection Engineering",
+    readTime: "6 min read",
+  },
+  {
+    slug: "rasp-vs-behavioral-biometrics-fraud-stack",
+    title: "Where RASP Fits in a Fraud Stack, Next to Behavioral Biometrics",
+    summary:
+      "Behavioral biometrics and device intelligence look at how a session behaves. RASP looks at whether the environment it's running in can be trusted at all. Neither replaces the other.",
+    date: "2026-08-23",
+    author: "Protect Team",
+    category: "Fundamentals",
+    readTime: "6 min read",
+  },
+  {
+    slug: "mobile-app-security-compliance-uae-nesa-central-bank",
+    title: "Mobile App Security Compliance in the UAE: NESA and Central Bank Guidance",
+    summary:
+      "The UAE doesn't have one named mobile-app framework — NESA's standards cover government and critical infrastructure, the Central Bank covers licensed financial institutions. What both actually expect from a mobile app.",
+    date: "2026-08-22",
+    author: "Protect Team",
+    category: "Compliance",
+    readTime: "6 min read",
+  },
+  {
+    slug: "sama-cybersecurity-framework-mobile-banking-app",
+    title: "SAMA Cybersecurity Framework: What It Means for Your Mobile Banking App",
+    summary:
+      "The Saudi Central Bank's Cybersecurity Framework names application security as one of its core domains. What that looks like in practice for a bank or fintech's mobile app.",
+    date: "2026-08-21",
+    author: "Protect Team",
+    category: "Compliance",
+    readTime: "6 min read",
+  },
+  {
+    slug: "apra-cps-234-mobile-banking-app-checklist",
+    title: "APRA CPS 234 and Mobile Banking Apps: A Practical Checklist",
+    summary:
+      "CPS 234 doesn't name mobile apps directly, but 'information security capability proportionate to vulnerabilities' has a clear reading for your customer-facing app. A practical checklist for what that means at the app layer.",
+    date: "2026-08-20",
+    author: "Protect Team",
+    category: "Compliance",
+    readTime: "6 min read",
+  },
+  {
     slug: "device-compromise-account-takeover-fraud-runtime-detection",
     title: "How a Compromised Device Enables Account Takeover Fraud",
     summary:

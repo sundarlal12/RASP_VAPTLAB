@@ -1,0 +1,75 @@
+import { ArticleLayout } from "@/components/marketing/ArticleLayout";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { articleSchema } from "@/components/seo/schema/article";
+import { pageKeywords } from "@/lib/seo";
+
+export const metadata = {
+  title: "APRA CPS 234 and Mobile Banking Apps: A Practical Checklist",
+  description:
+    "CPS 234 doesn't name mobile apps directly, but 'information security capability proportionate to vulnerabilities' has a clear reading for your customer-facing app. A practical checklist for what that means at the app layer.",
+  keywords: pageKeywords([
+    "APRA CPS 234 mobile app",
+    "APRA CPS 234 checklist",
+    "banking app compliance Australia",
+    "mobile app security Australia",
+    "RASP solution Australia",
+  ]),
+  alternates: { canonical: "/resources/apra-cps-234-mobile-banking-app-checklist/" },
+};
+
+<JsonLd
+  data={articleSchema({
+    title: "APRA CPS 234 and Mobile Banking Apps: A Practical Checklist",
+    description:
+      "CPS 234 doesn't name mobile apps directly, but 'information security capability proportionate to vulnerabilities' has a clear reading for your customer-facing app. A practical checklist for what that means at the app layer.",
+    slug: "apra-cps-234-mobile-banking-app-checklist",
+    datePublished: "2026-08-20",
+    authorName: "Protect Team",
+  })}
+/>
+
+<ArticleLayout
+  title="APRA CPS 234 and Mobile Banking Apps: A Practical Checklist"
+  slug="apra-cps-234-mobile-banking-app-checklist"
+  category="Compliance"
+  date="2026-08-20"
+  author="Protect Team"
+  readTime="6 min read"
+  toc={["What CPS 234 actually requires", "Reading it for a mobile app specifically", "A practical checklist", "The practical takeaway"]}
+>
+
+APRA's Prudential Standard CPS 234 is short — a few pages — and it doesn't mention "mobile app" once. That's by design: it's a prudential standard, not a technical spec, and it leaves the "how" to the regulated entity. Which is exactly why it's easy to under-scope for a customer-facing mobile app if you're reading it as a checklist of named controls instead of an obligation to interpret.
+
+We're not a compliance firm, and this isn't legal advice — treat it as an engineering-side starting point for a conversation with whoever owns your CPS 234 program.
+
+## What CPS 234 actually requires
+
+The standard's core obligation is that an APRA-regulated entity maintain "information security capability commensurate with the size and extent of threats" to its information assets, and that it's able to detect and respond to security incidents in a timely manner. It applies to APRA-regulated banks, insurers, and superannuation trustees — and by extension to material third parties in their supply chain.
+
+The two words doing the most work are **commensurate** and **detect**. Commensurate means the standard scales with your actual threat exposure, not a fixed checklist. Detect means visibility, not just prevention — APRA has been explicit in guidance that entities need to be able to identify when something has already gone wrong, not just have controls that assume it won't.
+
+## Reading it for a mobile app specifically
+
+A retail banking app is, for most APRA-regulated entities, one of the largest customer-facing information assets they operate — and one of the most exposed, since it runs on a device APRA has zero control over. Read against that:
+
+- **"Commensurate with threats"** — rooted-device fraud, emulator farms, and hooking-based automation are documented, active threats against banking apps specifically, not theoretical ones. A security posture that doesn't address them isn't commensurate with the actual threat landscape for a mobile banking app.
+- **"Detect... in a timely manner"** — this is the harder one for most teams. Backend fraud systems detect patterns after the fact, across many sessions. Detecting that *this specific session* is running on a rooted device or has a hooking framework attached happens (if it happens at all) at the app layer, in real time, or not at all.
+
+## A practical checklist
+
+Questions worth being able to answer plainly, regardless of which specific controls you land on:
+
+- Can you detect a rooted or jailbroken device before a session is trusted, not just flag it after the fact in a fraud review?
+- Can you distinguish a real device from an emulator or virtualized environment?
+- If Frida, Xposed, or a similar instrumentation framework attaches mid-session, do you find out, or does the session continue undetected?
+- Is your API traffic pinned against certificate substitution, or does it rely solely on OS-level TLS trust?
+- If someone decompiles, patches, and resigns your APK, is there a check that catches the mismatch — or does a repackaged build run indefinitely?
+- Is detection a one-time check at launch, or does it keep running through the session?
+
+If the honest answer to several of these is "no" or "we're not sure," that's a real gap between what CPS 234 asks for in principle and what the mobile app actually does in practice — independent of whatever's already covered at the network and backend layers.
+
+## The practical takeaway
+
+CPS 234 doesn't require a specific product or vendor. It requires that your information security capability actually match your threat exposure, and that you can detect problems rather than assume they won't happen. For a mobile banking app, root/VM/hooking detection, SSL pinning, and tamper attestation are the concrete, app-layer answer to what "commensurate" and "detect" mean when the information asset in question is running on a device you don't control.
+
+</ArticleLayout>

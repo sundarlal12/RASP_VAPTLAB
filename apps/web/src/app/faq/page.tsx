@@ -6,10 +6,12 @@ import { FAQSection } from "@/components/marketing/FAQSection";
 import { CTABand } from "@/components/marketing/CTABand";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { faqPageSchema } from "@/components/seo/schema/faqPage";
+import { pageKeywords } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "FAQ",
   description: "Answers to common questions about Protect's integration, detection behavior, and pricing.",
+  keywords: pageKeywords(["RASP FAQ", "mobile app security questions"]),
   alternates: { canonical: "/faq/" },
 };
 

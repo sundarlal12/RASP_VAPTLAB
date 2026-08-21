@@ -1,9 +1,11 @@
 import { Section } from "@/components/ui/Section";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { pageKeywords } from "@/lib/seo";
 
 export const metadata = {
   title: "Quickstart",
   description: "Configure a policy, upload a signed APK or AAB, and get a shielded build back from Protect.",
+  keywords: pageKeywords(["upload and shield APK", "APK shielding quickstart", "AAB shielding"]),
   alternates: { canonical: "/docs/quickstart/" },
 };
 

@@ -1,4 +1,4 @@
-import { siteConfig } from "@/lib/seo";
+import { siteConfig, baseKeywords } from "@/lib/seo";
 import { features } from "@/app/features/data";
 
 export function softwareApplicationSchema() {
@@ -10,8 +10,23 @@ export function softwareApplicationSchema() {
     operatingSystem: "Android",
     description: siteConfig.description,
     url: siteConfig.url,
-    keywords:
-      "RASP, runtime application self protection, mobile app shielding, app hardening, Frida detection Android, root detection library Android, Magisk detection, anti-tampering SDK Android, emulator detection Android, SSL pinning bypass prevention, Xposed LSPosed hooking detection, screen recording prevention Android, debugger detection Android, app repackaging detection",
+    keywords: [
+      ...baseKeywords,
+      "mobile app shielding",
+      "Frida detection Android",
+      "root detection library Android",
+      "Magisk detection",
+      "anti-tampering SDK Android",
+      "emulator detection Android",
+      "SSL pinning bypass prevention",
+      "Xposed LSPosed hooking detection",
+      "screen recording prevention Android",
+      "debugger detection Android",
+      "app repackaging detection",
+      "OWASP MASVS compliance",
+      "React Native app security",
+      "Flutter app security",
+    ].join(", "),
     featureList: features.map((feature) => feature.title),
     publisher: {
       "@type": "Organization",

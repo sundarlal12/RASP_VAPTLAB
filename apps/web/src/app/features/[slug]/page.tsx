@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { features, getFeatureBySlug, layers } from "@/app/features/data";
 import { industries, useCases } from "@/app/solutions/data";
+import { pageKeywords } from "@/lib/seo";
 import { Section } from "@/components/ui/Section";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { IconTile } from "@/components/ui/IconTile";
@@ -28,6 +29,7 @@ export async function generateMetadata({
   return {
     title: feature.title,
     description: feature.summary,
+    keywords: pageKeywords([feature.title, `${feature.title} Android`, `${feature.title} SDK`]),
     alternates: { canonical: `/features/${feature.slug}/` },
   };
 }

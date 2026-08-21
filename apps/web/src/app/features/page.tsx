@@ -9,11 +9,20 @@ import { CTABand } from "@/components/marketing/CTABand";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { softwareApplicationSchema } from "@/components/seo/schema/softwareApplication";
 import { readLayerAnimation } from "@/lib/layerAnimations";
+import { pageKeywords } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Features — Runtime Protection Capabilities",
   description:
     "Every Protect capability: root & jailbreak detection, anti-hooking, SSL pinning, tamper detection, runtime risk scoring, and more — organized across three protection layers.",
+  keywords: pageKeywords([
+    "root detection SDK Android",
+    "jailbreak detection library",
+    "anti-hooking SDK",
+    "tamper detection Android",
+    "runtime risk scoring",
+    "OWASP MASVS compliance",
+  ]),
   alternates: { canonical: "/features/" },
 };
 

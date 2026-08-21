@@ -6,10 +6,17 @@ import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Card } from "@/components/ui/Card";
+import { pageKeywords } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Docs",
   description: "Guides for configuring Protect's detection policy, SSL pinning, and integration path.",
+  keywords: pageKeywords([
+    "RASP SDK integration guide",
+    "Android SDK integration docs",
+    "SSL pinning configuration",
+    "detection policy configuration",
+  ]),
   alternates: { canonical: "/docs/" },
 };
 

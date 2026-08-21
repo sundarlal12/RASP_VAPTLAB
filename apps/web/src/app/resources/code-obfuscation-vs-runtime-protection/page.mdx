@@ -1,11 +1,18 @@
 import { ArticleLayout } from "@/components/marketing/ArticleLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { articleSchema } from "@/components/seo/schema/article";
+import { pageKeywords } from "@/lib/seo";
 
 export const metadata = {
   title: "Code Obfuscation vs. Runtime Protection: Why Mobile Apps Need Both",
   description:
     "Obfuscation slows down static analysis. It does nothing once your app is actually running on a hooked or rooted device. Why these are complementary layers, not substitutes.",
+  keywords: pageKeywords([
+    "code obfuscation Android",
+    "ProGuard vs RASP",
+    "obfuscation vs runtime protection",
+    "R8 obfuscation Android",
+  ]),
   alternates: { canonical: "/resources/code-obfuscation-vs-runtime-protection/" },
 };
 

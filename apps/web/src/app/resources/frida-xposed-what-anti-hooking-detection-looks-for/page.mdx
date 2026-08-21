@@ -1,11 +1,18 @@
 import { ArticleLayout } from "@/components/marketing/ArticleLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { articleSchema } from "@/components/seo/schema/article";
+import { pageKeywords } from "@/lib/seo";
 
 export const metadata = {
   title: "Frida and Xposed: What Anti-Hooking Detection Actually Looks For",
   description:
     "A practical look at the fingerprints instrumentation frameworks leave behind in a running process, and why native-layer detection catches more of them.",
+  keywords: pageKeywords([
+    "Frida detection Android",
+    "Xposed detection",
+    "LSPosed detection",
+    "anti-hooking Android SDK",
+  ]),
   alternates: { canonical: "/resources/frida-xposed-what-anti-hooking-detection-looks-for/" },
 };
 

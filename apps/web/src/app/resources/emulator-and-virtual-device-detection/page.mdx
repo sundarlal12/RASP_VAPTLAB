@@ -1,11 +1,18 @@
 import { ArticleLayout } from "@/components/marketing/ArticleLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { articleSchema } from "@/components/seo/schema/article";
+import { pageKeywords } from "@/lib/seo";
 
 export const metadata = {
   title: "Emulator and Virtual Device Detection: How It Actually Works",
   description:
     "Build fingerprints, sensor gaps, and telephony stubs — the signals that separate a real device from an emulator, and why any single one of them is easy to patch around.",
+  keywords: pageKeywords([
+    "emulator detection Android",
+    "virtual device detection",
+    "Android emulator fingerprinting",
+    "VM detection SDK",
+  ]),
   alternates: { canonical: "/resources/emulator-and-virtual-device-detection/" },
 };
 

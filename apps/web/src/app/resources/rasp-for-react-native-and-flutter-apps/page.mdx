@@ -1,9 +1,16 @@
 import { ArticleLayout } from "@/components/marketing/ArticleLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { articleSchema } from "@/components/seo/schema/article";
+import { pageKeywords } from "@/lib/seo";
 
 export const metadata = {
   title: "RASP for React Native and Flutter Apps: What Actually Works",
+  keywords: pageKeywords([
+    "React Native app security",
+    "Flutter app security",
+    "RASP React Native",
+    "RASP Flutter",
+  ]),
   description:
     "React Native and Flutter apps still compile down to a standard APK. What that means for root, hooking, and tamper detection — and where framework-level SDK integration actually gets harder.",
   alternates: { canonical: "/resources/rasp-for-react-native-and-flutter-apps/" },

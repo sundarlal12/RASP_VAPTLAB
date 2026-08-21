@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { useCases, getUseCaseBySlug } from "@/app/solutions/data";
 import { getFeatureBySlug } from "@/app/features/data";
+import { pageKeywords } from "@/lib/seo";
 import { Section } from "@/components/ui/Section";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { IconTile } from "@/components/ui/IconTile";
@@ -24,6 +25,7 @@ export async function generateMetadata({
   return {
     title: `${useCase.title} — Solutions`,
     description: useCase.summary,
+    keywords: pageKeywords([useCase.title, `${useCase.title} Android`, `${useCase.title} SDK`]),
     alternates: { canonical: `/solutions/use-cases/${useCase.slug}/` },
   };
 }

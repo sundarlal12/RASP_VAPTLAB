@@ -4,10 +4,17 @@ import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { ResourcesGrid } from "@/components/marketing/ResourcesGrid";
+import { pageKeywords } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Resources",
   description: "Writing on runtime app protection, detection engineering, and mobile security.",
+  keywords: pageKeywords([
+    "RASP blog",
+    "mobile security engineering",
+    "Android detection engineering",
+    "app security best practices",
+  ]),
   alternates: { canonical: "/resources/" },
 };
 

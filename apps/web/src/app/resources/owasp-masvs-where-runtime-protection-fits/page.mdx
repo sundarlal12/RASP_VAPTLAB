@@ -1,11 +1,18 @@
 import { ArticleLayout } from "@/components/marketing/ArticleLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { articleSchema } from "@/components/seo/schema/article";
+import { pageKeywords } from "@/lib/seo";
 
 export const metadata = {
   title: "OWASP MASVS and Where Runtime Protection Fits In",
   description:
     "MASVS's resilience requirements (MASVS-RESILIENCE) are explicitly about runtime behavior, not static code review. Mapping RASP controls to the categories an assessor actually checks.",
+  keywords: pageKeywords([
+    "OWASP MASVS",
+    "MASVS-RESILIENCE",
+    "mobile app security testing standard",
+    "MASVS compliance Android",
+  ]),
   alternates: { canonical: "/resources/owasp-masvs-where-runtime-protection-fits/" },
 };
 

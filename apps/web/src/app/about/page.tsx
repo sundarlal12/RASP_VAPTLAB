@@ -5,11 +5,13 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Card } from "@/components/ui/Card";
 import { CTABand } from "@/components/marketing/CTABand";
 import { Target, ShieldCheck, Cpu } from "lucide-react";
+import { pageKeywords } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "About",
   description:
     "VaptLabs builds SecureLint Protect — AI-powered, no-code runtime application security for mobile, focused on runtime detection, not just static app-store scanning.",
+  keywords: pageKeywords(["VaptLabs", "mobile security company", "RASP vendor"]),
   alternates: { canonical: "/about/" },
 };
 

@@ -6,11 +6,20 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { IndustryGrid } from "@/components/marketing/IndustryGrid";
 import { UseCaseGrid } from "@/components/marketing/UseCaseGrid";
 import { CTABand } from "@/components/marketing/CTABand";
+import { pageKeywords } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Solutions — By Industry & Use Case",
   description:
     "How Protect applies to fintech, gaming, healthcare, government, retail, and media apps — and to specific problems like anti-scraping, app cloning, and MITM prevention.",
+  keywords: pageKeywords([
+    "fintech app security",
+    "banking app protection",
+    "gaming anti-cheat SDK",
+    "app cloning prevention",
+    "MITM protection mobile",
+    "anti-scraping mobile app",
+  ]),
   alternates: { canonical: "/solutions/" },
 };
 

@@ -1,11 +1,18 @@
 import { ArticleLayout } from "@/components/marketing/ArticleLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { articleSchema } from "@/components/seo/schema/article";
+import { pageKeywords } from "@/lib/seo";
 
 export const metadata = {
   title: "SSL Pinning Certificate Rotation Without Breaking Your App",
   description:
     "Certificate pinning fails hard when it fails. A rollout pattern for rotating keys without locking out users on your current release.",
+  keywords: pageKeywords([
+    "SSL pinning certificate rotation",
+    "certificate pinning Android",
+    "SSL pinning bypass prevention",
+    "SPKI pinning Android",
+  ]),
   alternates: { canonical: "/resources/ssl-pinning-certificate-rotation-without-breaking-your-app/" },
 };
 

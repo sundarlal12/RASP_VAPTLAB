@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { plusJakarta, cabinetGrotesk } from "@/lib/fonts";
-import { siteConfig } from "@/lib/seo";
+import { siteConfig, pageKeywords } from "@/lib/seo";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SkipToContent } from "@/components/layout/SkipToContent";
@@ -16,6 +16,14 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  keywords: pageKeywords([
+    "Frida detection Android",
+    "root detection library Android",
+    "Magisk detection",
+    "Xposed LSPosed hooking detection",
+    "SSL pinning Android",
+    "anti-tampering SDK Android",
+  ]),
   openGraph: {
     type: "website",
     url: siteConfig.url,

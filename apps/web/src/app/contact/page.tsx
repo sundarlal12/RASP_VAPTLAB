@@ -3,12 +3,13 @@ import { ShieldCheck, Activity, UploadCloud, Smartphone } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { ContactSalesForm } from "@/components/forms/ContactSalesForm";
-import { siteConfig } from "@/lib/seo";
+import { siteConfig, pageKeywords } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Contact",
   description:
     "Talk to VaptLabs about integrating SecureLint Protect into your Android app — book a demo or reach our enterprise sales team directly.",
+  keywords: pageKeywords(["RASP enterprise sales", "mobile app security demo"]),
   alternates: { canonical: "/contact/" },
 };
 

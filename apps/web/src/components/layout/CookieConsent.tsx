@@ -54,6 +54,21 @@ const categories: { key: keyof Consent; label: string; description: string }[] =
   },
 ];
 
+const HAPPIERLEADS_SCRIPT_ID = "happierleads-pixel";
+
+function loadTrackingScripts(value: Consent) {
+  if (!value.analytics && !value.advertisement) return;
+  if (document.getElementById(HAPPIERLEADS_SCRIPT_ID)) return;
+
+  const script = document.createElement("script");
+  script.id = HAPPIERLEADS_SCRIPT_ID;
+  script.defer = true;
+  script.setAttribute("fetchpriority", "low");
+  script.setAttribute("data-cfasync", "false");
+  script.src = "https://rest.happierleads.com/v3/script?clientId=ej4Yak9jeHn9WVi1RSmtd3";
+  document.head.appendChild(script);
+}
+
 export function CookieConsent() {
   const [visible, setVisible] = useState(false);
   const [customizing, setCustomizing] = useState(false);
@@ -66,12 +81,17 @@ export function CookieConsent() {
     // notifications, and localStorage has no same-tab "storage" event to
     // subscribe to anyway.
     const stored = window.localStorage.getItem(STORAGE_KEY);
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (!stored) setVisible(true);
+    if (stored) {
+      loadTrackingScripts(JSON.parse(stored) as Consent);
+    } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setVisible(true);
+    }
   }, []);
 
   function persist(value: Consent) {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...value, timestamp: Date.now() }));
+    loadTrackingScripts(value);
     setVisible(false);
     setCustomizing(false);
   }
